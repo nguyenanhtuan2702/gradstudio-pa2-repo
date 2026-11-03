@@ -1,0 +1,333 @@
+/* GradStudio foundation — adapted from the supplied prototype foundations.css.
+ * Plain CSS; no network fonts, scripts or build step required.
+ * Load style.css instead of styles.css (do not load both).
+ * Font names are preferences: system fallbacks work offline.
+ * Use .gs-input for text-like inputs, not checkbox/radio/file controls.
+ * Disabled anchors: aria-disabled only communicates state; omit href for
+ * unavailable navigation. CSS does not prevent activation or save data.
+ */
+:root {
+  color-scheme: light;
+  /* Compatibility aliases: gs tokens remain the single source of truth. */
+  --color-background: var(--gs-color-bg);
+  --color-surface: var(--gs-color-surface);
+  --color-text: var(--gs-color-text);
+  --color-muted: var(--gs-color-text-muted);
+  --color-accent: var(--gs-color-primary);
+  --color-border: var(--gs-color-border);
+  --space-1: var(--gs-space-1);
+  --space-2: var(--gs-space-2);
+  --space-3: var(--gs-space-3);
+  --space-4: var(--gs-space-4);
+  --space-6: var(--gs-space-6);
+  --space-8: var(--gs-space-8);
+  --space-12: var(--gs-space-12);
+  --space-16: var(--gs-space-16);
+  --content-width: var(--gs-container-max);
+  /* ---- Màu ---- */
+  --gs-color-bg: #FAF8F5;
+  --gs-color-surface: #FFFFFF;
+  --gs-color-surface-sunken: #F1EDE6;
+  --gs-color-text: #231F1A;
+  --gs-color-text-muted: #5E564C;
+  --gs-color-text-disabled: #8A8174;
+  --gs-color-text-inverse: #FFFFFF;
+  --gs-color-border: #E2DBD0;
+  --gs-color-border-strong: #B9AE9E;   /* đường kẻ trang trí, KHÔNG dùng làm viền nhận biết điều khiển */
+  --gs-color-border-control: #8A7F72;  /* viền input/select/textarea/nút phụ: >= 3:1 so với nền trắng, nền trang và nền chìm */
+  --gs-color-primary: #7A5320;
+  --gs-color-primary-hover: #5F3F15;
+  --gs-color-primary-active: #4A300F;
+  --gs-color-primary-soft: #F3E7D2;
+  --gs-color-accent: #B8893B;
+  --gs-color-success: #2F6B4A;
+  --gs-color-success-soft: #E3F0E8;
+  --gs-color-warning: #7A4E00;
+  --gs-color-warning-soft: #FBEFD0;
+  --gs-color-error: #A3302B;
+  --gs-color-error-soft: #FBE6E3;
+  --gs-color-focus: #1F5FA8;
+  --gs-color-dark: #2B241C;
+  --gs-color-backdrop: rgba(35, 31, 26, 0.5);
+
+  /* ---- Font ---- */
+  --gs-font-serif: "Noto Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --gs-font-sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gs-weight-regular: 400;
+  --gs-weight-medium: 500;
+  --gs-weight-semibold: 600;
+
+  /* ---- Cỡ chữ (mobile-first; đổi tại 768 và 1280) ---- */
+  --gs-text-xs: 0.75rem;
+  --gs-text-sm: 0.875rem;
+  --gs-text-base: 1rem;
+  --gs-text-lg: 1.125rem;
+  --gs-text-h3: 1.25rem;
+  --gs-text-h2: 1.5rem;
+  --gs-text-h1: 1.875rem;
+  --gs-text-display: 2.25rem;
+  /* Line-height: tách nội dung và điều khiển UI */
+  --gs-leading-display: 1.25;   /* hero, h1 */
+  --gs-leading-heading: 1.3;    /* h2 */
+  --gs-leading-subheading: 1.35;/* h3, h4 */
+  --gs-leading-body: 1.6;       /* nội dung đọc nhiều dòng */
+  --gs-leading-compact: 1.5;    /* caption, tin nhắn chat, chú thích nhiều dòng */
+  --gs-leading-ui: 1.4;         /* nhãn, nút, tab, input, badge (thường một dòng) */
+
+  /* ---- Spacing (4px) ---- */
+  --gs-space-1: 0.25rem;
+  --gs-space-2: 0.5rem;
+  --gs-space-3: 0.75rem;
+  --gs-space-4: 1rem;
+  --gs-space-5: 1.25rem;
+  --gs-space-6: 1.5rem;
+  --gs-space-8: 2rem;
+  --gs-space-10: 2.5rem;
+  --gs-space-12: 3rem;
+  --gs-space-16: 4rem;
+  --gs-space-20: 5rem;
+
+  /* ---- Radius ---- */
+  --gs-radius-sm: 4px;
+  --gs-radius-md: 8px;
+  --gs-radius-lg: 12px;
+  --gs-radius-xl: 16px;
+  --gs-radius-full: 999px;
+
+  /* ---- Shadow ---- */
+  --gs-shadow-sm: 0 1px 2px rgba(35, 31, 26, 0.06);
+  --gs-shadow-md: 0 4px 14px rgba(35, 31, 26, 0.12);
+  --gs-shadow-lg: 0 16px 40px rgba(35, 31, 26, 0.2);
+
+  /* ---- Điều khiển / focus / layout ---- */
+  --gs-control-height: 2.75rem;
+  --gs-control-height-sm: 2.25rem;
+  --gs-focus-width: 2px;
+  --gs-focus-offset: 2px;
+  --gs-container-pad: 1rem;
+  --gs-container-max: 1200px;
+  --gs-container-max-wide: 1440px;
+  --gs-transition: 150ms ease;
+}
+
+/* Tablet ≥ 768px */
+@media (min-width: 768px) {
+  :root {
+    --gs-text-h3: 1.25rem;
+    --gs-text-h2: 1.75rem;
+    --gs-text-h1: 2.25rem;
+    --gs-text-display: 3rem;
+    --gs-container-pad: 1.5rem;
+  }
+}
+
+/* Desktop ≥ 1280px */
+@media (min-width: 1280px) {
+  :root {
+    --gs-text-h3: 1.375rem;
+    --gs-text-h2: 2rem;
+    --gs-text-h1: 2.5rem;
+    --gs-text-display: 3.5rem;
+    --gs-container-pad: 2rem;
+  }
+}
+
+/* ---- Reset (chỉ phần an toàn, không đụng bố cục lịch/chat) ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 1rem;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+
+.gs-list-reset { list-style: none; margin: 0; padding: 0; }
+
+body {
+  overflow-wrap: anywhere;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--gs-color-bg);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  line-height: var(--gs-leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--gs-font-serif);
+  font-weight: var(--gs-weight-medium);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+h1 { font-size: var(--gs-text-h1); line-height: var(--gs-leading-display); }
+h2 { font-size: var(--gs-text-h2); line-height: var(--gs-leading-heading); }
+h3, h4 { font-size: var(--gs-text-h3); line-height: var(--gs-leading-subheading); font-weight: var(--gs-weight-semibold); }
+.gs-display { font-family: var(--gs-font-serif); font-size: var(--gs-text-display); line-height: var(--gs-leading-display); font-weight: var(--gs-weight-medium); letter-spacing: 0; }
+p { overflow-wrap: anywhere; }
+
+a { color: var(--gs-color-primary); text-underline-offset: 0.2em; }
+a:hover { color: var(--gs-color-primary-hover); }
+
+img, picture, video, canvas { display: block; max-width: 100%; height: auto; }
+svg { max-width: 100%; }
+
+/* Form controls: chỉ kế thừa font/màu. Hình thức nằm ở class .gs-* */
+button, input, select, textarea { font: inherit; color: inherit; margin: 0; }
+button { cursor: pointer; }
+button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+textarea { resize: vertical; }
+
+/* ---- Focus-visible ---- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--gs-focus-width) solid var(--gs-color-focus);
+  outline-offset: var(--gs-focus-offset);
+}
+.gs-on-dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: #FFFFFF;
+}
+
+.gs-container {
+  width: 100%;
+  max-width: var(--gs-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+}
+.gs-container--wide { max-width: var(--gs-container-max-wide); }
+
+/* ---- Button ---- */
+.gs-btn {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--gs-space-2);
+  min-height: var(--gs-control-height);
+  min-width: var(--gs-control-height);
+  max-width: 100%;
+  padding: var(--gs-space-2) var(--gs-space-5);
+  border: 1px solid transparent;
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-semibold);
+  line-height: var(--gs-leading-compact);
+  text-align: center; text-decoration: none;
+  transition: background-color var(--gs-transition), border-color var(--gs-transition), color var(--gs-transition);
+}
+.gs-btn--block { display: flex; width: 100%; }
+
+.gs-btn--primary { background: var(--gs-color-primary); color: var(--gs-color-text-inverse); }
+.gs-btn--primary:hover { background: var(--gs-color-primary-hover); color: var(--gs-color-text-inverse); }
+.gs-btn--primary:active { background: var(--gs-color-primary-active); }
+
+.gs-btn--secondary { border-color: var(--gs-color-border-control); background: var(--gs-color-surface); color: var(--gs-color-text); }
+.gs-btn--secondary:hover { border-color: var(--gs-color-primary); color: var(--gs-color-primary-hover); }
+.gs-btn--secondary:active { background: var(--gs-color-surface-sunken); }
+
+.gs-btn--ghost { background: transparent; color: var(--gs-color-primary); }
+.gs-btn--ghost:hover { background: var(--gs-color-primary-soft); color: var(--gs-color-primary-hover); }
+.gs-btn--ghost:active { background: var(--gs-color-border); }
+
+.gs-btn--danger { background: var(--gs-color-error); color: var(--gs-color-text-inverse); }
+.gs-btn--danger:hover { filter: brightness(0.9); }
+
+.gs-btn:disabled, .gs-btn[aria-disabled="true"] {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+  color: var(--gs-color-text-disabled);
+  filter: none;
+}
+
+/* ---- Field: input / select / textarea ---- */
+.gs-label { display: block; margin-bottom: var(--gs-space-1); font-size: var(--gs-text-sm); font-weight: var(--gs-weight-medium); color: var(--gs-color-text); }
+.gs-help { margin-top: var(--gs-space-1); font-size: var(--gs-text-sm); color: var(--gs-color-text-muted); }
+.gs-error-text { margin-top: var(--gs-space-1); font-size: var(--gs-text-sm); color: var(--gs-color-error); }
+
+.gs-input, .gs-select, .gs-textarea {
+  display: block; width: 100%;
+  min-height: var(--gs-control-height);
+  min-width: 0;
+  max-width: 100%;
+  padding: var(--gs-space-2) var(--gs-space-3);
+  border: 1px solid var(--gs-color-border-control);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);   /* 16px: tránh tự phóng to trên iOS */
+  line-height: var(--gs-leading-compact);
+  transition: border-color var(--gs-transition);
+}
+.gs-input::placeholder, .gs-textarea::placeholder { color: var(--gs-color-text-muted); opacity: 1; }
+.gs-input:where(:enabled:not([readonly]):hover), .gs-select:where(:enabled:hover), .gs-textarea:where(:enabled:not([readonly]):hover) { border-color: var(--gs-color-primary); }
+.gs-textarea { min-height: 6rem; }
+/* Keep the native select arrow and keyboard behavior. */
+.gs-input[readonly], .gs-textarea[readonly] { background: var(--gs-color-surface-sunken); }
+.gs-input:disabled, .gs-select:disabled, .gs-textarea:disabled {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+  color: var(--gs-color-text-disabled);
+  cursor: not-allowed;
+}
+.gs-input[aria-invalid="true"], .gs-select[aria-invalid="true"], .gs-textarea[aria-invalid="true"], .gs-input:user-invalid, .gs-select:user-invalid, .gs-textarea:user-invalid {
+  border-color: var(--gs-color-error);
+}
+
+
+/* Opt-in flow helpers allow grid/flex children and long text to shrink. */
+.gs-stack { display: grid; gap: var(--gs-space-4); }
+.gs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--gs-space-3); }
+.gs-stack > *, .gs-cluster > * { min-width: 0; max-width: 100%; }
+.gs-card, .page-placeholder {
+  min-width: 0;
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+.gs-card--sunken { background: var(--gs-color-surface-sunken); }
+.gs-input:where(:enabled:not([readonly]):active), .gs-select:where(:enabled:active),
+.gs-textarea:where(:enabled:not([readonly]):active) { border-color: var(--gs-color-primary-active); }
+.gs-input[aria-invalid="true"], .gs-select[aria-invalid="true"],
+.gs-textarea[aria-invalid="true"] { border-color: var(--gs-color-error); }
+.gs-input:disabled, .gs-select:disabled, .gs-textarea:disabled { opacity: 1; }
+
+/* Existing starter HTML remains usable when its stylesheet link is updated. */
+.site-header, .site-main, .site-footer {
+  width: 100%;
+  max-width: var(--gs-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+}
+.site-header, .site-footer { padding-block: var(--gs-space-4); }
+.site-header { border-bottom: 1px solid var(--gs-color-border); }
+.site-main { min-height: 65vh; padding-block: var(--gs-space-8); }
+.site-footer { color: var(--gs-color-text-muted); border-top: 1px solid var(--gs-color-border); }
+.page-placeholder > * + * { margin-top: var(--gs-space-4); }
+.site-nav { display: flex; flex-wrap: wrap; gap: var(--gs-space-2); }
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--gs-control-height);
+  min-height: var(--gs-control-height);
+  max-width: 100%;
+  padding: var(--gs-space-2) var(--gs-space-4);
+  border: 1px solid var(--gs-color-border-control);
+  border-radius: var(--gs-radius-full);
+  text-decoration: none;
+}
+.site-nav a[aria-current="page"] { background: var(--gs-color-dark); color: var(--gs-color-text-inverse); }
+@media (min-width: 768px) {
+  .gs-card, .page-placeholder { padding: var(--gs-space-6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --gs-transition: 0s; }
+}
