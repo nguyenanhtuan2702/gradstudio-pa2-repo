@@ -1,31 +1,301 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GradStudio – lịch chụp và thông tin booking của khách hàng.">
+  <meta name="description"
+    content="GradStudio – Lịch chụp ảnh tốt nghiệp của Nguyễn Thùy Linh, thông tin chi tiết gói dịch vụ và khoản thanh toán cọc.">
   <title>GradStudio | Lịch chụp của tôi</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <a href="#main-content" class="skip-link">Chuyển đến nội dung chính</a>
+
   <header class="site-header">
-    <nav class="site-nav" aria-label="Điều hướng chính">
-      <a href="index.html">Dịch vụ</a>
-      <a href="page2.html">Quản lý tư vấn</a>
-      <a href="page3.html" aria-current="page">Lịch chụp của tôi</a>
-    </nav>
+    <div class="site-header__inner">
+      <a href="index.html" class="site-logo">GradStudio</a>
+
+      <nav class="site-nav" aria-label="Điều hướng chính">
+        <a href="index.html" class="site-nav__link">Dịch vụ</a>
+        <a href="page3.html" class="site-nav__link" aria-current="page">Lịch chụp của tôi</a>
+      </nav>
+
+      <div class="user-profile">
+        <span class="user-avatar">
+          <img src="assets/images/avatar-linh.jpg" alt="Ảnh đại diện của Nguyễn Thùy Linh" width="34" height="34"
+            class="user-avatar-img">
+        </span>
+        <span class="user-name">Linh</span>
+        <span class="user-chevron" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </div>
+    </div>
   </header>
 
-  <main class="site-main">
-    <!-- TODO: Thành viên C xây dựng Màn 3 theo docs/pa1/03-customer-appointment.png và LINK.md. -->
-    <section class="page-placeholder" aria-labelledby="page-title">
-      <h1 id="page-title">GradStudio – Lịch chụp của tôi</h1>
-      <p>Khung khởi tạo cho Màn 3. Hãy thay nội dung này bằng lịch makeup, lịch chụp, thông tin booking và khoản cọc theo thiết kế PA#1.</p>
-    </section>
+  <main id="main-content" class="site-main">
+    <div class="gs-container">
+      <section class="page-heading-section" aria-labelledby="page-title">
+        <h1 id="page-title" class="page-title">Lịch chụp của tôi</h1>
+        <p class="page-subtitle">Xem lại lịch đã thống nhất với studio và thanh toán cọc để giữ lịch.</p>
+
+        <div class="booking-tabs-wrapper">
+          <div class="booking-tabs" role="group" aria-label="Bộ lọc trạng thái lịch chụp">
+            <button type="button" class="booking-tab active">
+              Tất cả <span class="tab-count">1</span>
+            </button>
+            <button type="button" class="booking-tab">
+              Chờ cọc <span class="tab-count">1</span>
+            </button>
+            <button type="button" class="booking-tab">
+              Đã đặt lịch <span class="tab-count">0</span>
+            </button>
+            <button type="button" class="booking-tab">
+              Hoàn thành <span class="tab-count">0</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="appointment-layout">
+        <!-- Cột trái: Lịch tuần và dòng thời gian -->
+        <div class="appointment-main-col">
+          <section class="appointment-card calendar-card" aria-labelledby="calendar-month-heading">
+            <div class="calendar-card__header">
+              <h2 id="calendar-month-heading" class="calendar-month-title">Tháng 10, 2026</h2>
+              <span class="calendar-week-badge">TUẦN 43</span>
+            </div>
+
+            <div class="calendar-week-strip" role="group" aria-label="Lịch 7 ngày trong tuần 43">
+              <div class="calendar-day">
+                <span class="day-name">T2</span>
+                <span class="day-number">19</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-name">T3</span>
+                <span class="day-number">20</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-name">T4</span>
+                <span class="day-number">21</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-name">T5</span>
+                <span class="day-number">22</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-name">T6</span>
+                <span class="day-number">23</span>
+              </div>
+              <div class="calendar-day calendar-day--selected" aria-current="date">
+                <span class="day-name">T7</span>
+                <span class="day-number">24</span>
+                <span class="day-indicator" aria-hidden="true"></span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-name">CN</span>
+                <span class="day-number">25</span>
+              </div>
+            </div>
+
+            <div class="timeline-date-banner">
+              <span class="timeline-date-text">THỨ BẢY, 24/10 · NGÀY CỦA LINH</span>
+            </div>
+
+            <ol class="appointment-timeline" aria-label="Lịch trình chi tiết ngày 24 tháng 10 năm 2026">
+              <!-- Mốc 1: Yêu cầu ban đầu bị trùng -->
+              <li class="timeline-item timeline-item--conflict">
+                <div class="timeline-marker" aria-hidden="true">
+                  <span class="marker-circle marker-circle--conflict">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </span>
+                  <span class="timeline-connector timeline-connector--dashed"></span>
+                </div>
+                <div class="timeline-body">
+                  <div class="timeline-time"><del>09:00</del></div>
+                  <p class="timeline-title timeline-title--muted">Giờ bạn yêu cầu ban đầu</p>
+                  <p class="timeline-desc timeline-desc--muted">Thợ makeup đã kín lịch</p>
+                </div>
+              </li>
+
+              <!-- Mốc 2: Giờ Makeup -->
+              <li class="timeline-item">
+                <div class="timeline-marker" aria-hidden="true">
+                  <span class="marker-circle marker-circle--makeup">
+                    <span>A</span>
+                  </span>
+                  <span class="timeline-connector timeline-connector--solid"></span>
+                </div>
+                <div class="timeline-body">
+                  <div class="timeline-time">13:00 – 14:00</div>
+                  <h3 class="timeline-title">Makeup với Mai</h3>
+                  <p class="timeline-desc">Có mặt sớm 10 phút để chuẩn bị</p>
+                </div>
+              </li>
+
+              <!-- Mốc 3: Giờ Chụp ảnh -->
+              <li class="timeline-item">
+                <div class="timeline-marker" aria-hidden="true">
+                  <span class="marker-circle marker-circle--photo">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                      </path>
+                      <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                  </span>
+                </div>
+                <div class="timeline-body">
+                  <div class="timeline-time">14:00 – 16:00</div>
+                  <h3 class="timeline-title">Chụp ảnh với Tuấn</h3>
+                  <p class="timeline-desc">Studio đề xuất · Trong nhà và sân vườn</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+        </div>
+
+        <!-- Cột phải: Thẻ booking và Bản đồ studio -->
+        <aside class="appointment-side-col" aria-label="Thông tin thanh toán và địa điểm">
+          <!-- Thẻ tóm tắt Booking -->
+          <section class="appointment-card booking-summary-card" aria-labelledby="booking-service-heading">
+            <div class="booking-summary-header">
+              <span class="booking-code">GS-1024</span>
+              <span class="booking-status-pill">
+                <span class="status-dot" aria-hidden="true"></span>
+                Đã thống nhất lịch · Chờ cọc 30%
+              </span>
+            </div>
+
+            <h2 id="booking-service-heading" class="booking-service-title">Chụp ảnh tốt nghiệp</h2>
+
+            <dl class="booking-details-list">
+              <div class="booking-detail-row">
+                <dt class="detail-label">Gói</dt>
+                <dd class="detail-value">Tốt nghiệp Premium</dd>
+              </div>
+              <div class="booking-detail-row">
+                <dt class="detail-label">Bao gồm</dt>
+                <dd class="detail-value">Makeup · 2 giờ chụp</dd>
+              </div>
+              <div class="booking-detail-row">
+                <dt class="detail-label">Ngày</dt>
+                <dd class="detail-value">Thứ Bảy, 24/10/2026</dd>
+              </div>
+              <div class="booking-detail-row">
+                <dt class="detail-label">Bắt đầu</dt>
+                <dd class="detail-value">13:00 (makeup)</dd>
+              </div>
+            </dl>
+
+            <div class="booking-pricing-box">
+              <div class="price-row">
+                <span class="price-label">Giá gói</span>
+                <span class="price-value">1.800.000đ</span>
+              </div>
+              <div class="price-row price-row--highlight">
+                <span class="price-label">Cọc 30%</span>
+                <span class="price-value">540.000đ</span>
+              </div>
+              <div class="price-row price-row--subtle">
+                <span class="price-label">Còn lại 70% · Thanh toán sau buổi chụp</span>
+                <span class="price-value">1.260.000đ</span>
+              </div>
+            </div>
+
+            <div class="booking-actions">
+              <button type="button" class="gs-btn gs-btn--primary gs-btn--block btn-deposit-cta">
+                Thanh toán cọc 30%
+              </button>
+            </div>
+          </section>
+
+          <!-- Thẻ địa điểm Studio -->
+          <section class="appointment-card studio-location-card" aria-labelledby="location-heading">
+            <h2 id="location-heading" class="visually-hidden">Địa điểm GradStudio</h2>
+
+            <div class="map-graphic-wrapper">
+              <div class="map-graphic" role="img" aria-label="Bản đồ minh họa vị trí GradStudio tại TP. Hồ Chí Minh">
+                <svg class="map-svg" viewBox="0 0 400 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                  <rect width="100%" height="100%" fill="#F1EDE6" />
+                  <rect x="250" y="20" width="90" height="50" rx="16" fill="#E2EDE5" />
+                  <rect x="20" y="20" width="90" height="60" rx="8" fill="#E8E2D7" />
+                  <path d="M0,105 Q120,100 200,105 T400,95" stroke="#FFFFFF" stroke-width="26" fill="none" />
+                  <path d="M200,0 L200,160" stroke="#FFFFFF" stroke-width="18" fill="none" />
+                  <path d="M100,0 Q110,80 100,160" stroke="#FFFFFF" stroke-width="12" fill="none" />
+                  <path d="M0,105 Q120,100 200,105 T400,95" stroke="#DDD6C9" stroke-width="1.5" stroke-dasharray="4,4"
+                    fill="none" />
+                </svg>
+
+                <div class="map-pin">
+                  <span class="map-pin-badge">GradStudio</span>
+                  <span class="map-pin-pointer" aria-hidden="true"></span>
+                </div>
+
+                <span class="map-badge-tag">Bản đồ minh họa</span>
+              </div>
+            </div>
+
+            <div class="studio-info-row">
+              <div class="studio-text">
+                <strong class="studio-brand">GradStudio</strong>
+                <p class="studio-subtext">TP. Hồ Chí Minh · Địa chỉ sẽ gửi khi đặt cọc</p>
+              </div>
+              <div class="studio-action">
+                <a href="#location-heading" class="studio-directions-link">
+                  Xem đường đi <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Khung thông báo đề xuất giờ của Studio -->
+          <div class="schedule-proposal-callout" role="note" aria-label="Đề xuất thời gian của studio">
+            <svg class="proposal-callout-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p class="proposal-callout-text">
+              Studio đề xuất 14:00 vì khung makeup lúc 09:00 đã kín lịch.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <p>GradStudio – Prototype giao diện PA#2</p>
+    <div class="site-footer__inner gs-container">
+      <p>GradStudio – Prototype giao diện PA#2</p>
+      <p class="footer-note">Dữ liệu minh họa theo kịch bản: Nguyễn Thùy Linh · 24/10/2026 (GS-1024)</p>
+    </div>
   </footer>
+
+  <!-- Thanh điều hướng vai trò demo dưới góc trái theo PA#1 -->
+  <aside class="demo-role-bar" aria-label="Điều hướng demo giữa các vai trò">
+    <nav class="demo-nav" aria-label="Chuyển màn hình demo">
+      <a href="index.html" class="demo-link">Màn 1</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page2.html" class="demo-link">Màn 2</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page3.html" class="demo-link demo-link--active" aria-current="page">Màn 3</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <button type="button" class="demo-reset-btn" aria-label="Đặt lại trạng thái demo">
+        <span aria-hidden="true">↺</span> Đặt lại demo
+      </button>
+    </nav>
+  </aside>
 </body>
+
 </html>
