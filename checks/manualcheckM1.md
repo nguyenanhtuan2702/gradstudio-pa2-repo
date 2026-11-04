@@ -1,9 +1,9 @@
 # M1 Manual Testing
 
 ## Responsive Testing (Pass all)
-- 360px: [ev1](../screenshots/M1-360x740-1.png), [ev2](../screenshots/M1-360x740-2.png), [ev3](../screenshots/M1-360x740-3.png)
-- 768px: [ev1](../screenshots/M1-768x1024-1.png), [ev2](../screenshots/M1-768x1024-2.png), [ev3](../screenshots/M1-768x1024-3.png)
-- 1280px: [ev1](../screenshots/M1-1280x800-1.png), [ev2](../screenshots/M1-1280x800-2.png), [ev3](../screenshots/M1-1280x800-3.png)
+- 360px: [ev](../screenshots/M1-360x740.png)
+- 768px: [ev](../screenshots/M1-768x1024.png)
+- 1280px: [ev](../screenshots/M1-1280x800.png)
 
 ## Navigation Testing
 - Dịch vụ: PASS
