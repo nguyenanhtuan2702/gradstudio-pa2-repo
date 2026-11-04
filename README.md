@@ -23,7 +23,8 @@ gradstudio-pa2-repo/
 ├── index.html                    # Màn hình 1 – trang bắt đầu
 ├── page2.html                    # Màn hình 2 – giao diện Admin
 ├── page3.html                    # Màn hình 3 – lịch chụp của khách
-├── styles.css                    # CSS dùng chung cho cả ba trang
+├── style.css                     # CSS dùng chung chính thức cho cả ba trang
+├── styles.css                    # Tệp khởi tạo tạm; xóa sau khi các trang chuyển sang style.css
 ├── AGENTS.md                     # Quy tắc dành cho AI coding assistant
 ├── README.md                     # Hướng dẫn dự án
 ├── .gitignore                    # Các tệp không đưa lên Git
@@ -54,7 +55,8 @@ Dự án khởi tạo theo hướng HTML/CSS thuần, không cần cài package,
 - Các liên kết thuộc luồng chính phải dùng đường dẫn tương đối, ví dụ `page2.html`.
 - Nội dung phải hiển thị đầy đủ khi tắt JavaScript.
 - Dữ liệu minh họa được ghi trực tiếp trong HTML; không cần kết nối backend/API/database.
-- Dùng chung `styles.css` để giữ màu sắc, kiểu chữ, khoảng cách và thành phần nhất quán giữa ba trang.
+- Dùng chung `style.css` để giữ màu sắc, kiểu chữ, khoảng cách và thành phần nhất quán giữa ba trang.
+- `styles.css` chỉ là tệp khởi tạo tạm còn lại trong repo; sau khi `page2.html` và `page3.html` chuyển sang `style.css`, xóa `styles.css` để repo chỉ giữ stylesheet chính thức.
 
 Chi tiết bắt buộc dành cho AI được ghi trong `AGENTS.md`.
 

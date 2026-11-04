@@ -16,26 +16,46 @@
 
 ## 2. Công nghệ đã chốt
 
-**Sử dụng HTML5 và CSS3 thuần (plain CSS), không sử dụng CSS framework.** Đây là lựa chọn chính thức của repository PA#2.
+**Sử dụng HTML5 và CSS3 thuần (Plain HTML/CSS), không sử dụng CSS Framework.** Đây là lựa chọn công nghệ chính thức của repository PA#2.
 
-- Dùng HTML5 và CSS3 thuần.
-- Dùng file CSS chung `styles.css` cho cả ba trang; chỉ tạo CSS riêng khi có lý do rõ ràng và được nhóm thống nhất.
-- Không dùng Bootstrap, Tailwind, Bulma hoặc framework CSS khác.
-- Không dùng React, Vue, Angular, Svelte hoặc framework JavaScript nào.
-- Không dùng thư viện giao diện, thư viện icon, package hoặc dependency bên ngoài.
+### 2.1. HTML và CSS
+
+- Sử dụng HTML5 và CSS3 thuần.
+- Sử dụng một stylesheet chung là `style.css` cho cả ba trang. CSS đặc thù của từng trang vẫn đặt trong `style.css`, được nhóm theo khu vực và dùng selector có phạm vi rõ ràng để không ảnh hưởng các trang khác.
+- `styles.css` là tệp CSS khởi tạo tạm thời. Không dùng file này cho trang mới. Chỉ xóa `styles.css` sau khi `page2.html` và `page3.html` đã chuyển sang `style.css`, mọi tham chiếu đã được cập nhật và cả ba trang đã được kiểm tra lại. Khi hoàn tất, repository chỉ giữ `style.css` làm stylesheet chung.
+- Không sử dụng Bootstrap, Tailwind, Bulma hoặc bất kỳ CSS Framework nào khác.
+- Không sử dụng React, Vue, Angular, Svelte hoặc bất kỳ JavaScript Framework nào.
+
+### 2.2. JavaScript
+
+- Mặc định ưu tiên HTML và CSS thuần; không thêm JavaScript nếu không thực sự cần thiết.
+- Được phép sử dụng **Vanilla JavaScript ở mức tối thiểu** cho các tương tác giao diện không thiết yếu, ví dụ: đóng/mở menu, đóng/mở khung chat hoặc hộp thoại.
+- Không dùng JavaScript để tạo hoặc tải nội dung chính, điều hướng Main Flow, gửi form đến backend, xử lý nghiệp vụ hoặc đồng bộ dữ liệu giữa các trang.
+- Điều hướng Main Flow phải dùng liên kết HTML (`<a href="...">`) hoặc form có `action` phù hợp, không phụ thuộc JavaScript.
+- Nếu có JavaScript, ưu tiên đặt mã trong file cục bộ thuộc `assets/js/`. Không tải script từ CDN hoặc nguồn bên ngoài.
+- Mọi nội dung chính phải có sẵn trong HTML. Khi JavaScript bị tắt, người xem vẫn phải đọc được toàn bộ nội dung và sử dụng được các liên kết điều hướng chính.
+- Tương tác chỉ hoạt động khi có JavaScript phải được thiết kế theo nguyên tắc **Progressive Enhancement**: JavaScript chỉ bổ sung tiện ích, không được làm mất hoặc che nội dung khi script không chạy.
+- Phải kiểm tra thực tế từng trang với JavaScript bị tắt trước khi bàn giao.
+
+### 2.3. Dependency và tài nguyên bên ngoài
+
+- Không sử dụng thư viện giao diện, thư viện icon, package hoặc dependency bên ngoài.
 - Không dùng CDN, font tải từ Internet hoặc tài nguyên từ xa làm điều kiện để trang hiển thị đúng.
-- Không cần Node.js, npm, bundler, build step hoặc server. Mở trực tiếp `index.html` bằng trình duyệt phải xem được giao diện.
-- Ưu tiên ảnh nằm trong repository, ví dụ `assets/images/`; không hotlink ảnh từ website bên ngoài.
-- Không thêm JavaScript. Nội dung, bố cục chính và điều hướng phải hoạt động khi JavaScript bị tắt.
+- Ưu tiên sử dụng hình ảnh được lưu trực tiếp trong repository, ví dụ `assets/images/`; không hotlink ảnh từ website bên ngoài.
 
-Không tự ý thay đổi stack đã chốt. Nếu có lý do bắt buộc phải thay đổi, hãy nêu lợi ích, rủi ro và chờ nhóm thống nhất trước khi sửa.
+### 2.4. Môi trường thực thi
 
+- Không yêu cầu Node.js, npm, bundler, build step hoặc server.
+- Mở trực tiếp `index.html` bằng trình duyệt phải xem được giao diện; các file CSS, ảnh và script cục bộ phải tải đúng bằng đường dẫn tương đối.
+- Không thêm công cụ hoặc bước build mới nếu không có sự thống nhất của cả nhóm.
+
+Không tự ý thay đổi stack công nghệ đã chốt. Nếu có lý do thực sự cần thay đổi, AI phải nêu rõ lợi ích, rủi ro và chờ nhóm thống nhất trước khi thực hiện.
 ## 3. Những việc tuyệt đối không thực hiện (Never List)
 
 - Không tạo backend, API, database, đăng nhập/xác thực hoặc xử lý CRUD.
 - Không tích hợp thanh toán thật, không thu thập thông tin thanh toán và không thực hiện giao dịch tiền thật.
 - Không tạo logic giả vờ rằng tin nhắn, booking, lịch nhân viên hoặc trạng thái thanh toán đã được lưu hay đồng bộ giữa các trang.
-- Không dùng JavaScript để dựng nội dung chính, điều hướng chính hoặc làm cho nội dung chỉ xuất hiện sau khi chạy script.
+- Không dùng JavaScript để dựng nội dung chính, điều hướng Main Flow hoặc làm cho nội dung chỉ xuất hiện sau khi chạy script. Vanilla JavaScript chỉ được dùng cho tương tác giao diện không thiết yếu theo Mục 2.2.
 - Không dùng React, Vue, framework JavaScript, CSS framework hoặc dependency ngoài.
 - Không mở rộng phạm vi thành website nhiều trang hơn ba màn hình PA#1.
 - Không thay thế thiết kế PA#1 bằng template có sẵn hoặc một website khác.
@@ -43,9 +63,9 @@ Không tự ý thay đổi stack đã chốt. Nếu có lý do bắt buộc ph�
 - Không tự ý đổi logo, theme, bảng màu hoặc phong cách thương hiệu GradStudio.
 - Không dùng `href="#"` hoặc liên kết giả cho điều hướng thuộc Main Flow.
 - Không dùng đường dẫn tuyệt đối bắt đầu bằng `/` cho trang nội bộ; phải dùng đường dẫn tương đối như `page2.html`.
-- Không dùng `onclick` hoặc JavaScript để thay thế liên kết chuyển trang.
+- Không dùng `onclick` hoặc JavaScript để thay thế liên kết chuyển trang; điều hướng phải hoạt động bằng `<a href>` hoặc form có `action` ngay cả khi JavaScript bị tắt.
 - Không dùng `overflow-x: hidden` trên `html`, `body` hoặc wrapper để che lỗi tràn nội dung.
-- Không đặt chiều rộng cố định khiến trang bị tràn ở màn hình nhỏ; tránh các kiểu như `width: 1200px` cho layout chính.
+- Không đặt chiều rộng cố định khiến trang bị tràn ở màn hình nhỏ; tránh các kiểu như `width: 1280px` cho layout chính.
 - Không dùng `!important` trong CSS tự viết.
 - Không thêm nhiều giá trị khoảng cách tùy tiện ngoài spacing scale đã thống nhất.
 - Không tự nhận đã chạy kiểm thử, W3C, Accessibility hoặc chụp screenshot nếu thực tế chưa làm.
@@ -67,64 +87,72 @@ Không tự ý thay đổi stack đã chốt. Nếu có lý do bắt buộc ph�
 
 ### 5.1. Bảng màu
 
-Dùng các CSS custom properties trong `:root` của `styles.css` làm nguồn màu chung. Bộ màu khởi tạo của repository:
+Dùng các CSS custom properties có tiền tố `--gs-` trong `:root` của `style.css` làm nguồn màu chung. Bộ màu nền tảng hiện tại:
 
 ```css
 :root {
-  --color-background: #faf6f0;
-  --color-surface: #fffdfa;
-  --color-text: #2c2219;
-  --color-muted: #65584c;
-  --color-accent: #806044;
-  --color-border: #e7ddd1;
+  --gs-color-bg: #FAF8F5;
+  --gs-color-surface: #FFFFFF;
+  --gs-color-surface-sunken: #F1EDE6;
+  --gs-color-text: #231F1A;
+  --gs-color-text-muted: #5E564C;
+  --gs-color-border: #E2DBD0;
+  --gs-color-primary: #7A5320;
+  --gs-color-primary-hover: #5F3F15;
+  --gs-color-primary-soft: #F3E7D2;
+  --gs-color-accent: #B8893B;
 }
 ```
 
 - Có thể tinh chỉnh các giá trị trên để khớp ảnh PA#1 hơn, nhưng phải được cả nhóm thống nhất và áp dụng nhất quán trên cả ba trang.
-- Không tự tạo màu mới tùy tiện cho từng trang.
+- Không tự tạo màu mới tùy tiện cho từng trang. Nếu cần màu trạng thái hoặc màu trang trí, ưu tiên dùng token đã có trong `style.css`.
 - Màu chữ thường và chữ trên nút phải đạt tỷ lệ tương phản tối thiểu **4.5:1** với nền tương ứng.
-
 ### 5.2. Typography
 
 - Kích thước body text tối thiểu **16px**.
 - Có thể dùng serif cho logo/tiêu đề và sans-serif cho nội dung, biểu mẫu, nút.
-- Dùng font có sẵn trên hệ điều hành với fallback phù hợp; không tải font từ CDN.
+- Dùng font có sẵn trên hệ điều hành với fallback phù hợp; không tải font từ CDN hoặc Google Fonts.
 - Duy trì cấp bậc chữ rõ ràng giữa `h1`, `h2`, `h3`, nội dung, chú thích và nhãn.
 - Không giảm chữ quá nhỏ để ép nhiều nội dung vào một màn hình.
 
 ### 5.3. Spacing scale
 
-**Dùng hệ thống khoảng cách theo bội số 4px**, thống nhất giữa cả ba trang. Khai báo và tái sử dụng các biến sau trong `styles.css`:
+**Dùng hệ thống khoảng cách theo bội số 4px**, thống nhất giữa cả ba trang. Khai báo và tái sử dụng các biến `--gs-space-*` trong `style.css`:
 
 | CSS variable | Giá trị | Mục đích tham khảo |
 |---|---:|---|
-| `--space-1` | `4px` | Khoảng cách rất nhỏ |
-| `--space-2` | `8px` | Khoảng cách giữa thành phần gần nhau |
-| `--space-3` | `12px` | Khoảng cách nhỏ |
-| `--space-4` | `16px` | Padding/gap cơ bản |
-| `--space-6` | `24px` | Khoảng cách giữa nhóm thành phần |
-| `--space-8` | `32px` | Padding khu vực hoặc khoảng cách lớn |
-| `--space-12` | `48px` | Khoảng cách giữa section |
-| `--space-16` | `64px` | Khoảng cách lớn trên desktop |
+| `--gs-space-1` | `4px` | Khoảng cách rất nhỏ |
+| `--gs-space-2` | `8px` | Khoảng cách giữa thành phần gần nhau |
+| `--gs-space-3` | `12px` | Khoảng cách nhỏ |
+| `--gs-space-4` | `16px` | Padding/gap cơ bản |
+| `--gs-space-5` | `20px` | Khoảng cách trung bình |
+| `--gs-space-6` | `24px` | Khoảng cách giữa nhóm thành phần |
+| `--gs-space-8` | `32px` | Padding khu vực hoặc khoảng cách lớn |
+| `--gs-space-10` | `40px` | Khoảng cách lớn |
+| `--gs-space-12` | `48px` | Khoảng cách giữa section |
+| `--gs-space-16` | `64px` | Khoảng cách lớn trên desktop |
+| `--gs-space-20` | `80px` | Khoảng cách đặc biệt lớn khi cần thiết |
 
 Ví dụ khai báo:
 
 ```css
 :root {
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
+  --gs-space-1: 0.25rem;
+  --gs-space-2: 0.5rem;
+  --gs-space-3: 0.75rem;
+  --gs-space-4: 1rem;
+  --gs-space-5: 1.25rem;
+  --gs-space-6: 1.5rem;
+  --gs-space-8: 2rem;
+  --gs-space-10: 2.5rem;
+  --gs-space-12: 3rem;
+  --gs-space-16: 4rem;
+  --gs-space-20: 5rem;
 }
 ```
 
 - Ưu tiên dùng các biến này cho `margin`, `padding`, `gap` và khoảng cách giữa các khu vực.
 - Chỉ dùng giá trị ngoài scale khi thật sự cần thiết cho đường viền, kích thước icon, căn chỉnh chi tiết hoặc yêu cầu đặc thù; không tạo hàng loạt giá trị khoảng cách lẻ.
-
 ## 6. Breakpoints và quy tắc Responsive
 
 Thiết kế theo hướng **mobile-first**: viết kiểu hiển thị điện thoại trước, sau đó mở rộng bằng media query.
@@ -132,8 +160,8 @@ Thiết kế theo hướng **mobile-first**: viết kiểu hiển thị điện 
 | Thiết bị | Dải chiều rộng | Quy tắc |
 |---|---:|---|
 | Mobile | `0–767px` | Một cột; nội dung xếp dọc; điều khiển dễ chạm |
-| Tablet | `768–1199px` | Tổ chức lại thành một hoặc hai cột tùy nội dung; không ép layout desktop vào màn hình hẹp |
-| Desktop | `1200px trở lên` | Có thể dùng nhiều cột và bố cục đầy đủ như thiết kế PA#1 |
+| Tablet | `768–1279px` | Tổ chức lại thành một hoặc hai cột tùy nội dung; không ép layout desktop vào màn hình hẹp |
+| Desktop | `1280px trở lên` | Có thể dùng nhiều cột và bố cục đầy đủ như thiết kế PA#1 |
 
 Hai breakpoint chuẩn của dự án:
 
@@ -144,7 +172,7 @@ Hai breakpoint chuẩn của dự án:
   /* Tablet trở lên */
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   /* Desktop */
 }
 ```
@@ -206,7 +234,7 @@ Mỗi trang phải tuân thủ:
 
 1. Đọc `README.md` và toàn bộ file `AGENTS.md` này.
 2. Xem đúng ảnh màn hình liên quan trong `docs/pa1/` và đọc `docs/pa1/LINK.md` khi cần.
-3. Kiểm tra `styles.css` và cấu trúc hiện tại trước khi tạo CSS mới.
+3. Kiểm tra `style.css` và cấu trúc hiện tại trước khi tạo CSS mới.
 4. Xác định rõ trang/tệp được giao; không tự ý sửa trang của thành viên khác hoặc thay đổi stack chung.
 5. Nếu yêu cầu chưa đủ thông tin hoặc mâu thuẫn với quy tắc, nêu rõ giả định trước khi làm; không tự suy diễn nội dung nghiệp vụ.
 
@@ -214,7 +242,7 @@ Mỗi trang phải tuân thủ:
 
 1. Ưu tiên chỉnh sửa tối thiểu, tái sử dụng CSS tokens và component pattern hiện có.
 2. Giữ nội dung, nhận diện và thứ tự luồng PA#1.
-3. Không thêm dependency, script, framework hoặc tài nguyên từ xa.
+3. Không thêm dependency, framework hoặc tài nguyên từ xa. Chỉ thêm Vanilla JavaScript khi thật sự cần cho tương tác không thiết yếu và phải tuân thủ đầy đủ Mục 2.2.
 4. Không tạo chức năng backend/giả lập đồng bộ ngoài phạm vi prototype tĩnh.
 5. Viết HTML/CSS dễ đọc, có tên class rõ ràng và tránh lặp code không cần thiết.
 
@@ -239,6 +267,7 @@ Một trang chỉ được xem là hoàn thành khi đã rà soát các mục sa
 - [ ] Mở trực tiếp bằng file HTML từ thư mục.
 - [ ] Mọi liên kết trong Main Flow mở đúng file tồn tại.
 - [ ] Không phụ thuộc JavaScript để hiển thị nội dung hoặc điều hướng chính.
+- [ ] Nếu có JavaScript, đã tắt JavaScript và xác nhận toàn bộ nội dung chính vẫn hiển thị, các liên kết Main Flow vẫn hoạt động.
 - [ ] Dữ liệu mẫu phù hợp với câu chuyện GradStudio và không giả vờ là dữ liệu thật được đồng bộ.
 
 ### Responsive
