@@ -19,9 +19,10 @@
 **Sử dụng HTML5 và CSS3 thuần (plain CSS), không sử dụng CSS framework.** Đây là lựa chọn chính thức của repository PA#2.
 
 - Dùng HTML5 và CSS3 thuần.
-- Dùng file CSS chung `styles.css` cho cả ba trang; chỉ tạo CSS riêng khi có lý do rõ ràng và được nhóm thống nhất.
+- Dùng file CSS chung `style.css` cho cả ba trang; chỉ tạo CSS riêng khi có lý do rõ ràng và được nhóm thống nhất.
+- `styles.css` là tệp khởi tạo tạm. Không dùng file này cho trang mới; chỉ xóa sau khi `page2.html` và `page3.html` đã chuyển sang `style.css`. Khi hoàn tất, repo chỉ giữ `style.css` làm stylesheet chung.
 - Không dùng Bootstrap, Tailwind, Bulma hoặc framework CSS khác.
-- Không dùng React, Vue, Angular, Svelte hoặc framework JavaScript nào.
+- Không dùng React, Vue, Angular, Svelte hoặc framework JavaScript nào. (Lưu ý java script: chỉ được sử dụng để làm các tương tác như theo rubik chấm điểm gồm đóng mở menu, đóng mỏ hộp thoại....)
 - Không dùng thư viện giao diện, thư viện icon, package hoặc dependency bên ngoài.
 - Không dùng CDN, font tải từ Internet hoặc tài nguyên từ xa làm điều kiện để trang hiển thị đúng.
 - Không cần Node.js, npm, bundler, build step hoặc server. Mở trực tiếp `index.html` bằng trình duyệt phải xem được giao diện.
@@ -45,7 +46,7 @@ Không tự ý thay đổi stack đã chốt. Nếu có lý do bắt buộc ph�
 - Không dùng đường dẫn tuyệt đối bắt đầu bằng `/` cho trang nội bộ; phải dùng đường dẫn tương đối như `page2.html`.
 - Không dùng `onclick` hoặc JavaScript để thay thế liên kết chuyển trang.
 - Không dùng `overflow-x: hidden` trên `html`, `body` hoặc wrapper để che lỗi tràn nội dung.
-- Không đặt chiều rộng cố định khiến trang bị tràn ở màn hình nhỏ; tránh các kiểu như `width: 1200px` cho layout chính.
+- Không đặt chiều rộng cố định khiến trang bị tràn ở màn hình nhỏ; tránh các kiểu như `width: 1280px` cho layout chính.
 - Không dùng `!important` trong CSS tự viết.
 - Không thêm nhiều giá trị khoảng cách tùy tiện ngoài spacing scale đã thống nhất.
 - Không tự nhận đã chạy kiểm thử, W3C, Accessibility hoặc chụp screenshot nếu thực tế chưa làm.
@@ -67,7 +68,7 @@ Không tự ý thay đổi stack đã chốt. Nếu có lý do bắt buộc ph�
 
 ### 5.1. Bảng màu
 
-Dùng các CSS custom properties trong `:root` của `styles.css` làm nguồn màu chung. Bộ màu khởi tạo của repository:
+Dùng các CSS custom properties trong `:root` của `style.css` làm nguồn màu chung. Bộ màu khởi tạo của repository:
 
 ```css
 :root {
@@ -94,7 +95,7 @@ Dùng các CSS custom properties trong `:root` của `styles.css` làm nguồn m
 
 ### 5.3. Spacing scale
 
-**Dùng hệ thống khoảng cách theo bội số 4px**, thống nhất giữa cả ba trang. Khai báo và tái sử dụng các biến sau trong `styles.css`:
+**Dùng hệ thống khoảng cách theo bội số 4px**, thống nhất giữa cả ba trang. Khai báo và tái sử dụng các biến sau trong `style.css`:
 
 | CSS variable | Giá trị | Mục đích tham khảo |
 |---|---:|---|
@@ -133,7 +134,7 @@ Thiết kế theo hướng **mobile-first**: viết kiểu hiển thị điện 
 |---|---:|---|
 | Mobile | `0–767px` | Một cột; nội dung xếp dọc; điều khiển dễ chạm |
 | Tablet | `768–1199px` | Tổ chức lại thành một hoặc hai cột tùy nội dung; không ép layout desktop vào màn hình hẹp |
-| Desktop | `1200px trở lên` | Có thể dùng nhiều cột và bố cục đầy đủ như thiết kế PA#1 |
+| Desktop | `1280px trở lên` | Có thể dùng nhiều cột và bố cục đầy đủ như thiết kế PA#1 |
 
 Hai breakpoint chuẩn của dự án:
 
@@ -206,7 +207,7 @@ Mỗi trang phải tuân thủ:
 
 1. Đọc `README.md` và toàn bộ file `AGENTS.md` này.
 2. Xem đúng ảnh màn hình liên quan trong `docs/pa1/` và đọc `docs/pa1/LINK.md` khi cần.
-3. Kiểm tra `styles.css` và cấu trúc hiện tại trước khi tạo CSS mới.
+3. Kiểm tra `style.css` và cấu trúc hiện tại trước khi tạo CSS mới.
 4. Xác định rõ trang/tệp được giao; không tự ý sửa trang của thành viên khác hoặc thay đổi stack chung.
 5. Nếu yêu cầu chưa đủ thông tin hoặc mâu thuẫn với quy tắc, nêu rõ giả định trước khi làm; không tự suy diễn nội dung nghiệp vụ.
 

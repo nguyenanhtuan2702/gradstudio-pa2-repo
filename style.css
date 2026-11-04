@@ -331,3 +331,615 @@ textarea { resize: vertical; }
 @media (prefers-reduced-motion: reduce) {
   :root { --gs-transition: 0s; }
 }
+/* ========================================
+   PAGE 1 - CUSTOMER SERVICES
+   Thành viên A phụ trách
+   Bám theo ảnh mẫu 01-customer-services-chat.png
+======================================== */
+
+.page-home {
+  /* Biến riêng của trang 1 (không ảnh hưởng các trang khác) */
+  --gs-font-serif: Cambria, "Times New Roman", serif;
+  --gs-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --home-brown: #8E622A;
+  --home-brown-hover: #7A5320;
+  --home-gold: #CDA862;
+  --home-cream: #FAF7F1;
+  --home-wrap: 1376px;
+}
+
+.gs-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Khung trang: hero full-bleed, các phần còn lại giữ container ---------- */
+.page-home .site-main {
+  max-width: none;
+  min-height: 0;
+  padding: 0 0 var(--gs-space-16);
+  gap: var(--gs-space-16);
+}
+
+.page-home .site-main > :not(.gs-hero):not(.gs-chat-panel):not(.gs-proto-nav) {
+  width: min(100% - 2 * var(--gs-container-pad), var(--gs-container-max));
+  margin-inline: auto;
+}
+
+/* ---------- Header trong suốt đè lên hero ---------- */
+.page-home .site-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+}
+
+.page-home .site-header > .gs-container {
+  max-width: var(--home-wrap);
+  min-height: 82px;
+  padding-block: 20px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.page-home .gs-brand,
+.page-home .gs-brand:hover,
+.page-home .gs-brand:active {
+  min-height: var(--gs-control-height);
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-family: var(--gs-font-serif);
+  gap: 0;
+  font-size: 1.625rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.page-home .gs-brand em { font-style: italic; }
+
+.page-home .site-nav {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.page-home .site-nav a {
+  min-width: 0;
+  min-height: var(--gs-control-height);
+  padding: 8px 0 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.page-home .site-nav a:hover { color: #fff; }
+.page-home .site-nav a[aria-current="page"] {
+  background: transparent;
+  color: #fff;
+  border-bottom-color: var(--home-gold);
+}
+
+.page-home .gs-account {
+  flex-wrap: nowrap;
+  gap: 0.625rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Avatar tạm: cắt từ ảnh hero. Thay bằng ảnh đại diện thật khi có. */
+.gs-avatar {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: #5b4631 url("assets/images/hero1.jpg") 46% 30% / 800% auto no-repeat;
+}
+
+@media (min-width: 768px) {
+  .page-home .site-header > .gs-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .page-home .gs-account { justify-self: end; }
+}
+
+/* ---------- Hero ---------- */
+.page-home .gs-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  gap: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 132px 0 120px;
+  overflow: hidden;
+  background: #2b2118;
+  color: #fff;
+}
+
+.page-home .gs-hero > img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 10%;
+}
+
+.page-home .gs-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(36, 26, 18, 0.94) 0%, rgba(36, 26, 18, 0.84) 32%, rgba(36, 26, 18, 0.5) 62%, rgba(36, 26, 18, 0.3) 100%),
+    linear-gradient(180deg, rgba(20, 14, 9, 0.45) 0%, rgba(20, 14, 9, 0) 22%, rgba(20, 14, 9, 0) 72%, rgba(20, 14, 9, 0.45) 100%);
+}
+
+.page-home .gs-hero__content {
+  width: 100%;
+  max-width: var(--home-wrap);
+  margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+  gap: 0;
+  justify-items: start;
+}
+
+.page-home .gs-eyebrow {
+  color: var(--home-gold);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.page-home .gs-hero__content h1 {
+  max-width: none;
+  margin-top: 1.5rem;
+  color: #fff;
+  font-size: clamp(2.75rem, 5.6vw, 5rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.page-home .gs-hero__content h1 em {
+  color: var(--home-gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.page-home .gs-hero__lead {
+  max-width: 31rem;
+  margin-top: 1.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.page-home .gs-hero__content > div.gs-cluster {
+  margin-top: 2.5rem;
+  gap: 1rem;
+}
+
+.page-home .gs-hero .gs-btn {
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border-radius: var(--gs-radius-full);
+  font-size: 0.9375rem;
+}
+.page-home .gs-hero .gs-btn--primary { background: var(--home-brown); }
+.page-home .gs-hero .gs-btn--primary:hover { background: var(--home-brown-hover); }
+.page-home .gs-hero .gs-btn--secondary {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  color: #fff;
+}
+.page-home .gs-hero .gs-btn--secondary:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+.page-home .gs-hero .gs-btn--secondary:active { background: rgba(255, 255, 255, 0.22); }
+
+.page-home .gs-hero__content > ul {
+  margin-top: 2.75rem;
+  gap: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.page-home .gs-hero__content > ul li { padding-inline: 1.5rem; }
+.page-home .gs-hero__content > ul li:first-child { padding-left: 0; }
+.page-home .gs-hero__content > ul li + li { border-left: 1px solid rgba(255, 255, 255, 0.35); }
+
+.page-home .gs-scroll-cue,
+.page-home .gs-scroll-cue:hover {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.page-home .gs-scroll-cue::after {
+  content: "";
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+}
+
+/* ---------- Khung chat ---------- */
+.page-home .gs-chat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: min(100% - 2 * var(--gs-container-pad), 26rem);
+  height: min(32.5rem, calc(100svh - 2rem));
+  margin-inline: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 20px;
+  background: var(--home-cream);
+  box-shadow: 0 20px 50px rgba(35, 31, 26, 0.28);
+}
+
+.gs-chat-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--gs-color-border);
+  background: #F5EEE1;
+}
+.gs-chat-panel__header h2 {
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.gs-chat-status {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  color: var(--gs-color-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+.gs-chat-status::before {
+  content: "";
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: #3C9A5F;
+}
+.gs-chat-min {
+  display: grid;
+  place-items: center;
+  width: var(--gs-control-height);
+  height: var(--gs-control-height);
+  min-width: var(--gs-control-height);
+  min-height: var(--gs-control-height);
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gs-color-text);
+}
+.gs-chat-min { cursor: pointer; transition: background-color var(--gs-transition); }
+.gs-chat-min:hover { background: rgba(35, 31, 26, 0.08); }
+.gs-chat-panel:focus { outline: none; }
+
+.gs-chat-body {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: 1rem;
+  min-height: 0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.gs-chat-context {
+  justify-self: center;
+  margin: 0;
+  padding: 0.3rem 0.875rem;
+  border: 1px solid #D8B98A;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+.gs-chat-messages { display: grid; gap: 1rem; }
+
+.gs-msg { display: grid; justify-items: start; gap: 0.25rem; }
+.gs-msg--user { justify-items: end; }
+.gs-msg__bubble {
+  max-width: 88%;
+  margin: 0;
+  padding: 0.625rem 0.875rem;
+  border-radius: 16px 16px 16px 4px;
+  background: #F0E8DA;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: var(--gs-leading-compact);
+}
+.gs-msg--user .gs-msg__bubble {
+  border-radius: 16px 16px 4px 16px;
+  background: var(--home-brown);
+  color: #fff;
+}
+.gs-msg time {
+  color: var(--gs-color-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+}
+
+.gs-msg--typing .gs-msg__bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 0.9rem;
+}
+.gs-msg--typing i {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--home-brown);
+  animation: gs-typing 1.2s ease-in-out infinite;
+}
+.gs-msg--typing i:nth-child(2) { animation-delay: 0.15s; }
+.gs-msg--typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes gs-typing {
+  0%, 60%, 100% { opacity: 0.35; }
+  30% { opacity: 1; }
+}
+
+.gs-chat-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--gs-color-border);
+  background: var(--home-cream);
+}
+.page-home .gs-chat-composer .gs-input {
+  flex: 1;
+  padding-inline: 1rem;
+  border-color: var(--gs-color-border);
+  border-radius: var(--gs-radius-full);
+  background: #fff;
+  font-size: 0.875rem;
+}
+.page-home .gs-chat-send,
+.page-home .gs-chat-send:disabled {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 0;
+  padding: 0;
+  border-color: transparent;
+  border-radius: 50%;
+  background: var(--home-brown);
+  color: #fff;
+  cursor: default;
+}
+
+/* ---------- Nút chat nổi + ẩn/hiện khung chat ---------- */
+/* Không có JS: khung chat vẫn hiện như cũ. Có JS: body có .js-chat, khung ẩn cho tới khi body có .chat-open. */
+.page-home .gs-chat-fab { display: none; }
+
+.page-home.js-chat .gs-chat-fab {
+  position: fixed;
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(16px, 2vw, 32px);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--home-brown);
+  color: #fff;
+  box-shadow: var(--gs-shadow-lg);
+  transition: background-color var(--gs-transition), transform var(--gs-transition);
+}
+.page-home.js-chat .gs-chat-fab:hover { background: var(--home-brown-hover); transform: scale(1.05); }
+.page-home.js-chat .gs-chat-fab:active { background: var(--gs-color-primary-active); transform: scale(0.98); }
+.page-home.js-chat.chat-open .gs-chat-fab { display: none; }
+
+.page-home.js-chat .gs-chat-panel {
+  display: none;
+  position: fixed;
+  z-index: 40;
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(16px, 2vw, 32px);
+  width: min(380px, calc(100% - 2rem));
+  height: min(520px, calc(100svh - 4rem));
+  margin: 0;
+}
+.page-home.js-chat.chat-open .gs-chat-panel {
+  display: flex;
+  animation: gs-chat-in 180ms ease-out;
+}
+@keyframes gs-chat-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Ảnh thẻ dịch vụ ---------- */
+.page-home .gs-package-grid > .gs-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-4);
+}
+.page-home .gs-package-grid > .gs-card > img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: var(--gs-radius-md);
+}
+.page-home .gs-package-grid > .gs-card > a {
+  margin-top: auto;
+}
+
+/* ---------- Desktop: từ 1280px ---------- */
+@media (min-width: 1280px) {
+  .page-home .gs-package-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .page-home .gs-process-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .page-home .gs-chat-panel {
+    position: fixed;
+    z-index: 20;
+    right: 32px;
+    bottom: 32px;
+    width: 380px;
+    height: min(520px, calc(100svh - 64px));
+    margin: 0;
+  }
+
+  .page-home .site-footer > div {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  }
+}
+
+/* ---------- Mobile: dưới 768px ---------- */
+@media (max-width: 767px) {
+  .page-home .site-header > .gs-container {
+    min-height: 64px;
+    padding-block: 12px;
+    gap: var(--gs-space-2);
+  }
+
+  .page-home .gs-brand {
+    font-size: var(--gs-text-lg);
+  }
+
+  .page-home .site-nav {
+    justify-content: flex-end;
+    gap: var(--gs-space-4);
+  }
+
+  .page-home .site-nav a {
+    font-size: var(--gs-text-xs);
+  }
+
+  .page-home .site-header [role="group"] {
+    display: none;
+  }
+
+  .page-home .gs-hero {
+    min-height: min(760px, 100svh);
+    padding: 104px 0 72px;
+  }
+
+  .page-home .gs-hero::after {
+    background: linear-gradient(
+      90deg,
+      rgba(35, 27, 20, 0.82) 0%,
+      rgba(35, 27, 20, 0.58) 58%,
+      rgba(35, 27, 20, 0.34) 100%
+    );
+  }
+
+  .page-home .gs-hero > img {
+    object-position: 58% center;
+  }
+
+  .page-home .gs-hero__content h1 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  .page-home .gs-hero__content > div.gs-cluster {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .page-home .gs-hero__content > div.gs-cluster .gs-btn {
+    flex: 1 1 150px;
+  }
+
+  .page-home .gs-hero__content > ul {
+    display: grid;
+    gap: var(--gs-space-2);
+    margin-top: var(--gs-space-6);
+  }
+
+  .page-home .gs-hero__content > ul li,
+  .page-home .gs-hero__content > ul li + li {
+    padding-inline: 0;
+    border-left: 0;
+  }
+
+  .page-home .gs-scroll-cue {
+    display: none;
+  }
+
+  .page-home .gs-chat-panel {
+    height: 27.5rem;
+  }
+
+  .page-home .site-main {
+    gap: var(--gs-space-8);
+  }
+
+  .page-home .site-main > section:not(.gs-hero) {
+    gap: var(--gs-space-4);
+  }
+
+  .page-home .site-footer > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .page-home *,
+  .page-home *::before,
+  .page-home *::after {
+    scroll-behavior: auto;
+    transition-duration: 0s;
+    animation-duration: 0s;
+  }
+}
