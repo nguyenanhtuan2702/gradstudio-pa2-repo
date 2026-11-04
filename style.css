@@ -1800,3 +1800,764 @@ textarea { resize: vertical; }
   font-size: var(--gs-text-sm);
   color: var(--gs-color-text-disabled);
 }
+
+
+/* ==========================================================================
+   MÀN 2 — Admin tư vấn, lịch tài nguyên và tạo booking (page2.html)
+   ========================================================================== */
+
+/* ---- Avatar chung (dùng cả Màn 2) ---- */
+.gs-avatar {
+  display: grid;
+  place-items: center;
+  width: var(--gs-control-height);
+  aspect-ratio: 1;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary-hover);
+  font-weight: var(--gs-weight-semibold);
+  flex-shrink: 0;
+}
+
+/* ---- Admin shell ---- */
+.admin-page {
+  min-height: 100dvh;
+  background: var(--gs-color-bg);
+  padding-bottom: calc(var(--gs-space-20) + var(--gs-space-8));
+}
+
+/* ---- Header admin ---- */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--gs-color-surface);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.admin-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gs-space-4);
+  min-height: calc(var(--gs-space-16) + var(--gs-space-2));
+  padding-inline: var(--gs-container-pad);
+  max-width: var(--gs-container-max-wide);
+  margin-inline: auto;
+}
+
+/* Logo (dùng lại từ index) */
+.admin-page .logo {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-h3);
+  white-space: nowrap;
+  font-style: italic;
+}
+.admin-page .logo span {
+  color: var(--gs-color-primary);
+}
+
+/* Nav desktop */
+.admin-nav {
+  display: none;
+  align-items: center;
+  gap: var(--gs-space-5);
+}
+
+.admin-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  min-height: var(--gs-control-height);
+  padding-inline: var(--gs-space-2);
+  border: 0;
+  background: transparent;
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-medium);
+  text-decoration: none;
+  cursor: default;
+}
+
+.admin-nav__link--active,
+.admin-nav__link[aria-current="page"] {
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+  cursor: pointer;
+}
+
+/* Profile admin */
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  flex-shrink: 0;
+}
+
+.admin-profile__name {
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-medium);
+  white-space: nowrap;
+}
+
+/* ---- Panel switcher (mobile/tablet) ---- */
+.admin-panel-switcher {
+  background: var(--gs-color-surface);
+  border-bottom: 1px solid var(--gs-color-border);
+  padding: var(--gs-space-3) var(--gs-container-pad);
+  overflow-x: auto;
+}
+
+.admin-panel-switcher .gs-tabs {
+  min-width: max-content;
+}
+
+/* ---- Admin layout ---- */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ---- Admin pane (cột) ---- */
+.admin-pane {
+  min-width: 0;
+  padding: var(--gs-space-4);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+/* Mobile: chỉ hiện pane được chọn qua JS */
+.admin-pane--conversations,
+.admin-pane--resources {
+  display: none;
+}
+
+.admin-pane--chat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-4);
+}
+
+/* Khi JS kích hoạt panel qua class */
+.admin-pane--mobile-active {
+  display: block !important;
+}
+
+.admin-pane--chat.admin-pane--mobile-active {
+  display: flex !important;
+}
+
+/* Pane heading */
+.pane-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+  margin-bottom: var(--gs-space-4);
+}
+
+.pane-heading h1,
+.pane-heading h2 {
+  margin-top: var(--gs-space-1);
+}
+
+/* ---- Search field ---- */
+.p2-search-field {
+  margin-bottom: var(--gs-space-3);
+}
+
+/* ---- Bộ lọc hội thoại ---- */
+.conversation-filters {
+  margin-bottom: var(--gs-space-3);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.conversation-filters .gs-tabs {
+  min-width: max-content;
+}
+
+/* ---- Danh sách hội thoại ---- */
+.conversation-list {
+  display: grid;
+  gap: var(--gs-space-2);
+}
+
+.conversation {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gs-space-3);
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: var(--gs-radius-md);
+  background: transparent;
+  padding: var(--gs-space-3);
+  min-height: 44px;
+  cursor: pointer;
+  transition: background-color var(--gs-transition), border-color var(--gs-transition);
+}
+
+.conversation:hover {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+}
+
+.conversation[aria-current="true"] {
+  background: var(--gs-color-primary-soft);
+  border-color: var(--gs-color-border);
+}
+
+.conversation__body {
+  min-width: 0;
+  display: grid;
+  gap: var(--gs-space-1);
+}
+
+.conversation__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-2);
+  flex-wrap: wrap;
+}
+
+.conversation__meta strong {
+  font-weight: var(--gs-weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.conversation__meta small {
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.conversation__preview {
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Customer bar (cột giữa) ---- */
+.customer-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+  flex-wrap: wrap;
+  padding-bottom: var(--gs-space-3);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.customer-id {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-3);
+  min-width: 0;
+}
+
+.customer-id strong {
+  font-weight: var(--gs-weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.customer-bar__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gs-space-2);
+}
+
+/* ---- Chat log ---- */
+.admin-chat-log {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-2);
+  min-height: 14rem;
+  max-height: 28rem;
+}
+
+.chat-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gs-space-1);
+}
+
+.chat-line--out {
+  align-items: flex-end;
+}
+
+/* Bubble thông báo booking */
+.p2-notice-bubble {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Báo giá trong chat */
+.quote-card {
+  max-width: 85%;
+  margin-left: auto;
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-primary);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+
+/* ---- Response box (mô phỏng phản hồi Linh) ---- */
+.response-box {
+  padding: var(--gs-space-4);
+  border: 1px dashed var(--gs-color-border-control);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-primary-soft);
+}
+
+.response-box strong {
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+.response-box p {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  margin-bottom: var(--gs-space-3);
+}
+
+.response-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-2);
+}
+
+/* ---- Chat composer ---- */
+.chat-composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--gs-space-2);
+  background: var(--gs-color-surface);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  padding: var(--gs-space-3);
+}
+
+.chat-composer .gs-btn {
+  min-width: var(--gs-control-height);
+  padding-inline: var(--gs-space-3);
+}
+
+/* ---- Section actions ---- */
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-3);
+}
+
+/* ---- Booking form ---- */
+.booking-form {
+  display: grid;
+  gap: var(--gs-space-4);
+  scroll-margin-top: var(--gs-space-8);
+}
+
+.booking-form h2 {
+  margin-top: var(--gs-space-1);
+}
+
+.booking-fields {
+  display: grid;
+  gap: var(--gs-space-4);
+}
+
+.field-stack {
+  display: block;
+}
+
+.field-control {
+  position: relative;
+  display: block;
+}
+
+.field-lock {
+  position: absolute;
+  right: var(--gs-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  pointer-events: none;
+}
+
+.booking-summary {
+  display: grid;
+  gap: var(--gs-space-2);
+  padding: var(--gs-space-4);
+  background: var(--gs-color-surface);
+  border-radius: var(--gs-radius-md);
+  border: 1px solid var(--gs-color-border);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-4);
+  flex-wrap: wrap;
+}
+
+.summary-row span {
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-sm);
+}
+
+/* ---- Resource pane ---- */
+.resource-pane {
+  background: var(--gs-color-surface);
+}
+
+/* ---- Chú thích lịch ---- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-3);
+  margin-block: var(--gs-space-4);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+}
+
+.legend-item::before {
+  content: '';
+  width: 1rem;
+  height: 0.625rem;
+  border-radius: var(--gs-radius-sm);
+  flex-shrink: 0;
+}
+
+.legend-item--confirmed::before { background: #E6DCCB; border: 1px solid var(--gs-color-border); }
+.legend-item--pending::before   { background: var(--gs-color-surface); border: 1px dashed var(--gs-color-primary); }
+.legend-item--conflict::before  { background: var(--gs-color-error-soft); border: 1px solid var(--gs-color-error); }
+.legend-item--off::before       { background: var(--gs-color-surface-sunken); border: 1px solid var(--gs-color-border); }
+
+/* ---- Calendar wrap ---- */
+.calendar-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: var(--gs-space-4);
+}
+
+/* ---- Resource calendar grid ---- */
+.resource-calendar {
+  min-width: 36rem;
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-md);
+  overflow: hidden;
+}
+
+.resource-time-spacer,
+.resource-time-axis {
+  min-height: var(--gs-control-height-sm);
+  background: var(--gs-color-surface-sunken);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.resource-time-spacer {
+  border-right: 1px solid var(--gs-color-border);
+}
+
+.resource-time-axis {
+  position: relative;
+}
+
+.resource-time-label {
+  position: absolute;
+  left: var(--resource-left);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-xs);
+  white-space: nowrap;
+}
+
+.resource-time-label:first-child {
+  transform: translate(0, -50%);
+}
+
+.resource-time-label--last {
+  transform: translate(-100%, -50%);
+}
+
+.resource-calendar-row {
+  display: contents;
+}
+
+.resource-calendar-label {
+  min-height: calc(var(--gs-control-height) + var(--gs-space-2));
+  display: flex;
+  align-items: center;
+  padding: var(--gs-space-2);
+  border-right: 1px solid var(--gs-color-border);
+  border-bottom: 1px solid var(--gs-color-border);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.resource-calendar-track {
+  position: relative;
+  min-height: calc(var(--gs-control-height) + var(--gs-space-2));
+  border-bottom: 1px solid var(--gs-color-border);
+  background-image: linear-gradient(
+    to right,
+    var(--gs-color-border) 1px,
+    transparent 1px
+  );
+  background-size: 20% 100%;
+}
+
+.resource-event {
+  position: absolute;
+  z-index: 1;
+  left: var(--resource-left);
+  width: var(--resource-width);
+  top: var(--gs-space-1);
+  bottom: var(--gs-space-1);
+  min-width: var(--gs-space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-inline: var(--gs-space-2);
+  border-radius: var(--gs-radius-sm);
+  overflow: hidden;
+  font-size: var(--gs-text-xs);
+  line-height: var(--gs-leading-ui);
+}
+
+.resource-event span,
+.resource-event small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resource-event--pending {
+  background: var(--gs-color-surface);
+  border: 1px dashed var(--gs-color-primary);
+  color: var(--gs-color-primary-hover);
+}
+
+.resource-event--conflict {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--gs-color-error-soft),
+    var(--gs-color-error-soft) var(--gs-space-2),
+    var(--gs-color-surface) var(--gs-space-2),
+    var(--gs-color-surface) var(--gs-space-3)
+  );
+  border: 1px solid var(--gs-color-error);
+  color: var(--gs-color-error);
+}
+
+/* ---- Warning box ---- */
+.warning-box {
+  margin-bottom: var(--gs-space-4);
+  padding: var(--gs-space-4);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-error-soft);
+  color: var(--gs-color-error);
+}
+
+.warning-box strong {
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+/* ---- Suggestion list ---- */
+.suggestion-list {
+  display: grid;
+  gap: var(--gs-space-3);
+  margin-top: var(--gs-space-3);
+}
+
+.suggestion {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+
+.suggestion strong {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-lg);
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+.suggestion p {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Demo dock (page2 dùng anchor <a> thay button) ---- */
+.demo-dock {
+  position: relative;
+  z-index: 20;
+  width: max-content;
+  max-width: calc(100% - var(--gs-space-6));
+  margin: var(--gs-space-8) auto var(--gs-space-3);
+  padding: var(--gs-space-2);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-dark);
+  color: var(--gs-color-text-inverse);
+  box-shadow: var(--gs-shadow-md);
+}
+
+.demo-dock__label {
+  display: block;
+  padding-inline: var(--gs-space-2);
+  color: var(--gs-color-border);
+  font-size: var(--gs-text-xs);
+}
+
+.demo-dock__actions {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  gap: var(--gs-space-1);
+}
+
+.demo-dock__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--gs-control-height);
+  padding-inline: var(--gs-space-4);
+  border: 0;
+  border-radius: var(--gs-radius-md);
+  background: transparent;
+  color: var(--gs-color-text-inverse);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.demo-dock__btn[aria-current="page"] {
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+}
+
+.demo-dock__btn:hover:not([aria-current="page"]) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---- Chip (nếu chưa có) ---- */
+.gs-chip {
+  display: inline-flex;
+  padding: var(--gs-space-1) var(--gs-space-3);
+  border: 1px solid var(--gs-color-border-strong);
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary-hover);
+  font-size: var(--gs-text-sm);
+  line-height: var(--gs-leading-ui);
+  white-space: nowrap;
+}
+
+/* ========== RESPONSIVE — Màn 2 ========== */
+
+/* Tablet ≥ 768px */
+@media (min-width: 768px) {
+  .booking-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-profile__name {
+    display: inline;
+  }
+}
+
+/* Desktop ≥ 1280px */
+@media (min-width: 1280px) {
+  /* Hiện admin nav */
+  .admin-nav {
+    display: flex;
+  }
+
+  /* Ẩn panel switcher */
+  .admin-panel-switcher {
+    display: none;
+  }
+
+  /* 3-column layout */
+  .admin-layout {
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.6fr) minmax(18rem, 1fr);
+    height: calc(100dvh - 4.5rem);
+  }
+
+  /* Hiện tất cả pane */
+  .admin-pane--conversations,
+  .admin-pane--resources,
+  .admin-pane--chat {
+    display: block;
+  }
+
+  .admin-pane--chat {
+    display: flex;
+  }
+
+  .admin-pane {
+    border-bottom: 0;
+    border-right: 1px solid var(--gs-color-border);
+    overflow-y: auto;
+  }
+
+  .resource-pane {
+    border-right: 0;
+  }
+
+  /* Chat log cao hơn trên desktop */
+  .admin-chat-log {
+    min-height: 18rem;
+    max-height: none;
+    flex: 1;
+  }
+}
+
+/* Mobile: ẩn tên hồ sơ */
+@media (max-width: 767px) {
+  .admin-profile__name {
+    display: none;
+  }
+
+  .demo-dock__label {
+    display: none;
+  }
+
+  .demo-dock {
+    width: calc(100% - var(--gs-space-6));
+    max-width: calc(100% - var(--gs-space-6));
+  }
+
+  .customer-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
