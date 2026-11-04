@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GradStudio – chụp ảnh kỷ yếu, tốt nghiệp và chân dung, tư vấn trực tiếp trên web.">
   <title>GradStudio | Dịch vụ</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-home">
   <header class="site-header">
@@ -249,5 +249,19 @@
       });
     })();
   </script>
+  <!-- Thanh điều hướng vai trò demo dưới góc trái theo PA#1 -->
+  <aside class="demo-role-bar" aria-label="Điều hướng demo giữa các vai trò">
+    <nav class="demo-nav" aria-label="Chuyển màn hình demo">
+      <a href="index.html" class="demo-link demo-link--active" aria-current="page">Màn 1</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page2.html" class="demo-link">Màn 2</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page3.html" class="demo-link">Màn 3</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <button type="button" class="demo-reset-btn" aria-label="Đặt lại trạng thái demo">
+        <span aria-hidden="true">↺</span> Đặt lại demo
+      </button>
+    </nav>
+  </aside>
 </body>
 </html>
