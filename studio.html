@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GradStudio – giao diện nhân viên studio: tư vấn, xử lý xung đột lịch và tạo booking GS-1024.">
+  <title>GradStudio | Tư vấn và xử lý lịch (Nhân viên studio)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html">GradStudio<small>Nhân viên studio</small></a>
+      <nav class="site-nav" aria-label="Khu vực nhân viên studio">
+        <a href="studio.html" aria-current="page">Hội thoại</a>
+      </nav>
+      <p class="user-profile" aria-label="Đang xem với vai trò nhân viên studio Thảo">
+        <span class="user-avatar" aria-hidden="true">T</span>
+        <span>Thảo · Admin</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="site-main gs-stack" id="main-content">
+    <section aria-labelledby="page-title">
+      <h1 id="page-title">Tư vấn và xử lý trùng lịch</h1>
+      <p class="role-strip">Bạn đang xem với vai trò <strong>nhân viên studio (Thảo)</strong>. Trạng thái hiển thị: Linh đã đồng ý giờ mới. Lịch chưa được giữ cho đến khi cọc 30% thành công và hệ thống kiểm tra lại nhân sự, phòng.</p>
+    </section>
+
+    <div class="admin-grid">
+      <section class="admin-col admin-col--list" aria-labelledby="list-title">
+        <h2 id="list-title">Danh sách hội thoại</h2>
+        <ul class="conv-list gs-list-reset">
+          <li class="conv conv--active">
+            <h3>Nguyễn Thùy Linh</h3>
+            <p>Gói Tốt nghiệp · 24/10/2026</p>
+            <p class="meta">Dạ được, mình chọn 14:00 nhé. · 17:26</p>
+            <div class="status-row">
+              <span class="badge badge--ok"><span aria-hidden="true">✓</span> Đã chốt lịch</span>
+              <span class="meta">Đang mở</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <div class="admin-col">
+        <section class="admin-col" aria-labelledby="chat-title">
+          <h2 id="chat-title">Hội thoại với Nguyễn Thùy Linh</h2>
+          <p class="status-row"><span class="meta">Trạng thái hội thoại:</span> <span class="badge badge--ok"><span aria-hidden="true">✓</span> Đã chốt lịch</span></p>
+          <div class="gs-card chat">
+            <ol class="msg-list gs-list-reset" aria-label="Nội dung hội thoại">
+              <li class="msg msg--other">
+                <span class="meta">Nguyễn Thùy Linh · 17:20</span>
+                <p class="msg__bubble">Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?</p>
+              </li>
+              <li class="msg msg--self">
+                <span class="meta">Thảo (GradStudio) · 17:21</span>
+                <p class="msg__bubble">Để mình kiểm tra lịch cho bạn nhé.</p>
+              </li>
+              <li class="msg msg--self">
+                <span class="meta">Thảo (GradStudio) · 17:24</span>
+                <p class="msg__bubble">Makeup artist Mai bận 08:00–12:00 nên chưa nhận được 09:00. Mình đề xuất makeup 13:00–14:00 và chụp 14:00–16:00 tại Phòng B nhé?</p>
+              </li>
+              <li class="msg msg--other">
+                <span class="meta">Nguyễn Thùy Linh · 17:26</span>
+                <p class="msg__bubble">Dạ được, mình chọn 14:00 nhé.</p>
+              </li>
+            </ol>
+            <div class="composer">
+              <label class="gs-label" for="reply">Trả lời khách</label>
+              <div class="composer__row">
+                <input class="gs-input" id="reply" type="text" placeholder="Nhập tin nhắn…" disabled aria-describedby="reply-note">
+                <button class="gs-btn gs-btn--primary" type="button" disabled>Gửi</button>
+              </div>
+              <p class="gs-help" id="reply-note">Gửi tin nhắn chưa khả dụng trong prototype PA#2.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-col" aria-labelledby="form-title">
+          <h2 id="form-title">Booking mới</h2>
+          <form class="gs-card gs-stack" action="booking.html" method="get">
+            <div class="form-grid">
+              <div class="field field--full">
+                <label class="gs-label" for="f-customer">Khách hàng</label>
+                <input class="gs-input" id="f-customer" type="text" value="Nguyễn Thùy Linh" readonly>
+              </div>
+              <div class="field field--full">
+                <label class="gs-label" for="f-package">Gói dịch vụ (2 giờ chụp, 30 ảnh chỉnh)</label>
+                <select class="gs-select" id="f-package">
+                  <option selected>Gói Tốt nghiệp Premium</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-date">Ngày chụp</label>
+                <input class="gs-input" id="f-date" type="text" value="Thứ Bảy, 24/10/2026" readonly>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-time">Giờ được chọn</label>
+                <select class="gs-select" id="f-time">
+                  <option value="09:00" disabled>09:00 (không khả dụng)</option>
+                  <option value="14:00" selected>14:00</option>
+                </select>
+                <p class="gs-help">09:00 không khả dụng vì Mai bận 08:00–12:00.</p>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-makeup">Makeup</label>
+                <input class="gs-input" id="f-makeup" type="text" value="13:00–14:00 với Mai" readonly>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-photo">Buổi chụp</label>
+                <input class="gs-input" id="f-photo" type="text" value="14:00–16:00 với Tuấn" readonly>
+              </div>
+              <div class="field field--full">
+                <label class="gs-label" for="f-room">Địa điểm</label>
+                <select class="gs-select" id="f-room">
+                  <option selected>Phòng B</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-total">Tổng giá</label>
+                <input class="gs-input" id="f-total" type="text" value="1.800.000đ" readonly>
+              </div>
+              <div class="field">
+                <label class="gs-label" for="f-deposit">Cọc 30%</label>
+                <input class="gs-input" id="f-deposit" type="text" value="540.000đ" readonly>
+              </div>
+              <div class="field field--full">
+                <label class="gs-label" for="f-rest">Còn lại 70% (thanh toán sau buổi chụp)</label>
+                <input class="gs-input" id="f-rest" type="text" value="1.260.000đ" readonly>
+              </div>
+            </div>
+            <button class="gs-btn gs-btn--primary gs-btn--block" type="submit">Tạo booking</button>
+            <p class="gs-help">Booking mới có trạng thái Chờ cọc 30%. Lịch chưa được giữ cho đến khi cọc thành công và nhân sự, phòng được kiểm tra lại.</p>
+          </form>
+        </section>
+      </div>
+
+      <section class="admin-col" aria-labelledby="res-title">
+        <h2 id="res-title">Lịch tài nguyên — Thứ Bảy, 24/10/2026</h2>
+        <div class="note note--conflict">
+          <strong><span aria-hidden="true">⚠</span> Xung đột: 09:00 không khả dụng</strong>
+          Makeup artist Mai bận từ 08:00 đến 12:00 nên không thể làm makeup lúc 09:00.
+        </div>
+        <ul class="res-list gs-list-reset">
+          <li class="res res--busy">
+            <h3>Mai · Makeup artist</h3>
+            <p class="res__time">08:00–12:00</p>
+            <p><span class="badge badge--bad"><span aria-hidden="true">✕</span> Bận — không nhận 09:00</span></p>
+            <p class="meta">Khung giờ này gây xung đột với yêu cầu ban đầu của Nguyễn Thùy Linh.</p>
+          </li>
+          <li class="res res--plan">
+            <h3>Mai · Makeup artist</h3>
+            <p class="res__time">13:00–14:00</p>
+            <p><span class="badge badge--wait"><span aria-hidden="true">◷</span> Đề xuất — chưa giữ chỗ</span></p>
+            <p class="meta">Makeup · Nguyễn Thùy Linh · Gói Tốt nghiệp Premium</p>
+          </li>
+          <li class="res res--plan">
+            <h3>Tuấn · Nhiếp ảnh</h3>
+            <p class="res__time">14:00–16:00</p>
+            <p><span class="badge badge--wait"><span aria-hidden="true">◷</span> Đề xuất — chưa giữ chỗ</span></p>
+            <p class="meta">Chụp · Nguyễn Thùy Linh · Gói Tốt nghiệp Premium</p>
+          </li>
+          <li class="res res--plan">
+            <h3>Phòng B</h3>
+            <p class="res__time">14:00–16:00</p>
+            <p><span class="badge badge--wait"><span aria-hidden="true">◷</span> Đề xuất — chưa giữ chỗ</span></p>
+            <p class="meta">Buổi chụp của Nguyễn Thùy Linh</p>
+          </li>
+        </ul>
+        <p class="gs-help">Các khung “Đề xuất” chỉ được giữ sau khi cọc 30% thành công và hệ thống kiểm tra lại.</p>
+      </section>
+    </div>
+
+    <nav class="next-step" aria-label="Bước tiếp theo trong luồng minh họa">
+      <p class="meta">Bước tiếp theo — đổi vai trò (không cần đăng nhập trong PA#2)</p>
+      <a class="gs-btn gs-btn--secondary" href="booking.html">Khách hàng: xem lịch chụp GS-1024</a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <p>GradStudio – Prototype giao diện PA#2</p>
+    <p>Dữ liệu minh họa: Nguyễn Thùy Linh · 24/10/2026 · GS-1024</p>
+  </footer>
+</body>
+</html>

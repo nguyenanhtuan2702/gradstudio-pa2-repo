@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GradStudio – lịch chụp GS-1024 của Nguyễn Thùy Linh, đang chờ cọc 30%.">
+  <title>GradStudio | Lịch chụp của tôi</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html">GradStudio</a>
+      <nav class="site-nav" aria-label="Điều hướng khách hàng">
+        <a href="index.html">Dịch vụ</a>
+        <a href="booking.html" aria-current="page">Lịch chụp của tôi</a>
+      </nav>
+      <p class="user-profile" aria-label="Đang xem với vai trò khách hàng Nguyễn Thùy Linh">
+        <span class="user-avatar" aria-hidden="true">L</span>
+        <span>Linh · Khách hàng</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="site-main gs-stack" id="main-content">
+    <section aria-labelledby="page-title">
+      <h1 id="page-title">Lịch chụp của tôi</h1>
+      <p class="lead">Xem lại lịch đã thống nhất với studio. Lịch chỉ được giữ sau khi cọc 30% thành công.</p>
+    </section>
+
+    <div class="booking-grid">
+      <div class="gs-stack">
+        <section class="gs-card gs-stack" aria-labelledby="week-title">
+          <h2 id="week-title">Tháng 10, 2026 · Tuần 43</h2>
+          <ol class="week" aria-label="Các ngày trong tuần, ngày chụp được đánh dấu là Thứ Bảy 24/10">
+            <li><span>T2</span><span>19</span></li>
+            <li><span>T3</span><span>20</span></li>
+            <li><span>T4</span><span>21</span></li>
+            <li><span>T5</span><span>22</span></li>
+            <li><span>T6</span><span>23</span></li>
+            <li aria-current="date"><span>T7</span><span>24</span></li>
+            <li><span>CN</span><span>25</span></li>
+          </ol>
+          <p class="meta">Ngày được đánh dấu (nền nâu): Thứ Bảy, 24/10/2026.</p>
+        </section>
+
+        <section class="gs-card gs-stack" aria-labelledby="timeline-title">
+          <h2 id="timeline-title">Lịch trình Thứ Bảy, 24/10/2026</h2>
+          <ol class="timeline">
+            <li class="is-unavailable">
+              <p class="timeline__time"><del>09:00</del></p>
+              <p>Giờ bạn yêu cầu ban đầu</p>
+              <p><span class="badge badge--bad"><span aria-hidden="true">✕</span> Không khả dụng</span></p>
+              <p class="meta">Makeup artist Mai bận 08:00–12:00.</p>
+            </li>
+            <li>
+              <p class="timeline__time">13:00–14:00</p>
+              <h3>Makeup với Mai</h3>
+              <p class="meta">Giờ makeup đã thống nhất</p>
+            </li>
+            <li>
+              <p class="timeline__time">14:00–16:00</p>
+              <h3>Chụp ảnh với Tuấn</h3>
+              <p class="meta">Phòng B · Giờ chụp đã thống nhất</p>
+            </li>
+          </ol>
+        </section>
+      </div>
+
+      <section class="gs-card gs-stack" aria-labelledby="booking-title">
+        <p class="status-row"><span class="meta">Mã booking</span> <strong>GS-1024</strong></p>
+        <p><span class="badge badge--wait"><span aria-hidden="true">◷</span> Đã thống nhất lịch · Chờ cọc 30%</span></p>
+        <h2 id="booking-title">Gói Tốt nghiệp Premium</h2>
+        <dl class="details">
+          <div><dt>Khách hàng</dt><dd>Nguyễn Thùy Linh</dd></div>
+          <div><dt>Loại buổi chụp</dt><dd>Tốt nghiệp cá nhân</dd></div>
+          <div><dt>Ngày</dt><dd>Thứ Bảy, 24/10/2026</dd></div>
+          <div><dt>Makeup</dt><dd>13:00–14:00 với Mai</dd></div>
+          <div><dt>Chụp ảnh</dt><dd>14:00–16:00 với Tuấn · Phòng B</dd></div>
+          <div><dt>Bao gồm</dt><dd>2 giờ chụp · 30 ảnh chỉnh</dd></div>
+        </dl>
+        <div class="price-box">
+          <p class="price-row"><span>Tổng giá</span> <strong>1.800.000đ</strong></p>
+          <p class="price-row price-row--due"><span>Cọc 30%</span> <strong>540.000đ</strong></p>
+          <p class="price-row"><span>Còn lại 70% (thanh toán sau buổi chụp)</span> <strong>1.260.000đ</strong></p>
+        </div>
+        <button class="gs-btn gs-btn--primary gs-btn--block" type="button" disabled aria-describedby="pay-note">Thanh toán cọc 30%</button>
+        <p class="note" id="pay-note"><strong>Thanh toán chưa khả dụng trong prototype PA#2.</strong> Booking vẫn ở trạng thái Chờ cọc 30%; lịch chưa được giữ. Studio chỉ giữ lịch sau khi cọc thành công và kiểm tra lại nhân sự, phòng.</p>
+      </section>
+    </div>
+
+    <nav class="next-step" aria-label="Điều hướng khách hàng">
+      <p class="meta">Khách hàng: tiếp tục khám phá</p>
+      <a class="gs-btn gs-btn--secondary" href="index.html">Quay lại trang dịch vụ</a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <p>GradStudio – Prototype giao diện PA#2</p>
+    <p>Dữ liệu minh họa: Nguyễn Thùy Linh · 24/10/2026 · GS-1024</p>
+  </footer>
+</body>
+</html>
