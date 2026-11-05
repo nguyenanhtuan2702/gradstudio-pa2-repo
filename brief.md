@@ -423,3 +423,355 @@ Tôi là thành viên C, chịu trách nhiệm phát triển `page3.html`, tổn
 - Mọi lỗi kỹ thuật (font tiếng Việt, layout avatar, 3 lỗi W3C ARIA) đều được phát hiện qua ảnh chụp kiểm tra thực tế của người dùng và được sửa đúng gốc rễ bằng HTML/CSS ngữ nghĩa, không dùng mẹo che giấu (`overflow-x: hidden`, `!important`, tabpanel rỗng hay script giả lập).
 - Bộ ảnh minh chứng trong `screenshots/` (`page3-360.png`, `page3-768.png`, `page3-1280.png`) và kết quả kiểm tra `checks/validator-page3.png` phản ánh chính xác kết quả thực tế thu được trên trình duyệt khi tắt JavaScript.
 
+---
+
+# PHẦN III: BRIEF VÀ PROMPT DỰNG LẠI BA MÀN HÌNH THEO FINAL BRIEF (Claude, 2026-11-05)
+
+Phần này ghi lại prompt thực tế đã gửi cho assistant (Claude, claude.ai) để dựng lại `index.html`, `studio.html`, `booking.html` và `styles.css`, theo đúng thứ tự gửi. Prompt tác vụ được chép nguyên văn; ghi chú về tệp đính kèm chỉ mô tả những gì thực sự được đính kèm.
+
+## 1. Prompt tác vụ — nguyên văn
+
+Tệp đính kèm cùng lượt gửi: `AGENTS.md`, `page2.html`, `styles.css`, `index.html`, `page3.html`. File `GradStudio-final-project-brief.pdf` được nhắc trong prompt nhưng **không** nằm trong các tệp đính kèm.
+
+~~~text
+# TASK: Rebuild the complete GradStudio PA#2 prototype
+
+You are working directly inside my existing GradStudio repository.
+
+I want you to rebuild and complete the four existing source files:
+
+- `index.html`
+- `styles.css`
+- `page2.html`
+- `page3.html`
+
+The final required files must be:
+
+- `index.html` — Screen 1: Services and chat (Customer)
+- `styles.css` — Shared stylesheet for all three pages
+- `studio.html` — Screen 2: Advice and clash handling (Admin)
+- `booking.html` — Screen 3: Review appointment and pay deposit (Customer)
+
+You must rename `page2.html` to `studio.html` and `page3.html` to `booking.html`, and update every reference accordingly.
+
+## PHASE 1 — READ AND UNDERSTAND THE REQUIREMENTS
+
+Before writing or modifying code:
+
+1. Read the entire `AGENTS.md` file in the repository.
+2. Read the entire `GradStudio-final-project-brief.pdf`.
+3. Inspect all four existing source files.
+4. Inspect the existing repository structure, images, CSS, and `docs/pa1/` references if available.
+5. Understand the three required screens and the complete GS-1024 example.
+
+IMPORTANT PRIORITY RULE:
+
+The newly provided `GradStudio-final-project-brief.pdf` is the authoritative product specification for PA#2.
+
+If an older instruction in `AGENTS.md` conflicts with the new final project brief, follow the new brief for product requirements and identify the conflict before implementing.
+
+Do not blindly reuse outdated page names, old booking information, old interactions, or old navigation.
+
+## PHASE 2 — IMPLEMENT THE THREE SCREENS
+
+### SCREEN 1 — index.html: Customer services and chat
+
+Build the customer-facing service page.
+
+Required content:
+
+- GradStudio introduction and service catalogue.
+- Kỷ yếu lớp: from 350.000đ/person.
+- Tốt nghiệp: from 1.800.000đ.
+- Chân dung/CV: from 690.000đ.
+- Sample conversation with customer Nguyễn Thùy Linh.
+- Customer's message:
+
+  "Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?"
+
+- Studio's reply:
+
+  "Để mình kiểm tra lịch cho bạn nhé."
+
+The page must represent the initial customer question, not a later booking state.
+
+Important corrections:
+
+- Do not use a floating chat panel that covers the page content.
+- At 360px, the chat must not hide any content or controls.
+- Rework the chat placement so it fits naturally into the page layout.
+- The process section must not claim that the studio holds the appointment slot immediately after agreeing on a time.
+- Explain that the slot is held only after the 30% deposit succeeds and resources are checked again.
+- Sending a message is not implemented in PA#2. Show the send button as disabled and add a short visible explanation.
+- Use clear navigation to Screen 2, explicitly identifying the next role, such as "Nhân viên studio: mở cuộc trò chuyện này".
+- Keep a link to the customer booking page where appropriate.
+
+### SCREEN 2 — studio.html: Admin advice and clash handling
+
+Build the Admin interface for Admin Thảo.
+
+This page must show the state AFTER Linh has agreed to the new proposed time.
+
+Required information:
+
+Customer:
+- Nguyễn Thùy Linh.
+
+Original request:
+- Saturday, 24/10/2026, 09:00.
+- Graduation package with makeup.
+
+Conflict:
+- Makeup artist Mai is busy from 08:00–12:00.
+- Clearly explain why 09:00 is unavailable.
+- Do not communicate the conflict using colour alone.
+
+Agreed schedule:
+- Makeup: 13:00–14:00 with Mai.
+- Photo shoot: 14:00–16:00 with Tuấn.
+- Location: Phòng B.
+
+Booking information:
+- Package: Gói Tốt nghiệp Premium.
+- Duration: 2 hours.
+- 30 edited photos.
+- Total: 1.800.000đ.
+- Deposit: 540.000đ.
+- Remaining: 1.260.000đ.
+
+Required UI state:
+- Conversation status: Đã chốt lịch.
+- Selected time: 14:00.
+- Button "Tạo booking" must be enabled in this static screen.
+- Show the conflict reason clearly.
+- Include the conversation list, chat area, Booking mới form, and resource calendar.
+
+IMPORTANT LAYOUT REQUIREMENTS:
+
+- The chat and the complete Booking mới form must be readable by scrolling the page.
+- Do not place the chat and form in a shared column with an independent scrollbar that hides the form.
+- Resource calendar labels must be fully readable at all widths.
+- Long customer names and service names must wrap or remain readable.
+- Do not rely on colour or hatching alone to communicate a conflict.
+
+The Admin page must include a clear navigation link to the next role, such as:
+
+"Khách hàng: xem lịch chụp GS-1024".
+
+### SCREEN 3 — booking.html: Customer appointment and deposit
+
+Build the customer booking page for Linh.
+
+Required information:
+
+- Booking ID: GS-1024.
+- Customer: Nguyễn Thùy Linh.
+- Booking state: Đã thống nhất lịch · Chờ cọc 30%.
+- Date: Saturday, 24/10/2026.
+- Package: Gói Tốt nghiệp Premium.
+- Makeup: 13:00–14:00 with Mai.
+- Photo shoot: 14:00–16:00 with Tuấn at Phòng B.
+- Total price: 1.800.000đ.
+- Deposit 30%: 540.000đ.
+- Remaining 70%: 1.260.000đ.
+
+Required presentation:
+
+- Show the original 09:00 request as unavailable or crossed out.
+- Show the agreed makeup and photo-shoot timeline.
+- Display the package and payment breakdown clearly.
+- Provide the button "Thanh toán cọc 30%".
+
+Payment behavior:
+
+- PA#2 does not implement real payment.
+- The payment button must be disabled.
+- Add a clearly visible note explaining that payment is not available in this prototype.
+- Do not claim that the booking is confirmed or that the time is held.
+- The current booking state remains Chờ cọc 30%.
+
+## PHASE 3 — CONSISTENT BUSINESS RULES
+
+Use exactly these status names consistently.
+
+Conversation statuses:
+- Chưa trả lời
+- Đang tư vấn
+- Đã chốt lịch
+- Hoàn thành
+
+Booking statuses:
+- Chờ cọc 30%
+- Đã đặt lịch
+- Hoàn thành
+
+Screen 3 may display:
+
+"Đã thống nhất lịch · Chờ cọc 30%"
+
+Important business rule:
+
+The appointment slot is NOT held when the customer merely agrees to a time.
+
+Only after:
+1. The customer successfully pays the 30% deposit.
+2. The system checks the staff and resources again.
+
+Then the booking can move from Chờ cọc 30% to Đã đặt lịch.
+
+Do not contradict this rule anywhere.
+
+All three pages must tell exactly the same GS-1024 story.
+
+## PHASE 4 — IMAGES AND VISUAL DESIGN
+
+The brief explicitly warns that the original prototype contains identifiable real people whose image rights have not been verified.
+
+Therefore:
+
+- Do not reuse identifiable real-person photos without verified usage rights.
+- Prefer initials, illustrations, abstract CSS visuals, or properly licensed images.
+- Do not hotlink random images from websites.
+- If licensed images are used, record their sources so they can later be documented in `PROTOTYPE.md`.
+- Preserve the GradStudio visual identity: elegant, warm cream, brown, and gold accents.
+- Keep the typography hierarchy and visual style consistent.
+- Do not replace the original design with a generic ready-made template.
+
+## PHASE 5 — TECHNICAL REQUIREMENTS
+
+Follow `AGENTS.md` and the PA#2 rubric.
+
+Use:
+- Semantic HTML5.
+- Plain CSS.
+- One shared `styles.css`.
+- Relative links between HTML pages.
+
+Do not use:
+- React, Vue, Angular, or JavaScript frameworks.
+- Bootstrap or Tailwind.
+- External UI libraries or dependencies.
+- Backend, API, database, authentication, or real payment.
+- JavaScript to generate the main content or navigate between pages.
+
+JavaScript is unnecessary for this milestone. Prefer HTML and CSS only.
+
+All important content and main navigation must work with JavaScript disabled.
+
+Navigation must use real relative links:
+
+- `index.html`
+- `studio.html`
+- `booking.html`
+
+Do not use `href="#"`, fake links, or JavaScript onclick for main-flow navigation.
+
+For actions that have no next page in PA#2, use disabled buttons with a visible explanation.
+
+Remove all demo controls:
+- Màn 1 / Màn 2 / Màn 3.
+- Đặt lại demo.
+- Mô phỏng phản hồi của Linh.
+- Mô phỏng thanh toán.
+
+Remove unrelated non-functional navigation items or clearly mark unavailable features as unavailable.
+
+## PHASE 6 — RESPONSIVE DESIGN
+
+All three pages must work at:
+
+- 360px — mobile.
+- 768px — tablet.
+- 1280px — desktop.
+
+Requirements:
+
+- Mobile-first CSS.
+- No horizontal overflow.
+- No clipped text or overlapping content.
+- Long Vietnamese names and service names must wrap.
+- Images must fit their containers.
+- Independent buttons and links must have a minimum height of 44px at 360px.
+- Body text should be at least 16px.
+- Text and button contrast should meet 4.5:1.
+- Use the shared spacing scale defined in the project rules.
+- Do not hide overflow to cover layout bugs.
+
+## PHASE 7 — HTML AND ACCESSIBILITY
+
+For every page:
+
+- Exactly one `<h1>`.
+- Correct heading hierarchy.
+- Appropriate `<header>`, `<nav>`, `<main>`, `<footer>`, `<section>`, and `<article>` landmarks.
+- Every input must have a visible `<label>` correctly linked using `for` and `id`.
+- Every meaningful image must have suitable `alt` text.
+- Decorative images should use `alt=""`.
+- Interactive elements must have understandable accessible names.
+- Keyboard focus must be visible.
+- Use `<a>` for navigation and `<button>` for actions.
+
+## PHASE 8 — TESTING AND VERIFICATION
+
+After implementation:
+
+1. Check every internal link and confirm its target file exists.
+2. Confirm the three pages work when opened directly from the repository folder.
+3. Test all pages with JavaScript disabled.
+4. Test responsive layout at 360px, 768px, and 1280px.
+5. Check horizontal overflow using:
+
+   `document.documentElement.scrollWidth > document.documentElement.clientWidth`
+
+   Expected result: `false`.
+
+6. Check for elements extending beyond the right edge.
+7. Check all images, alt text, labels, headings, and landmarks.
+8. Run W3C Nu Checker if available.
+9. Check that no real-person images with unverified rights remain.
+
+Do not claim that a test passed unless you actually ran it.
+
+## PHASE 9 — FINAL DELIVERABLES
+
+Implement the complete four-file result:
+
+- `index.html`
+- `styles.css`
+- `studio.html`
+- `booking.html`
+
+Keep the original repository and Git history intact.
+
+Do not delete `.git`, `docs/pa1/`, existing documentation, or unrelated assets without explicit approval.
+
+Do not overwrite unrelated work from other team members.
+
+Before finishing:
+
+1. List every file created, modified, renamed, or removed.
+2. Summarize the changes made to each screen.
+3. Explain how the three screens connect.
+4. List any remaining issues or assumptions.
+5. Report the actual responsive and W3C test results.
+6. Identify any requirements that could not be completed.
+
+Do not stop after giving recommendations or a plan. Perform the implementation in the repository.
+
+The goal is a complete, coherent, responsive GradStudio PA#2 prototype that follows the new final project brief and is ready for the team to review.
+~~~
+
+## 2. Follow-up prompts — theo thứ tự
+
+### 1. Yêu cầu ghi phần việc của assistant vào hai file nhật ký/brief
+
+> bổ sung phần của bạn nãy giờ tui nhắn vô 2 file sau
+
+Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung Phần III này vào `brief.md` và ba mục ngày 2026-11-05 vào cuối `AI-LOG.md`; không sửa các phần của thành viên khác.
+
+## 3. Ghi chú về phạm vi và tính trung thực
+
+- Prompt tác vụ yêu cầu đọc `GradStudio-final-project-brief.pdf`, nhưng file này không được đính kèm nên assistant không đọc được; kết quả chỉ bám prompt và `AGENTS.md` bản đã đính kèm. Cần nhóm đối chiếu với PDF.
+- `AGENTS.md` bản đính kèm ghi `styles.css` là stylesheet chung, còn Phần I và `AI-LOG.md` ghi nhóm đã thống nhất `style.css`. Ba trang assistant xuất ra đang liên kết `styles.css`; cần đồng bộ tên file (xem `AI-LOG.md`, mục ngày 2026-11-05).
+- Các kết quả kiểm tra (tràn ngang, vùng bấm 44px, liên kết, Nu Checker HTML 0 thông báo) do assistant chạy trong sandbox của nó, không phải trên máy nhóm. Chưa chạy: bàn phím/focus, tương phản, DevTools Accessibility, screenshot và kết quả lưu vào `screenshots/`, `checks/`. Brief này không khẳng định các mục đó đã đạt.
+- Assistant không thao tác Git: việc đổi tên `page2.html` → `studio.html`, `page3.html` → `booking.html` và xóa file cũ do nhóm tự thực hiện.
