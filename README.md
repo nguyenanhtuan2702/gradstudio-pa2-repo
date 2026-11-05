@@ -1,147 +1,136 @@
-# GradStudio – PA#2 Responsive Prototype
+# GradStudio — PA#2 Responsive Prototype
 
-Repository này dùng cho **PA#2 – Responsive Prototype** của nhóm. Mục tiêu là chuyển ba màn hình chính đã thiết kế ở PA#1 thành ba trang HTML/CSS tĩnh, có thể mở trực tiếp trên trình duyệt và hiển thị tốt ở điện thoại, máy tính bảng và máy tính.
+Repository này chứa prototype responsive tĩnh cho ba màn hình Main Flow của GradStudio. Các trang dựa trên thiết kế PA#1 và được cập nhật theo brief final project mới nhất.
 
-> **Phạm vi:** Đây là prototype giao diện. Nhóm không xây dựng backend, API, cơ sở dữ liệu hay giao dịch thanh toán thật. Dữ liệu minh họa được viết trực tiếp trong HTML.
+> **Phạm vi PA#2:** Chỉ xây dựng ba trang HTML/CSS mô phỏng các trạng thái được giao. Đây không phải ứng dụng hoàn chỉnh: không có đăng nhập, backend, lưu dữ liệu, đồng bộ chat, giữ lịch tự động hay thanh toán thật.
 
-## 1. Ba màn hình của dự án
+## 1. Ba màn hình
 
-| Trang | File | Nội dung |
+| File | Vai trò | Nội dung và trạng thái |
 |---|---|---|
-| Màn 1 | `index.html` | Khách xem dịch vụ GradStudio và cuộc trò chuyện tư vấn |
-| Màn 2 | `page2.html` | Admin xem hội thoại, lịch tài nguyên và thông tin booking |
-| Màn 3 | `page3.html` | Khách xem lịch chụp, thông tin booking và khoản cọc |
+| index.html | Khách hàng | Linh xem dịch vụ, giá tham khảo, portfolio/đánh giá có trong PA#1 và chat hỏi về lịch 09:00 ngày 24/10. |
+| studio.html | Nhân viên studio/Admin | Hiển thị trạng thái sau khi Linh đồng ý giờ 14:00; có ghi chú xung đột 09:00, lịch tài nguyên và form Booking mới. |
+| booking.html | Khách hàng | Linh xem booking GS-1024 đang chờ cọc 30%, lịch makeup và lịch chụp. |
 
-Thứ tự câu chuyện: **Khách hỏi dịch vụ → Admin xử lý yêu cầu → Khách xem lại lịch và khoản cọc**.
+Câu chuyện: **Khách hỏi dịch vụ → Nhân viên studio kiểm tra lịch và thống nhất giờ → Khách xem lại booking và khoản cọc.**
 
-Ảnh tham chiếu PA#1 và hướng dẫn xem prototype ban đầu nằm trong `docs/pa1/`.
+Tên file trên là yêu cầu của brief PA#2. Không dùng các tên cũ page2.html hoặc page3.html.
+Ảnh và LINK.md trong docs/pa1 là tài liệu tham khảo; nếu khác brief final project mới, làm theo brief mới.
 
-## 2. Cấu trúc thư mục
+## 2. Dữ liệu mẫu xuyên suốt
 
-```text
-gradstudio-pa2-repo/
-├── index.html                    # Màn hình 1 – trang bắt đầu
-├── page2.html                    # Màn hình 2 – giao diện Admin
-├── page3.html                    # Màn hình 3 – lịch chụp của khách
-├── style.css                     # CSS dùng chung chính thức cho cả ba trang
-├── styles.css                    # Tệp khởi tạo tạm; xóa sau khi các trang chuyển sang style.css
-├── AGENTS.md                     # Quy tắc dành cho AI coding assistant
-├── README.md                     # Hướng dẫn dự án
-├── .gitignore                    # Các tệp không đưa lên Git
-├── assets/
-│   └── images/                   # Ảnh được sử dụng trong giao diện
-├── docs/
-│   └── pa1/                      # Tài liệu và ảnh ba màn hình PA#1
-├── screenshots/                  # 9 ảnh chụp trang ở 3 kích thước
-└── checks/                       # Kết quả kiểm tra W3C cho từng trang
-```
+- Khách hàng: Nguyễn Thùy Linh; Admin: Thảo.
+- Makeup với Mai: 13:00–14:00 ngày 24/10/2026.
+- Chụp với Tuấn tại Phòng B: 14:00–16:00 cùng ngày.
+- Gói Tốt nghiệp Premium: 2 giờ chụp, 30 ảnh chỉnh; loại buổi chụp là Tốt nghiệp cá nhân.
+- Tổng giá: 1.800.000đ; cọc 30%: 540.000đ; còn lại 70%: 1.260.000đ, thanh toán sau buổi chụp.
+- Mã booking minh họa: GS-1024.
+- 09:00 là giờ khách hỏi ban đầu. Mai bận 08:00–12:00 nên giờ đó không khả dụng.
+- Màn 1 hiển thị ba dịch vụ và giá tham khảo: Kỷ yếu lớp từ 350.000đ/người, Tốt nghiệp từ 1.800.000đ, Chân dung/CV từ 690.000đ.
+- Chat mẫu Màn 1 có câu hỏi “Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?” và phản hồi “Để mình kiểm tra lịch cho bạn nhé.”
 
-Các file HTML và CSS hiện là **khung khởi tạo**. Thành viên phụ trách từng màn hình cần hoàn thiện nội dung và giao diện dựa trên ảnh tham chiếu PA#1.
+**Phân biệt giờ:** 13:00 là giờ bắt đầu makeup; 14:00 là giờ bắt đầu chụp. Đồng ý giờ trong chat chưa giữ lịch. Lịch chỉ được giữ sau khi cọc thành công và tài nguyên được kiểm tra lại.
 
-## 3. Cách mở và xem website
+## 3. Trạng thái và giới hạn prototype
 
-1. Giải nén repository hoặc mở thư mục dự án trong VS Code.
-2. Mở file `index.html` trực tiếp bằng trình duyệt (Chrome, Edge hoặc Firefox).
-3. Dùng các liên kết trên thanh điều hướng để chuyển giữa ba trang.
+Mỗi trang thể hiện một trạng thái tĩnh:
 
-Dự án khởi tạo theo hướng HTML/CSS thuần, không cần cài package, chạy server hoặc build trước khi mở. Nếu nhóm quyết định dùng framework CSS, cần cập nhật `AGENTS.md` và README, đồng thời bảo đảm CSS được tải dưới dạng file CSS chứ không phụ thuộc script build lúc mở trang.
+- Hội thoại dùng các trạng thái: Chưa trả lời, Đang tư vấn, Đã chốt lịch, Hoàn thành.
+- Booking dùng các trạng thái: Chờ cọc 30%, Đã đặt lịch, Hoàn thành. Trang booking có thể ghi đầy đủ “Đã thống nhất lịch · Chờ cọc 30%”.
+- Screen 2 thể hiện Linh đã đồng ý giờ 14:00 và nút Tạo booking đang bật.
+- Screen 3 thể hiện booking đang chờ cọc; nút Thanh toán cọc 30% disabled và có ghi chú rằng thanh toán chưa khả dụng trong prototype.
+- Gửi tin nhắn và các hành động khác không có trang đích cũng phải disabled, kèm ghi chú ngắn, hiển thị được.
 
-## 4. Quy ước khi làm giao diện
+Điều hướng giữa trang dùng liên kết thật, đường dẫn tương đối và nhãn cho biết ai tiếp tục khi đổi vai trò. Ví dụ: “Nhân viên studio: mở cuộc trò chuyện này”. Không có màn hình đăng nhập trong PA#2.
 
-- Giữ nhận diện GradStudio và nội dung chính của ba màn hình PA#1.
-- Có thể thay đổi cách sắp xếp thành phần để giao diện phù hợp với từng kích thước; ghi lại thay đổi và lý do trong `PROTOTYPE.md`.
-- Làm theo hướng mobile-first và kiểm tra ở các chiều rộng **360 px, 768 px và 1280 px**.
-- Không để xuất hiện cuộn ngang, nội dung bị cắt hoặc thành phần chồng lấn.
-- Các liên kết thuộc luồng chính phải dùng đường dẫn tương đối, ví dụ `page2.html`.
-- Nội dung phải hiển thị đầy đủ khi tắt JavaScript.
-- Dữ liệu minh họa được ghi trực tiếp trong HTML; không cần kết nối backend/API/database.
-- Dùng chung `style.css` để giữ màu sắc, kiểu chữ, khoảng cách và thành phần nhất quán giữa ba trang.
-- `styles.css` chỉ là tệp khởi tạo tạm còn lại trong repo; sau khi `page2.html` và `page3.html` chuyển sang `style.css`, xóa `styles.css` để repo chỉ giữ stylesheet chính thức.
+Không đưa các điều khiển demo của prototype cũ vào trang: Màn 1/Màn 2/Màn 3, Đặt lại demo, Mô phỏng phản hồi của Linh hoặc Mô phỏng thanh toán. Các menu, nút và liên kết không có đích phải được bỏ hoặc ghi rõ là chưa khả dụng. Không dùng href="#" làm liên kết giả; liên kết neo tới một id có thật trên cùng trang, như #chat, vẫn dùng được để cuộn tới nội dung.
 
-Chi tiết bắt buộc dành cho AI được ghi trong `AGENTS.md`.
+## 4. Công nghệ và nội dung
 
-## 5. Kiểm tra trước khi hoàn thành
+- Dùng HTML5 và CSS3 thuần, stylesheet chung styles.css.
+- Không dùng framework CSS/JavaScript, thư viện, package, CDN, font tải từ Internet, backend hoặc build step.
+- Mở index.html trực tiếp bằng trình duyệt; nội dung và điều hướng vẫn dùng được khi JavaScript bị tắt. Prototype PA#2 không cần JavaScript.
+- Dùng tiếng Việt cho nội dung giao diện.
+- Không dùng ảnh người thật có thể nhận diện khi chưa xác minh quyền. Dùng minh họa/chữ cái đầu hoặc ảnh có giấy phép phù hợp; ghi nguồn và giấy phép ảnh trong PROTOTYPE.md. Không hotlink ảnh từ website bên ngoài.
+- Giữ nhận diện GradStudio và dùng chung design tokens, typography, spacing và pattern trong styles.css.
+- Các khu vực ngoài phạm vi ba màn hình không được trình bày như chức năng đã hoạt động.
 
-Thực hiện các bước sau cho **từng trang**:
+Brief final project mô tả phạm vi sản phẩm rộng hơn cho các PA tiếp theo. Những chức năng như tài khoản, quản trị nhiều studio, nhắc lịch, thanh toán trực tuyến, quản lý nhân viên và thư viện ảnh không phải phần cần triển khai vận hành trong PA#2.
 
-1. Mở trang trực tiếp từ thư mục dự án.
-2. Tắt JavaScript trong DevTools, tải lại trang và kiểm tra nội dung vẫn hiển thị.
-3. Kiểm tra ở 360 px, 768 px và 1280 px.
-4. Trong Console, chạy:
+## 5. Responsive
 
-   ```js
-   document.documentElement.scrollWidth > document.documentElement.clientWidth
-   ```
+Thiết kế mobile-first với breakpoint dùng chung 768px và 1200px. Phải kiểm tra chính xác các viewport sau:
 
-   Kết quả mong đợi: `false`.
+- 360px: mobile, nội dung xếp dọc; nút và liên kết độc lập cao tối thiểu 44px.
+- 768px: tablet, dùng một hoặc hai cột phù hợp với nội dung; không ép layout ba cột desktop.
+- 1280px: desktop, có thể hiển thị nhiều cột.
 
-5. Trong Console, kiểm tra phần tử tràn khỏi cạnh phải:
+Yêu cầu cụ thể:
 
-   ```js
-   [...document.querySelectorAll('body *')].filter(
-     element => element.getBoundingClientRect().right > document.documentElement.clientWidth
-   )
-   ```
+- Không có cuộn ngang, nội dung bị cắt hoặc thành phần chồng lấn.
+- Chat trên index.html không che nội dung ở 360px.
+- Trên studio.html, toàn bộ chat và form Booking mới phải đọc được bằng cách cuộn trang; lịch tài nguyên phải hiện đầy đủ tên khách, gói, giờ và trạng thái.
+- Xung đột lịch phải có nhãn hoặc nội dung chữ, không chỉ dùng màu sắc/họa tiết.
+- Nội dung dài phải xuống dòng; ảnh co theo khung chứa.
+- Không dùng overflow-x: hidden để che lỗi tràn.
 
-   Kết quả mong đợi: `[]` (ngoại lệ chỉ áp dụng cho nội dung bảng nằm trong vùng cuộn riêng, nếu có).
+## 6. Mở và kiểm tra
 
-6. Kiểm tra từng file HTML tại <https://validator.w3.org/nu/>. Mục tiêu: **0 lỗi**.
-7. Kiểm tra Accessibility trong DevTools: landmarks, heading, label, alt text và khả năng đọc.
-8. Chụp ảnh toàn trang khi JavaScript đã tắt và lưu vào `screenshots/`.
-9. Lưu kết quả W3C của từng trang vào `checks/`.
+1. Mở index.html trực tiếp bằng Chrome, Edge hoặc Firefox; không cần server hay cài package.
+2. Trong DevTools, tắt JavaScript và tải lại trang. Nội dung chính, trạng thái và liên kết vẫn phải dùng được.
+3. Dùng Device Toolbar để kiểm tra đúng 360px, 768px và 1280px; không chỉ thay đổi zoom.
+4. Kiểm tra cuộn ngang trong Console:
 
-### Quy tắc đặt tên ảnh
+~~~js
+document.documentElement.scrollWidth > document.documentElement.clientWidth
+~~~
 
-```text
+Kết quả mong đợi là false.
+
+5. Kiểm tra phần tử vượt cạnh phải:
+
+~~~js
+[...document.querySelectorAll('body *')].filter(
+  element => element.getBoundingClientRect().right > document.documentElement.clientWidth
+)
+~~~
+
+Kết quả mong đợi là mảng rỗng, trừ vùng cuộn ngang riêng được brief cho phép.
+
+6. Chạy từng trang qua W3C Nu Checker; mục tiêu là 0 errors. Lưu kết quả thực tế trong checks/.
+7. Xem Accessibility trong DevTools: landmarks, một h1, thứ tự heading, label hiển thị, alt, accessible name, focus bàn phím và độ tương phản.
+8. Chụp screenshot full-page khi JavaScript tắt và lưu trong screenshots/.
+
+Tên screenshot cần nộp:
+
+~~~text
 screenshots/
 ├── index-360.png
 ├── index-768.png
 ├── index-1280.png
-├── page2-360.png
-├── page2-768.png
-├── page2-1280.png
-├── page3-360.png
-├── page3-768.png
-└── page3-1280.png
-```
+├── studio-360.png
+├── studio-768.png
+├── studio-1280.png
+├── booking-360.png
+├── booking-768.png
+└── booking-1280.png
+~~~
 
-Kết quả W3C có thể lưu dưới dạng `.png` hoặc `.txt`, ví dụ `validator-index.png`, `validator-page2.png`, `validator-page3.png`.
+Tên kết quả validator có thể là validator-index, validator-studio và validator-booking, lưu dạng PNG hoặc TXT trong checks/.
 
-## 6. Các tài liệu cần bổ sung trước khi nộp
+Không ghi PASS hoặc báo đã kiểm tra nếu chưa thực sự chạy kiểm tra; không tạo screenshot hay kết quả validator giả.
 
-Ngoài source code, nhóm cần hoàn thiện các tài liệu theo yêu cầu PA#2:
+## 7. Tài liệu và nộp bài
 
-- `PROTOTYPE.md`: thành viên, cách mở, mô tả ba trang, thay đổi so với PA#1, phần chưa liên kết và thông tin CSS.
-- `brief.md`: các prompt thực tế đã gửi cho assistant, giữ đúng thứ tự sử dụng.
-- `AI-LOG.md`: nhật ký theo từng trang/tác vụ, gồm công cụ, yêu cầu, phần AI làm chưa đúng, cách kiểm tra và yêu cầu sửa.
-- `SELF_ASSESSMENT_REPORT.md`: tự đánh giá đủ 7 tiêu chí, có điểm và dẫn chứng cho từng tiêu chí.
+Trước khi nộp, hoàn thiện:
 
-Không ghi lại prompt, lỗi hoặc kết quả kiểm thử không thực sự xảy ra. Mỗi thành viên cần lưu thông tin phần việc của mình trong quá trình thực hiện để nhóm tổng hợp chính xác.
+- PROTOTYPE.md: thông tin nhóm, cách mở prototype, mô tả ba trang và luồng, thay đổi so với PA#1, phần chưa nối, CSS/breakpoint/spacing, nguồn ảnh có giấy phép.
+- brief.md: các prompt thực tế đã gửi cho AI theo đúng thứ tự; không chép đề bài thay cho prompt.
+- AI-LOG.md: ghi công cụ, yêu cầu, phần AI làm sai hoặc được sửa, cách phát hiện và kết quả kiểm tra thực tế.
+- SELF_ASSESSMENT_REPORT.md: tự đánh giá đủ 7 tiêu chí, kèm điểm và bằng chứng.
+- screenshots/: chín ảnh full-page ở ba kích thước.
+- checks/: kết quả W3C cho từng trang.
 
-## 7. Làm việc với Git
+Mỗi thành viên ghi lại phần việc, prompt và kiểm tra thực tế của mình. Không bịa prompt, lỗi, kết quả kiểm thử hoặc trải nghiệm.
 
-Mỗi thành viên cần cấu hình tên và email Git của chính mình, sau đó commit phần việc mình thực hiện. Không gom toàn bộ thay đổi của cả nhóm vào một commit duy nhất.
-
-Ví dụ khởi tạo Git lần đầu trong thư mục dự án:
-
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "chore: khoi tao repository GradStudio PA2"
-```
-
-Sau khi tạo repository trống trên GitHub, thêm địa chỉ repository và push:
-
-```bash
-git remote add origin <URL_REPOSITORY_GITHUB>
-git push -u origin main
-```
-
-Thay `<URL_REPOSITORY_GITHUB>` bằng URL repository thật của nhóm.
-
-## 8. Thành phần cần có trong ZIP nộp bài
-
-ZIP cuối cùng phải chứa toàn bộ thư mục repository, bao gồm thư mục ẩn `.git/`, source code, rules file, tài liệu, `docs/pa1/`, `screenshots/` và `checks/`. Không đưa `node_modules/` vào ZIP.
-
-**Lưu ý:** ZIP khởi tạo được gửi kèm hiện chưa có `.git/`. Sau khi giải nén, nhóm cần chạy `git init` hoặc clone/push repository theo quy trình Git của nhóm. Khi chuẩn bị ZIP nộp bài cuối cùng, phải bảo đảm thư mục `.git/` đã được giữ lại.
+Mỗi thành viên commit phần việc mình thực hiện; không gom toàn bộ thay đổi của nhóm vào một commit duy nhất. ZIP cuối cùng cần chứa repository, mã nguồn, tài liệu, docs/pa1, screenshots, checks và thư mục ẩn .git/. Không đưa node_modules vào ZIP.

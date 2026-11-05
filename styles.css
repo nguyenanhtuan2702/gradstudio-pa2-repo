@@ -559,13 +559,14 @@ textarea { resize: vertical; }
 @media (min-width: 768px) {
   .hero { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
   .hero__art { min-height: 16rem; }
-  .card-grid, .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .admin-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .admin-grid > .admin-col--list { grid-column: 1 / -1; }
   .booking-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
 }
 @media (min-width: 1200px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .admin-grid { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr) minmax(0, 22rem); }
   .admin-grid > .admin-col--list { grid-column: auto; }
