@@ -3,29 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GradStudio – trang dịch vụ và tư vấn khách hàng.">
+  <meta name="description" content="GradStudio – chụp ảnh kỷ yếu, tốt nghiệp và chân dung, tư vấn trực tiếp trên web.">
   <title>GradStudio | Dịch vụ</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-home">
   <header class="site-header">
-    <nav class="site-nav" aria-label="Điều hướng chính">
-      <a href="index.html" aria-current="page">Dịch vụ</a>
-      <a href="page2.html">Quản lý tư vấn</a>
-      <a href="page3.html">Lịch chụp của tôi</a>
-    </nav>
+    <div class="gs-container gs-cluster">
+      <a class="gs-brand gs-btn gs-btn--ghost" href="index.html#top" aria-label="GradStudio – trang dịch vụ">
+        Grad<em>Studio</em>
+      </a>
+
+      <nav class="site-nav" aria-label="Điều hướng khách hàng">
+        <a href="index.html#dich-vu" aria-current="page">Dịch vụ</a>
+        <a href="page3.html">Lịch chụp của tôi</a>
+      </nav>
+
+      <div class="gs-account gs-cluster" role="group" aria-label="Tài khoản khách hàng Nguyễn Thùy Linh">
+        <span class="gs-avatar" aria-hidden="true"></span>
+        <span>Linh</span>
+        <svg class="gs-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+      </div>
+    </div>
   </header>
 
-  <main class="site-main">
-    <!-- TODO: Thành viên A xây dựng Màn 1 theo docs/pa1/01-customer-services-chat.png. -->
-    <section class="page-placeholder" aria-labelledby="page-title">
-      <h1 id="page-title">GradStudio – Dịch vụ chụp ảnh</h1>
-      <p>Khung khởi tạo cho Màn 1. Hãy thay nội dung này bằng giao diện dịch vụ và tư vấn khách hàng theo thiết kế PA#1.</p>
+  <main class="site-main gs-stack" id="top">
+    <section class="gs-hero gs-stack" aria-labelledby="hero-title">
+      <img
+        src="assets/images/hero1.jpg"
+        alt="Nhóm bạn mặc áo tốt nghiệp chụp ảnh kỷ yếu tại sân trường"
+        width="6000"
+        height="4000"
+        fetchpriority="high"
+      >
+
+      <div class="gs-hero__content gs-stack">
+        <p class="gs-eyebrow">Studio ảnh tốt nghiệp &amp; chân dung</p>
+        <h1 id="hero-title">Lưu lại ngày<br><em>ra trường</em><br>theo cách của bạn</h1>
+        <p class="gs-hero__lead">Kỷ yếu lớp, tốt nghiệp, chân dung CV — tư vấn ngay trên web, chốt lịch rõ ràng, chọn ảnh trong tài khoản của bạn.</p>
+
+        <div class="gs-cluster">
+          <a class="gs-btn gs-btn--primary" href="#goi-chup">Xem gói chụp</a>
+          <a class="gs-btn gs-btn--secondary" href="#chat-gradstudio">Chat với studio</a>
+        </div>
+
+        <ul class="gs-cluster gs-list-reset" aria-label="Điểm nổi bật">
+          <li>Tư vấn trực tiếp trên web</li>
+          <li>Không lo trùng lịch</li>
+          <li>Chọn ảnh ngay trong tài khoản</li>
+        </ul>
+      </div>
+
+      <a class="gs-scroll-cue" href="#dich-vu">Cuộn xuống</a>
     </section>
+
+    <aside class="gs-chat-panel" id="chat-gradstudio" aria-labelledby="chat-title" tabindex="-1">
+      <header class="gs-chat-panel__header">
+        <span class="gs-avatar" aria-hidden="true"></span>
+        <div>
+          <h2 id="chat-title"><span class="gs-visually-hidden">Chat với </span>GradStudio</h2>
+          <p class="gs-chat-status">Đang hoạt động</p>
+        </div>
+        <button class="gs-chat-min" type="button" aria-label="Thu nhỏ khung chat">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 8h8"/></svg>
+        </button>
+      </header>
+
+      <div class="gs-chat-body">
+        <p class="gs-chat-context">Đang hỏi về: <strong>Gói Tốt nghiệp</strong></p>
+
+        <ol class="gs-chat-messages gs-list-reset" aria-label="Cuộc trò chuyện mẫu">
+          <li class="gs-msg gs-msg--user">
+            <strong class="gs-visually-hidden">Nguyễn Thùy Linh</strong>
+            <p class="gs-msg__bubble">Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?</p>
+            <time datetime="17:20">17:20</time>
+          </li>
+          <li class="gs-msg gs-msg--studio">
+            <strong class="gs-visually-hidden">GradStudio</strong>
+            <p class="gs-msg__bubble">Để mình kiểm tra lịch cho bạn nhé.</p>
+            <time datetime="17:21">17:21</time>
+          </li>
+          <li class="gs-msg gs-msg--studio gs-msg--typing">
+            <span class="gs-visually-hidden">GradStudio đang soạn tin nhắn</span>
+            <span class="gs-msg__bubble" aria-hidden="true"><i></i><i></i><i></i></span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="gs-chat-composer">
+        <label for="message-preview">Tin nhắn</label>
+        <input class="gs-input" id="message-preview" type="text" placeholder="Nhập tin nhắn…" readonly>
+        <button class="gs-btn gs-btn--primary gs-chat-send" type="button" disabled aria-label="Gửi">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 9h11M10 4.5 14.5 9 10 13.5"/></svg>
+        </button>
+        <p class="gs-help gs-visually-hidden">Đây là đoạn chat mẫu; prototype không gửi tin nhắn.</p>
+      </div>
+    </aside>
+
+    <section class="gs-stack" id="dich-vu" aria-labelledby="services-title">
+      <div class="gs-stack">
+        <p>Dịch vụ</p>
+        <h2 id="services-title">Chọn buổi chụp của bạn</h2>
+        <p>Mỗi buổi chụp bắt đầu bằng một cuộc trò chuyện — để mình hiểu bạn muốn kể câu chuyện nào.</p>
+      </div>
+
+      <div class="gs-package-grid gs-stack" id="goi-chup">
+        <article class="gs-card gs-stack" id="goi-ky-yeu">
+          <img src="assets/images/GoiKyyeulop.jpg" alt="Tập thể học sinh chụp ảnh kỷ yếu tại sân trường" width="4000" height="6000" loading="lazy" decoding="async">
+          <p>01</p>
+          <h3>Kỷ yếu lớp</h3>
+          <p>Một người đại diện đặt lịch cho cả lớp.</p>
+          <p><strong>Từ 350.000đ/người</strong></p>
+          <a class="gs-btn gs-btn--secondary" href="#chat-gradstudio" aria-label="Tư vấn gói Kỷ yếu lớp">Tư vấn gói này</a>
+        </article>
+
+        <article class="gs-card gs-card--sunken gs-stack" id="goi-tot-nghiep">
+          <img src="assets/images/GoiTotNghiep.jpg" alt="Hai sinh viên mặc áo tốt nghiệp cầm hoa" width="4000" height="6000" loading="lazy" decoding="async">
+          <p>Phổ biến · 02</p>
+          <h3>Tốt nghiệp</h3>
+          <p>Chụp cá nhân hoặc nhóm nhỏ, tùy chọn makeup và thuê áo.</p>
+          <p>Gói Tốt nghiệp Premium gồm 2 giờ chụp và 30 ảnh chỉnh.</p>
+          <p><strong>Từ 1.800.000đ</strong></p>
+          <a class="gs-btn gs-btn--primary" href="#chat-gradstudio" aria-label="Tư vấn gói Tốt nghiệp">Tư vấn gói này</a>
+        </article>
+
+        <article class="gs-card gs-stack" id="goi-chan-dung">
+          <img src="assets/images/GoiCh%C3%A2n%20dungCV.jpg" alt="Nam khách hàng mặc vest trong buổi chụp chân dung" width="4000" height="6000" loading="lazy" decoding="async">
+          <p>03</p>
+          <h3>Chân dung/CV</h3>
+          <p>Buổi chụp ngắn, chọn ảnh cần chỉnh và nhận file.</p>
+          <p><strong>Từ 690.000đ</strong></p>
+          <a class="gs-btn gs-btn--secondary" href="#chat-gradstudio" aria-label="Tư vấn gói Chân dung/CV">Tư vấn gói này</a>
+        </article>
+      </div>
+      <p class="gs-help">Giá tham khảo — giá chốt được ghi trên booking sau khi tư vấn.</p>
+    </section>
+
+    <section class="gs-stack" aria-labelledby="process-title">
+      <div class="gs-stack">
+        <p>Quy trình</p>
+        <h2 id="process-title">Từ một tin nhắn đến bộ ảnh hoàn chỉnh</h2>
+      </div>
+
+      <ol class="gs-process-grid gs-stack gs-list-reset">
+        <li class="gs-card gs-stack">
+          <p>01</p>
+          <h3>Chat tư vấn</h3>
+          <p>Nhắn studio ngay trên web để hỏi gói, concept và giá.</p>
+        </li>
+        <li class="gs-card gs-stack">
+          <p>02</p>
+          <h3>Chốt lịch</h3>
+          <p>Studio kiểm tra thợ chụp, makeup, phòng và giữ lịch cho bạn.</p>
+        </li>
+        <li class="gs-card gs-stack">
+          <p>03</p>
+          <h3>Buổi chụp</h3>
+          <p>Ekip chuẩn bị theo checklist của từng loại buổi chụp.</p>
+        </li>
+        <li class="gs-card gs-stack">
+          <p>04</p>
+          <h3>Chọn ảnh &amp; nhận file</h3>
+          <p>Chọn ảnh cần chỉnh trong tài khoản, nhận file khi hoàn tất.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="gs-card gs-stack" aria-labelledby="class-title">
+      <p>Kỷ yếu lớp</p>
+      <h2 id="class-title">Cả lớp, một khung hình</h2>
+      <p>Một người đại diện đặt lịch cho cả lớp. Studio lo trang phục, makeup và lịch chụp cho cả nhóm.</p>
+      <a class="gs-btn gs-btn--primary" href="#chat-gradstudio">Tư vấn kỷ yếu</a>
+    </section>
+
+    <section class="gs-card gs-stack" aria-labelledby="closing-title">
+      <h2 id="closing-title">Ngày ra trường chỉ có một lần</h2>
+      <p>Nhắn GradStudio để giữ lịch đẹp cho mùa tốt nghiệp này.</p>
+      <a class="gs-btn gs-btn--primary" href="#chat-gradstudio">Chat với studio</a>
+    </section>
+
   </main>
 
   <footer class="site-footer">
-    <p>GradStudio – Prototype giao diện PA#2</p>
+    <div class="gs-container gs-stack">
+      <section class="gs-stack" aria-labelledby="footer-brand-title">
+        <h2 id="footer-brand-title">GradStudio</h2>
+        <p>Studio ảnh kỷ yếu, tốt nghiệp và chân dung — kể lại ngày của bạn bằng ánh sáng dịu và sự tận tâm.</p>
+      </section>
+
+      <section class="gs-stack" aria-labelledby="footer-services-title">
+        <h2 id="footer-services-title">Dịch vụ</h2>
+        <ul class="gs-list-reset gs-stack">
+          <li><a class="gs-btn gs-btn--ghost" href="#goi-ky-yeu">Kỷ yếu lớp</a></li>
+          <li><a class="gs-btn gs-btn--ghost" href="#goi-tot-nghiep">Tốt nghiệp</a></li>
+          <li><a class="gs-btn gs-btn--ghost" href="#goi-chan-dung">Chân dung/CV</a></li>
+        </ul>
+      </section>
+
+      <section class="gs-stack" aria-labelledby="footer-account-title">
+        <h2 id="footer-account-title">Tài khoản</h2>
+        <ul class="gs-list-reset gs-stack">
+          <li><a class="gs-btn gs-btn--ghost" href="page3.html">Lịch chụp của tôi</a></li>
+        </ul>
+      </section>
+
+      <section class="gs-stack" aria-labelledby="footer-contact-title">
+        <h2 id="footer-contact-title">Liên hệ</h2>
+        <address>
+          GradStudio, TP. Hồ Chí Minh<br>
+          <a class="gs-btn gs-btn--ghost" href="tel:0900000000">0900 000 000</a><br>
+          Mở cửa 8:00–20:00 mỗi ngày
+        </address>
+      </section>
+    </div>
+    <p>© 2026 GradStudio</p>
   </footer>
+  <button class="gs-chat-fab" type="button" aria-controls="chat-gradstudio" aria-expanded="false" aria-label="Mở chat với GradStudio">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.55L3 20.5l1.5-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 10.5h7M8.5 13.5h4.5"/></svg>
+  </button>
+
+  <script>
+    // Chat nổi: bấm icon (hoặc các nút "Chat với studio", "Tư vấn gói này") để mở, bấm "–" hoặc Esc để đóng.
+    (function () {
+      var body = document.body;
+      var panel = document.getElementById('chat-gradstudio');
+      var fab = document.querySelector('.gs-chat-fab');
+      var closeBtn = panel && panel.querySelector('.gs-chat-min');
+      if (!panel || !fab || !closeBtn) return;
+
+      body.classList.add('js-chat'); // chỉ ẩn khung chat khi JS chạy được
+
+      function setOpen(open) {
+        body.classList.toggle('chat-open', open);
+        fab.setAttribute('aria-expanded', String(open));
+        (open ? panel : fab).focus();
+      }
+
+      fab.addEventListener('click', function () { setOpen(true); });
+      closeBtn.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && body.classList.contains('chat-open')) setOpen(false);
+      });
+      document.querySelectorAll('a[href="#chat-gradstudio"]').forEach(function (a) {
+        a.addEventListener('click', function (e) { e.preventDefault(); setOpen(true); });
+      });
+    })();
+  </script>
+  <!-- Thanh điều hướng vai trò demo dưới góc trái theo PA#1 -->
+  <aside class="demo-role-bar" aria-label="Điều hướng demo giữa các vai trò">
+    <nav class="demo-nav" aria-label="Chuyển màn hình demo">
+      <a href="index.html" class="demo-link demo-link--active" aria-current="page">Màn 1</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page2.html" class="demo-link">Màn 2</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <a href="page3.html" class="demo-link">Màn 3</a>
+      <span class="demo-divider" aria-hidden="true">·</span>
+      <button type="button" class="demo-reset-btn" aria-label="Đặt lại trạng thái demo">
+        <span aria-hidden="true">↺</span> Đặt lại demo
+      </button>
+    </nav>
+  </aside>
 </body>
 </html>

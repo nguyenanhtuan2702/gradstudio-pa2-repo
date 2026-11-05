@@ -1,119 +1,2563 @@
-/*
- * CSS dùng chung cho GradStudio PA#2.
- * Đây là bộ khung ban đầu; thành viên B hoàn thiện design tokens
- * dựa trên giao diện PA#1 và thống nhất với cả nhóm.
+/* GradStudio foundation — adapted from the supplied prototype foundations.css.
+ * Plain CSS; no network fonts, scripts or build step required.
+ * Load style.css instead of styles.css (do not load both).
+ * Font names are preferences: system fallbacks work offline.
+ * Use .gs-input for text-like inputs, not checkbox/radio/file controls.
+ * Disabled anchors: aria-disabled only communicates state; omit href for
+ * unavailable navigation. CSS does not prevent activation or save data.
  */
-
 :root {
   color-scheme: light;
-  --color-background: #faf6f0;
-  --color-surface: #fffdfa;
-  --color-text: #2c2219;
-  --color-muted: #65584c;
-  --color-accent: #806044;
-  --color-border: #e7ddd1;
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --content-width: 75rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  /* Compatibility aliases: gs tokens remain the single source of truth. */
+  --color-background: var(--gs-color-bg);
+  --color-surface: var(--gs-color-surface);
+  --color-text: var(--gs-color-text);
+  --color-muted: var(--gs-color-text-muted);
+  --color-accent: var(--gs-color-primary);
+  --color-border: var(--gs-color-border);
+  --space-1: var(--gs-space-1);
+  --space-2: var(--gs-space-2);
+  --space-3: var(--gs-space-3);
+  --space-4: var(--gs-space-4);
+  --space-6: var(--gs-space-6);
+  --space-8: var(--gs-space-8);
+  --space-12: var(--gs-space-12);
+  --space-16: var(--gs-space-16);
+  --content-width: var(--gs-container-max);
+  /* ---- Màu chuẩn theo 03-customer-appointment.png ---- */
+  --gs-color-bg: #FAF6F1;
+  --gs-color-surface: #FFFDF9;
+  --gs-color-surface-sunken: #F8F2EA;
+  --gs-color-text: #2B2118;
+  --gs-color-text-muted: #65584C;
+  --gs-color-text-disabled: #94887C;
+  --gs-color-text-inverse: #FFFFFF;
+  --gs-color-border: #EBE2D5;
+  --gs-color-border-subtle: #EFEBE5;
+  --gs-color-border-strong: #C4B9AA;
+  --gs-color-border-control: #8D6026;
+  --gs-color-primary: #8D6026;
+  --gs-color-primary-hover: #754E1D;
+  --gs-color-primary-active: #5C3D16;
+  --gs-color-primary-soft: #F3E6D3;
+  --gs-color-accent: #C9A46A;
+  --gs-color-success: #2F6B4A;
+  --gs-color-success-soft: #E3F0E8;
+  --gs-color-warning: #7A4E00;
+  --gs-color-warning-soft: #F3E6D3;
+  --gs-color-error: #A3302B;
+  --gs-color-error-soft: #FBE6E3;
+  --gs-color-focus: #1F5FA8;
+  --gs-color-dark: #2B2118;
+  --gs-color-backdrop: rgba(43, 33, 24, 0.5);
+
+  /* ---- Font ---- */
+  --gs-font-serif: Cambria, "Times New Roman", "Noto Serif", serif;
+  --gs-font-sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gs-weight-regular: 400;
+  --gs-weight-medium: 500;
+  --gs-weight-semibold: 600;
+
+  /* ---- Cỡ chữ (mobile-first; đổi tại 768 và 1280) ---- */
+  --gs-text-xs: 0.75rem;
+  --gs-text-sm: 0.875rem;
+  --gs-text-base: 1rem;
+  --gs-text-lg: 1.125rem;
+  --gs-text-h3: 1.25rem;
+  --gs-text-h2: 1.5rem;
+  --gs-text-h1: 1.875rem;
+  --gs-text-display: 2.25rem;
+  /* Line-height: tách nội dung và điều khiển UI */
+  --gs-leading-display: 1.25;   /* hero, h1 */
+  --gs-leading-heading: 1.3;    /* h2 */
+  --gs-leading-subheading: 1.35;/* h3, h4 */
+  --gs-leading-body: 1.6;       /* nội dung đọc nhiều dòng */
+  --gs-leading-compact: 1.5;    /* caption, tin nhắn chat, chú thích nhiều dòng */
+  --gs-leading-ui: 1.4;         /* nhãn, nút, tab, input, badge (thường một dòng) */
+
+  /* ---- Spacing (4px) ---- */
+  --gs-space-1: 0.25rem;
+  --gs-space-2: 0.5rem;
+  --gs-space-3: 0.75rem;
+  --gs-space-4: 1rem;
+  --gs-space-5: 1.25rem;
+  --gs-space-6: 1.5rem;
+  --gs-space-8: 2rem;
+  --gs-space-10: 2.5rem;
+  --gs-space-12: 3rem;
+  --gs-space-16: 4rem;
+  --gs-space-20: 5rem;
+
+  /* ---- Radius ---- */
+  --gs-radius-sm: 4px;
+  --gs-radius-md: 8px;
+  --gs-radius-lg: 12px;
+  --gs-radius-xl: 16px;
+  --gs-radius-full: 999px;
+
+  /* ---- Shadow ---- */
+  --gs-shadow-sm: 0 1px 2px rgba(35, 31, 26, 0.06);
+  --gs-shadow-md: 0 4px 14px rgba(35, 31, 26, 0.12);
+  --gs-shadow-lg: 0 16px 40px rgba(35, 31, 26, 0.2);
+
+  /* ---- Điều khiển / focus / layout ---- */
+  --gs-control-height: 2.75rem;
+  --gs-control-height-sm: 2.25rem;
+  --gs-focus-width: 2px;
+  --gs-focus-offset: 2px;
+  --gs-container-pad: 1rem;
+  --gs-container-max: 1200px;
+  --gs-container-max-wide: 1440px;
+  --gs-transition: 150ms ease;
 }
 
-* {
-  box-sizing: border-box;
+/* Tablet ≥ 768px */
+@media (min-width: 768px) {
+  :root {
+    --gs-text-h3: 1.25rem;
+    --gs-text-h2: 1.75rem;
+    --gs-text-h1: 2.25rem;
+    --gs-text-display: 3rem;
+    --gs-container-pad: 1.5rem;
+  }
 }
+
+/* Desktop ≥ 1280px */
+@media (min-width: 1280px) {
+  :root {
+    --gs-text-h3: 1.375rem;
+    --gs-text-h2: 2rem;
+    --gs-text-h1: 2.5rem;
+    --gs-text-display: 3.5rem;
+    --gs-container-pad: 2rem;
+  }
+}
+
+/* ---- Reset (chỉ phần an toàn, không đụng bố cục lịch/chat) ---- */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
-  min-width: 320px;
-  background: var(--color-background);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 1rem;
 }
+
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+
+.gs-list-reset { list-style: none; margin: 0; padding: 0; }
 
 body {
-  min-width: 320px;
-  margin: 0;
-  color: var(--color-text);
-  background: var(--color-background);
-  line-height: 1.6;
   overflow-wrap: anywhere;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--gs-color-bg);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  line-height: var(--gs-leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-a {
-  color: var(--color-accent);
+h1, h2, h3, h4 {
+  font-family: var(--gs-font-serif);
+  font-weight: var(--gs-weight-medium);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+h1 { font-size: var(--gs-text-h1); line-height: var(--gs-leading-display); }
+h2 { font-size: var(--gs-text-h2); line-height: var(--gs-leading-heading); }
+h3, h4 { font-size: var(--gs-text-h3); line-height: var(--gs-leading-subheading); font-weight: var(--gs-weight-semibold); }
+.gs-display { font-family: var(--gs-font-serif); font-size: var(--gs-text-display); line-height: var(--gs-leading-display); font-weight: var(--gs-weight-medium); letter-spacing: 0; }
+p { overflow-wrap: anywhere; }
+
+a { color: var(--gs-color-primary); text-underline-offset: 0.2em; }
+a:hover { color: var(--gs-color-primary-hover); }
+
+img, picture, video, canvas { display: block; max-width: 100%; height: auto; }
+svg { max-width: 100%; }
+
+/* Form controls: chỉ kế thừa font/màu. Hình thức nằm ở class .gs-* */
+button, input, select, textarea { font: inherit; color: inherit; margin: 0; }
+button { cursor: pointer; }
+button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+textarea { resize: vertical; }
+
+/* ---- Focus-visible ---- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--gs-focus-width) solid var(--gs-color-focus);
+  outline-offset: var(--gs-focus-offset);
+}
+.gs-on-dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: #FFFFFF;
 }
 
-.site-header,
-.site-main,
-.site-footer {
-  width: min(100% - 2rem, var(--content-width));
+.gs-container {
+  width: 100%;
+  max-width: var(--gs-container-max);
   margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+}
+.gs-container--wide { max-width: var(--gs-container-max-wide); }
+
+/* ---- Button ---- */
+.gs-btn {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--gs-space-2);
+  min-height: var(--gs-control-height);
+  min-width: var(--gs-control-height);
+  max-width: 100%;
+  padding: var(--gs-space-2) var(--gs-space-5);
+  border: 1px solid transparent;
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-semibold);
+  line-height: var(--gs-leading-compact);
+  text-align: center; text-decoration: none;
+  transition: background-color var(--gs-transition), border-color var(--gs-transition), color var(--gs-transition);
+}
+.gs-btn--block { display: flex; width: 100%; }
+
+.gs-btn--primary { background: var(--gs-color-primary); color: var(--gs-color-text-inverse); }
+.gs-btn--primary:hover { background: var(--gs-color-primary-hover); color: var(--gs-color-text-inverse); }
+.gs-btn--primary:active { background: var(--gs-color-primary-active); }
+
+.gs-btn--secondary { border-color: var(--gs-color-border-control); background: var(--gs-color-surface); color: var(--gs-color-text); }
+.gs-btn--secondary:hover { border-color: var(--gs-color-primary); color: var(--gs-color-primary-hover); }
+.gs-btn--secondary:active { background: var(--gs-color-surface-sunken); }
+
+.gs-btn--ghost { background: transparent; color: var(--gs-color-primary); }
+.gs-btn--ghost:hover { background: var(--gs-color-primary-soft); color: var(--gs-color-primary-hover); }
+.gs-btn--ghost:active { background: var(--gs-color-border); }
+
+.gs-btn--danger { background: var(--gs-color-error); color: var(--gs-color-text-inverse); }
+.gs-btn--danger:hover { filter: brightness(0.9); }
+
+.gs-btn:disabled, .gs-btn[aria-disabled="true"] {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+  color: var(--gs-color-text-disabled);
+  filter: none;
 }
 
+/* ---- Field: input / select / textarea ---- */
+.gs-label { display: block; margin-bottom: var(--gs-space-1); font-size: var(--gs-text-sm); font-weight: var(--gs-weight-medium); color: var(--gs-color-text); }
+.gs-help { margin-top: var(--gs-space-1); font-size: var(--gs-text-sm); color: var(--gs-color-text-muted); }
+.gs-error-text { margin-top: var(--gs-space-1); font-size: var(--gs-text-sm); color: var(--gs-color-error); }
+
+.gs-input, .gs-select, .gs-textarea {
+  display: block; width: 100%;
+  min-height: var(--gs-control-height);
+  min-width: 0;
+  max-width: 100%;
+  padding: var(--gs-space-2) var(--gs-space-3);
+  border: 1px solid var(--gs-color-border-control);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);   /* 16px: tránh tự phóng to trên iOS */
+  line-height: var(--gs-leading-compact);
+  transition: border-color var(--gs-transition);
+}
+.gs-input::placeholder, .gs-textarea::placeholder { color: var(--gs-color-text-muted); opacity: 1; }
+.gs-input:where(:enabled:not([readonly]):hover), .gs-select:where(:enabled:hover), .gs-textarea:where(:enabled:not([readonly]):hover) { border-color: var(--gs-color-primary); }
+.gs-textarea { min-height: 6rem; }
+/* Keep the native select arrow and keyboard behavior. */
+.gs-input[readonly], .gs-textarea[readonly] { background: var(--gs-color-surface-sunken); }
+.gs-input:disabled, .gs-select:disabled, .gs-textarea:disabled {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+  color: var(--gs-color-text-disabled);
+  cursor: not-allowed;
+}
+.gs-input[aria-invalid="true"], .gs-select[aria-invalid="true"], .gs-textarea[aria-invalid="true"], .gs-input:user-invalid, .gs-select:user-invalid, .gs-textarea:user-invalid {
+  border-color: var(--gs-color-error);
+}
+
+
+/* Opt-in flow helpers allow grid/flex children and long text to shrink. */
+.gs-stack { display: grid; gap: var(--gs-space-4); }
+.gs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--gs-space-3); }
+.gs-stack > *, .gs-cluster > * { min-width: 0; max-width: 100%; }
+.gs-card, .page-placeholder {
+  min-width: 0;
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+.gs-card--sunken { background: var(--gs-color-surface-sunken); }
+.gs-input:where(:enabled:not([readonly]):active), .gs-select:where(:enabled:active),
+.gs-textarea:where(:enabled:not([readonly]):active) { border-color: var(--gs-color-primary-active); }
+.gs-input[aria-invalid="true"], .gs-select[aria-invalid="true"],
+.gs-textarea[aria-invalid="true"] { border-color: var(--gs-color-error); }
+.gs-input:disabled, .gs-select:disabled, .gs-textarea:disabled { opacity: 1; }
+
+/* Existing starter HTML remains usable when its stylesheet link is updated. */
 .site-header {
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--gs-color-bg);
+  border-bottom: 1px solid var(--gs-color-border-subtle);
+}
+
+.site-main, .site-footer {
+  width: 100%;
+  max-width: var(--gs-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+}
+.site-footer { padding-block: var(--gs-space-4); }
+.site-main { min-height: 65vh; padding-block: var(--gs-space-8); }
+.site-footer { color: var(--gs-color-text-muted); border-top: 1px solid var(--gs-color-border); }
+.page-placeholder > * + * { margin-top: var(--gs-space-4); }
+/* Header Navigation & Inner layout */
+.site-header__inner {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding: 0 clamp(1rem, 4vw, 3.5rem);
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--gs-space-4);
+}
+
+.site-logo {
+  justify-self: start;
+  font-family: var(--gs-font-serif);
+  font-size: 1.625rem;
+  font-weight: var(--gs-weight-regular);
+  color: var(--gs-color-text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .site-nav {
+  justify-self: center;
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  align-items: center;
+  gap: clamp(1.5rem, 3.5vw, 3rem);
 }
 
-.site-nav a {
+.site-nav a,
+.site-nav__link {
   display: inline-flex;
-  min-height: 44px;
   align-items: center;
   justify-content: center;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
+  min-height: 44px;
+  padding: var(--gs-space-2) 0;
+  color: var(--gs-color-text-muted);
   text-decoration: none;
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  transition: color var(--gs-transition), border-color var(--gs-transition);
 }
 
-.site-nav a[aria-current="page"] {
-  color: var(--color-surface);
-  background: var(--color-text);
-  border-color: var(--color-text);
+.site-nav a:hover,
+.site-nav__link:hover {
+  color: var(--gs-color-text);
 }
 
-.site-main {
-  min-height: 65vh;
-  padding-block: var(--space-8);
+.site-nav a[aria-current="page"],
+.site-nav__link[aria-current="page"] {
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+  background: transparent;
+  border-bottom: 2px solid var(--gs-color-accent);
 }
 
-.page-placeholder {
-  padding: var(--space-6);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 1rem;
+.user-profile {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  min-height: 44px;
+  padding: var(--gs-space-1) var(--gs-space-2);
+  color: var(--gs-color-text);
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-medium);
 }
 
-.page-placeholder h1 {
-  margin-top: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.2;
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--gs-color-border);
+  flex-shrink: 0;
 }
 
-.site-footer {
-  padding-block: var(--space-4);
-  color: var(--color-muted);
-  border-top: 1px solid var(--color-border);
-}
-
-img {
+.user-avatar img,
+.user-avatar-img,
+.user-avatar svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
   display: block;
-  max-width: 100%;
-  height: auto;
+}
+
+.user-chevron {
+  color: var(--gs-color-text-muted);
+  display: inline-flex;
+}
+
+@media (max-width: 767px) {
+  .site-header__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    min-height: 56px;
+    padding: var(--gs-space-2) var(--gs-space-4);
+    gap: var(--gs-space-2);
+  }
+  .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: var(--gs-space-6);
+    padding-top: var(--gs-space-1);
+    border-top: 1px solid var(--gs-color-border-subtle);
+  }
+}
+@media (min-width: 768px) {
+  .gs-card, .page-placeholder { padding: var(--gs-space-6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --gs-transition: 0s; }
+}
+
+
+
+/* ========================================
+   PAGE 1 - CUSTOMER SERVICES
+   Thành viên A phụ trách
+   Bám theo ảnh mẫu 01-customer-services-chat.png
+======================================== */
+
+.page-home {
+  /* Biến riêng của trang 1 (không ảnh hưởng các trang khác) */
+  --gs-font-serif: Cambria, "Times New Roman", serif;
+  --gs-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --home-brown: #8E622A;
+  --home-brown-hover: #7A5320;
+  --home-gold: #CDA862;
+  --home-cream: #FAF7F1;
+  --home-wrap: 1376px;
+}
+
+.gs-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Khung trang: hero full-bleed, các phần còn lại giữ container ---------- */
+.page-home .site-main {
+  max-width: none;
+  min-height: 0;
+  padding: 0 0 var(--gs-space-16);
+  gap: var(--gs-space-16);
+}
+
+.page-home .site-main > :not(.gs-hero):not(.gs-chat-panel):not(.gs-proto-nav) {
+  width: min(100% - 2 * var(--gs-container-pad), var(--gs-container-max));
+  margin-inline: auto;
+}
+
+/* ---------- Header trong suốt đè lên hero ---------- */
+.page-home .site-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+}
+
+.page-home .site-header > .gs-container {
+  max-width: var(--home-wrap);
+  min-height: 82px;
+  padding-block: 20px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.page-home .gs-brand,
+.page-home .gs-brand:hover,
+.page-home .gs-brand:active {
+  min-height: var(--gs-control-height);
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-family: var(--gs-font-serif);
+  gap: 0;
+  font-size: 1.625rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.page-home .gs-brand em { font-style: italic; }
+
+.page-home .site-nav {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.page-home .site-nav a {
+  min-width: 0;
+  min-height: var(--gs-control-height);
+  padding: 8px 0 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.page-home .site-nav a:hover { color: #fff; }
+.page-home .site-nav a[aria-current="page"] {
+  background: transparent;
+  color: #fff;
+  border-bottom-color: var(--home-gold);
+}
+
+.page-home .gs-account {
+  flex-wrap: nowrap;
+  gap: 0.625rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Avatar tạm: cắt từ ảnh hero. Thay bằng ảnh đại diện thật khi có. */
+.gs-avatar {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: #5b4631 url("assets/images/hero1.jpg") 46% 30% / 800% auto no-repeat;
 }
 
 @media (min-width: 768px) {
-  .site-header,
-  .site-main,
-  .site-footer {
-    width: min(100% - 3rem, var(--content-width));
+  .page-home .site-header > .gs-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .page-home .gs-account { justify-self: end; }
+}
+
+/* ---------- Hero ---------- */
+.page-home .gs-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  gap: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 132px 0 120px;
+  overflow: hidden;
+  background: #2b2118;
+  color: #fff;
+}
+
+.page-home .gs-hero > img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 10%;
+}
+
+.page-home .gs-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(36, 26, 18, 0.94) 0%, rgba(36, 26, 18, 0.84) 32%, rgba(36, 26, 18, 0.5) 62%, rgba(36, 26, 18, 0.3) 100%),
+    linear-gradient(180deg, rgba(20, 14, 9, 0.45) 0%, rgba(20, 14, 9, 0) 22%, rgba(20, 14, 9, 0) 72%, rgba(20, 14, 9, 0.45) 100%);
+}
+
+.page-home .gs-hero__content {
+  width: 100%;
+  max-width: var(--home-wrap);
+  margin-inline: auto;
+  padding-inline: var(--gs-container-pad);
+  gap: 0;
+  justify-items: start;
+}
+
+.page-home .gs-eyebrow {
+  color: var(--home-gold);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.page-home .gs-hero__content h1 {
+  max-width: none;
+  margin-top: 1.5rem;
+  color: #fff;
+  font-size: clamp(2.75rem, 5.6vw, 5rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.page-home .gs-hero__content h1 em {
+  color: var(--home-gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.page-home .gs-hero__lead {
+  max-width: 31rem;
+  margin-top: 1.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.page-home .gs-hero__content > div.gs-cluster {
+  margin-top: 2.5rem;
+  gap: 1rem;
+}
+
+.page-home .gs-hero .gs-btn {
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border-radius: var(--gs-radius-full);
+  font-size: 0.9375rem;
+}
+.page-home .gs-hero .gs-btn--primary { background: var(--home-brown); }
+.page-home .gs-hero .gs-btn--primary:hover { background: var(--home-brown-hover); }
+.page-home .gs-hero .gs-btn--secondary {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  color: #fff;
+}
+.page-home .gs-hero .gs-btn--secondary:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+.page-home .gs-hero .gs-btn--secondary:active { background: rgba(255, 255, 255, 0.22); }
+
+.page-home .gs-hero__content > ul {
+  margin-top: 2.75rem;
+  gap: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.page-home .gs-hero__content > ul li { padding-inline: 1.5rem; }
+.page-home .gs-hero__content > ul li:first-child { padding-left: 0; }
+.page-home .gs-hero__content > ul li + li { border-left: 1px solid rgba(255, 255, 255, 0.35); }
+
+.page-home .gs-scroll-cue,
+.page-home .gs-scroll-cue:hover {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.page-home .gs-scroll-cue::after {
+  content: "";
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+}
+
+/* ---------- Khung chat ---------- */
+.page-home .gs-chat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: min(100% - 2 * var(--gs-container-pad), 26rem);
+  height: min(32.5rem, calc(100svh - 2rem));
+  margin-inline: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 20px;
+  background: var(--home-cream);
+  box-shadow: 0 20px 50px rgba(35, 31, 26, 0.28);
+}
+
+.gs-chat-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--gs-color-border);
+  background: #F5EEE1;
+}
+.gs-chat-panel__header h2 {
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.gs-chat-status {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  color: var(--gs-color-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+.gs-chat-status::before {
+  content: "";
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: #3C9A5F;
+}
+.gs-chat-min {
+  display: grid;
+  place-items: center;
+  width: var(--gs-control-height);
+  height: var(--gs-control-height);
+  min-width: var(--gs-control-height);
+  min-height: var(--gs-control-height);
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gs-color-text);
+}
+.gs-chat-min { cursor: pointer; transition: background-color var(--gs-transition); }
+.gs-chat-min:hover { background: rgba(35, 31, 26, 0.08); }
+.gs-chat-panel:focus { outline: none; }
+
+.gs-chat-body {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: 1rem;
+  min-height: 0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.gs-chat-context {
+  justify-self: center;
+  margin: 0;
+  padding: 0.3rem 0.875rem;
+  border: 1px solid #D8B98A;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+.gs-chat-messages { display: grid; gap: 1rem; }
+
+.gs-msg { display: grid; justify-items: start; gap: 0.25rem; }
+.gs-msg--user { justify-items: end; }
+.gs-msg__bubble {
+  max-width: 88%;
+  margin: 0;
+  padding: 0.625rem 0.875rem;
+  border-radius: 16px 16px 16px 4px;
+  background: #F0E8DA;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: var(--gs-leading-compact);
+}
+.gs-msg--user .gs-msg__bubble {
+  border-radius: 16px 16px 4px 16px;
+  background: var(--home-brown);
+  color: #fff;
+}
+.gs-msg time {
+  color: var(--gs-color-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+}
+
+.gs-msg--typing .gs-msg__bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 0.9rem;
+}
+.gs-msg--typing i {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--home-brown);
+  animation: gs-typing 1.2s ease-in-out infinite;
+}
+.gs-msg--typing i:nth-child(2) { animation-delay: 0.15s; }
+.gs-msg--typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes gs-typing {
+  0%, 60%, 100% { opacity: 0.35; }
+  30% { opacity: 1; }
+}
+
+.gs-chat-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--gs-color-border);
+  background: var(--home-cream);
+}
+.page-home .gs-chat-composer .gs-input {
+  flex: 1;
+  padding-inline: 1rem;
+  border-color: var(--gs-color-border);
+  border-radius: var(--gs-radius-full);
+  background: #fff;
+  font-size: 0.875rem;
+}
+.page-home .gs-chat-send,
+.page-home .gs-chat-send:disabled {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 0;
+  padding: 0;
+  border-color: transparent;
+  border-radius: 50%;
+  background: var(--home-brown);
+  color: #fff;
+  cursor: default;
+}
+
+/* ---------- Nút chat nổi + ẩn/hiện khung chat ---------- */
+/* Không có JS: khung chat vẫn hiện như cũ. Có JS: body có .js-chat, khung ẩn cho tới khi body có .chat-open. */
+.page-home .gs-chat-fab { display: none; }
+
+.page-home.js-chat .gs-chat-fab {
+  position: fixed;
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(16px, 2vw, 32px);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--home-brown);
+  color: #fff;
+  box-shadow: var(--gs-shadow-lg);
+  transition: background-color var(--gs-transition), transform var(--gs-transition);
+}
+.page-home.js-chat .gs-chat-fab:hover { background: var(--home-brown-hover); transform: scale(1.05); }
+.page-home.js-chat .gs-chat-fab:active { background: var(--gs-color-primary-active); transform: scale(0.98); }
+.page-home.js-chat.chat-open .gs-chat-fab { display: none; }
+
+.page-home.js-chat .gs-chat-panel {
+  display: none;
+  position: fixed;
+  z-index: 40;
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(16px, 2vw, 32px);
+  width: min(380px, calc(100% - 2rem));
+  height: min(520px, calc(100svh - 4rem));
+  margin: 0;
+}
+.page-home.js-chat.chat-open .gs-chat-panel {
+  display: flex;
+  animation: gs-chat-in 180ms ease-out;
+}
+@keyframes gs-chat-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Ảnh thẻ dịch vụ ---------- */
+.page-home .gs-package-grid > .gs-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-4);
+}
+.page-home .gs-package-grid > .gs-card > img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: var(--gs-radius-md);
+}
+.page-home .gs-package-grid > .gs-card > a {
+  margin-top: auto;
+}
+
+/* ---------- Desktop: từ 1280px ---------- */
+@media (min-width: 1280px) {
+  .page-home .gs-package-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .page-home .gs-process-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .page-home .gs-chat-panel {
+    position: fixed;
+    z-index: 20;
+    right: 32px;
+    bottom: 32px;
+    width: 380px;
+    height: min(520px, calc(100svh - 64px));
+    margin: 0;
+  }
+
+  .page-home .site-footer > div {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  }
+}
+
+/* ---------- Mobile: dưới 768px ---------- */
+@media (max-width: 767px) {
+  .page-home .site-header > .gs-container {
+    min-height: 64px;
+    padding-block: 12px;
+    gap: var(--gs-space-2);
+  }
+
+  .page-home .gs-brand {
+    font-size: var(--gs-text-lg);
+  }
+
+  .page-home .site-nav {
+    justify-content: flex-end;
+    gap: var(--gs-space-4);
+  }
+
+  .page-home .site-nav a {
+    font-size: var(--gs-text-xs);
+  }
+
+  .page-home .site-header [role="group"] {
+    display: none;
+  }
+
+  .page-home .gs-hero {
+    min-height: min(760px, 100svh);
+    padding: 104px 0 72px;
+  }
+
+  .page-home .gs-hero::after {
+    background: linear-gradient(
+      90deg,
+      rgba(35, 27, 20, 0.82) 0%,
+      rgba(35, 27, 20, 0.58) 58%,
+      rgba(35, 27, 20, 0.34) 100%
+    );
+  }
+
+  .page-home .gs-hero > img {
+    object-position: 58% center;
+  }
+
+  .page-home .gs-hero__content h1 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  .page-home .gs-hero__content > div.gs-cluster {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .page-home .gs-hero__content > div.gs-cluster .gs-btn {
+    flex: 1 1 150px;
+  }
+
+  .page-home .gs-hero__content > ul {
+    display: grid;
+    gap: var(--gs-space-2);
+    margin-top: var(--gs-space-6);
+  }
+
+  .page-home .gs-hero__content > ul li,
+  .page-home .gs-hero__content > ul li + li {
+    padding-inline: 0;
+    border-left: 0;
+  }
+
+  .page-home .gs-scroll-cue {
+    display: none;
+  }
+
+  .page-home .gs-chat-panel {
+    height: 27.5rem;
+  }
+
+  .page-home .site-main {
+    gap: var(--gs-space-8);
+  }
+
+  .page-home .site-main > section:not(.gs-hero) {
+    gap: var(--gs-space-4);
+  }
+
+  .page-home .site-footer > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .page-home *,
+  .page-home *::before,
+  .page-home *::after {
+    scroll-behavior: auto;
+    transition-duration: 0s;
+    animation-duration: 0s;
+  }
+}
+
+
+/* ==========================================================================
+   Màn 3: Lịch chụp của tôi (Customer Appointment & Booking Details)
+   ========================================================================== */
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: var(--gs-space-2);
+  left: var(--gs-space-2);
+  z-index: 1000;
+  padding: var(--gs-space-2) var(--gs-space-4);
+  background: var(--gs-color-dark);
+  color: #FFFFFF;
+  border-radius: var(--gs-radius-md);
+  text-decoration: none;
+  font-weight: var(--gs-weight-semibold);
+  transform: translateY(-200%);
+  transition: transform var(--gs-transition);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Visually Hidden Utility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Site Header Extension handled above */
+
+/* Page Header & Tabs */
+.page-heading-section {
+  margin-bottom: var(--gs-space-6);
+}
+
+.page-title {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-h1);
+  line-height: var(--gs-leading-display);
+  color: var(--gs-color-text);
+  margin-bottom: var(--gs-space-2);
+}
+
+.page-subtitle {
+  font-size: var(--gs-text-base);
+  color: var(--gs-color-text-muted);
+  line-height: var(--gs-leading-body);
+  margin-bottom: var(--gs-space-6);
+}
+
+.booking-tabs-wrapper {
+  border-bottom: 1px solid var(--gs-color-border);
+  margin-bottom: var(--gs-space-6);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.booking-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-6);
+  min-width: max-content;
+  padding-bottom: 0;
+}
+
+.booking-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--gs-color-text-muted);
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  padding: var(--gs-space-2) 0 var(--gs-space-3);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  cursor: pointer;
+  transition: color var(--gs-transition), border-color var(--gs-transition);
+}
+
+.booking-tab:hover {
+  color: var(--gs-color-primary);
+}
+
+.booking-tab.active,
+.booking-tab[aria-selected="true"] {
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+  border-bottom-color: var(--gs-color-dark);
+}
+
+.tab-count {
+  color: var(--gs-color-text-disabled);
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-regular);
+}
+
+.booking-tab.active .tab-count,
+.booking-tab[aria-selected="true"] .tab-count {
+  color: var(--gs-color-text-muted);
+}
+
+/* Main Layout Grid */
+.appointment-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gs-space-6);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .appointment-layout {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--gs-space-6);
+  }
+}
+
+@media (min-width: 1280px) {
+  .appointment-layout {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--gs-space-8);
+  }
+}
+
+.appointment-main-col,
+.appointment-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-6);
+  min-width: 0;
+}
+
+/* Appointment Card Common */
+.appointment-card {
+  background: var(--gs-color-surface);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-xl);
+  padding: var(--gs-space-5);
+  box-shadow: var(--gs-shadow-sm);
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .appointment-card {
+    padding: var(--gs-space-6);
+  }
+}
+
+/* Calendar Card */
+.calendar-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gs-space-5);
+  gap: var(--gs-space-2);
+}
+
+.calendar-month-title {
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-lg);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text);
+}
+
+.calendar-week-badge {
+  font-size: var(--gs-text-xs);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.calendar-week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--gs-space-1);
+  margin-bottom: var(--gs-space-6);
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gs-space-2) 2px;
+  border-radius: var(--gs-radius-md);
+  min-height: 52px;
+}
+
+.calendar-day .day-name {
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  line-height: 1.2;
+}
+
+.calendar-day .day-number {
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  color: var(--gs-color-text);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.calendar-day--selected {
+  background: var(--gs-color-dark);
+  color: var(--gs-color-text-inverse);
+}
+
+.calendar-day--selected .day-name {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.calendar-day--selected .day-number {
+  color: #FFFFFF;
+  font-weight: var(--gs-weight-semibold);
+  font-size: 1.125rem;
+}
+
+.day-indicator {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-accent);
+  margin-top: 4px;
+}
+
+/* Timeline */
+.timeline-date-banner {
+  border-top: 1px solid var(--gs-color-border);
+  padding-top: var(--gs-space-5);
+  margin-bottom: var(--gs-space-5);
+}
+
+.timeline-date-text {
+  font-size: var(--gs-text-xs);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.appointment-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: var(--gs-space-4);
+  position: relative;
+  padding-bottom: var(--gs-space-6);
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.marker-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--gs-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gs-color-border-control);
+  background: var(--gs-color-surface);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.marker-circle--conflict {
+  border-color: var(--gs-color-border-strong);
+  color: var(--gs-color-text-disabled);
+}
+
+.marker-circle--makeup {
+  border-color: var(--gs-color-border-control);
+  color: var(--gs-color-primary);
+  font-weight: var(--gs-weight-semibold);
+  font-size: 0.875rem;
+}
+
+.marker-circle--photo {
+  border-color: var(--gs-color-border-control);
+  color: var(--gs-color-primary);
+}
+
+.timeline-connector {
+  width: 2px;
+  flex-grow: 1;
+  margin-top: 4px;
+}
+
+.timeline-connector--dashed {
+  border-left: 2px dashed var(--gs-color-border-strong);
+}
+
+.timeline-connector--solid {
+  background: var(--gs-color-border);
+}
+
+.timeline-body {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.timeline-time {
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text-muted);
+  margin-bottom: var(--gs-space-1);
+}
+
+.timeline-time del {
+  color: var(--gs-color-text-disabled);
+  text-decoration: line-through;
+}
+
+.timeline-title {
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text);
+  margin-bottom: var(--gs-space-1);
+  line-height: var(--gs-leading-compact);
+}
+
+.timeline-title--muted {
+  color: var(--gs-color-text-muted);
+  font-weight: var(--gs-weight-regular);
+}
+
+.timeline-desc {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  line-height: var(--gs-leading-compact);
+}
+
+.timeline-desc--muted {
+  color: var(--gs-color-text-disabled);
+}
+
+/* Booking Summary Card */
+.booking-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gs-space-2);
+  margin-bottom: var(--gs-space-4);
+}
+
+.booking-code {
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-primary);
+  letter-spacing: 0.05em;
+}
+
+.booking-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--gs-color-warning-soft);
+  color: var(--gs-color-warning);
+  border-radius: var(--gs-radius-full);
+  font-size: var(--gs-text-xs);
+  font-weight: var(--gs-weight-medium);
+  line-height: 1.3;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-accent);
+  flex-shrink: 0;
+}
+
+.booking-service-title {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-h2);
+  line-height: var(--gs-leading-heading);
+  color: var(--gs-color-text);
+  margin-bottom: var(--gs-space-5);
+}
+
+.booking-details-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gs-space-3);
+  margin-bottom: var(--gs-space-6);
+}
+
+.booking-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-4);
+  border-bottom: 1px dashed var(--gs-color-border);
+  padding-bottom: var(--gs-space-2);
+}
+
+.booking-detail-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-label {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  white-space: nowrap;
+}
+
+.detail-value {
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-medium);
+  color: var(--gs-color-text);
+  text-align: right;
+}
+
+.booking-pricing-box {
+  background: var(--gs-color-surface-sunken);
+  border-radius: var(--gs-radius-lg);
+  padding: var(--gs-space-4);
+  margin-bottom: var(--gs-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-2);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-4);
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text);
+}
+
+.price-row--highlight {
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text);
+}
+
+.price-row--highlight .price-value {
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-semibold);
+}
+
+.price-row--subtle {
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  line-height: 1.4;
+}
+
+.price-row--subtle .price-value {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-medium);
+}
+
+.booking-actions {
+  margin-top: var(--gs-space-2);
+}
+
+.btn-deposit-cta {
+  font-size: var(--gs-text-base);
+  min-height: 48px;
+  border-radius: var(--gs-radius-lg);
+}
+
+/* Studio Location Card */
+.studio-location-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.map-graphic-wrapper {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background: var(--gs-color-surface-sunken);
+  border-bottom: 1px solid var(--gs-color-border);
+  overflow: hidden;
+}
+
+.map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.map-pin {
+  position: absolute;
+  top: 36%;
+  left: 45%;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.map-pin-badge {
+  background: var(--gs-color-dark);
+  color: #FFFFFF;
+  font-size: var(--gs-text-xs);
+  font-weight: var(--gs-weight-medium);
+  padding: 3px 10px;
+  border-radius: var(--gs-radius-full);
+  box-shadow: var(--gs-shadow-sm);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.map-pin-pointer {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--gs-color-dark);
+  margin-top: -1px;
+}
+
+.map-badge-tag {
+  position: absolute;
+  bottom: var(--gs-space-2);
+  right: var(--gs-space-2);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--gs-color-text-muted);
+  font-size: 0.6875rem;
+  padding: 2px 8px;
+  border-radius: var(--gs-radius-sm);
+  border: 1px solid var(--gs-color-border);
+  pointer-events: none;
+}
+
+.studio-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-4);
+}
+
+.studio-brand {
+  display: block;
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-semibold);
+  color: var(--gs-color-text);
+  margin-bottom: 2px;
+}
+
+.studio-subtext {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+}
+
+.studio-directions-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-1);
+  min-height: 44px;
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-medium);
+  color: var(--gs-color-primary);
+  text-decoration: none;
+  padding: var(--gs-space-2) 0;
+}
+
+.studio-directions-link:hover {
+  text-decoration: underline;
+}
+
+/* Studio Proposal Callout Box */
+.schedule-proposal-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-4);
+  background: var(--gs-color-surface);
+  border: 1px dashed var(--gs-color-accent);
+  border-radius: var(--gs-radius-lg);
+}
+
+.proposal-callout-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--gs-color-accent);
+  margin-top: 2px;
+}
+
+.proposal-callout-text {
+  margin: 0;
+  font-size: var(--gs-text-sm);
+  line-height: var(--gs-leading-body);
+  color: var(--gs-color-text);
+  overflow-wrap: anywhere;
+}
+
+/* Floating Demo Role Switcher */
+.demo-role-bar {
+  position: fixed;
+  bottom: var(--gs-space-4);
+  left: var(--gs-space-4);
+  z-index: 100;
+  max-width: calc(100vw - 2rem);
+}
+
+.demo-nav {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gs-space-1);
+  padding: 4px 10px;
+  background: var(--gs-color-surface);
+  border: 1px solid var(--gs-color-border-control);
+  border-radius: var(--gs-radius-full);
+  box-shadow: var(--gs-shadow-md);
+}
+
+.demo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 4px 10px;
+  font-size: var(--gs-text-xs);
+  font-weight: var(--gs-weight-medium);
+  color: var(--gs-color-text);
+  text-decoration: none;
+  border-radius: var(--gs-radius-full);
+  transition: background var(--gs-transition), color var(--gs-transition);
+}
+
+.demo-link:hover {
+  background: var(--gs-color-surface-sunken);
+  color: var(--gs-color-primary);
+}
+
+.demo-link--active,
+.demo-link[aria-current="page"] {
+  background: var(--gs-color-primary);
+  color: #FFFFFF;
+  font-weight: var(--gs-weight-semibold);
+}
+
+.demo-link--active:hover {
+  background: var(--gs-color-primary-hover);
+  color: #FFFFFF;
+}
+
+.demo-divider {
+  color: var(--gs-color-border-strong);
+  font-size: var(--gs-text-xs);
+}
+
+.demo-reset-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--gs-font-sans);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  padding: 4px 8px;
+  min-height: 36px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--gs-radius-full);
+}
+
+.demo-reset-btn:hover {
+  color: var(--gs-color-text);
+  background: var(--gs-color-surface-sunken);
+}
+
+@media (max-width: 480px) {
+  .demo-role-bar {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: var(--gs-space-2);
+    width: calc(100% - 1.5rem);
+  }
+  .demo-nav {
+    width: 100%;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px 6px;
+  }
+  .demo-link,
+  .demo-reset-btn {
+    min-height: 44px;
+    padding: var(--gs-space-2) 6px;
+    font-size: var(--gs-text-xs);
+  }
+}
+
+/* Site Footer Extension */
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-1);
+}
+
+.footer-note {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-disabled);
+}
+
+
+/* ==========================================================================
+   MÀN 2 — Admin tư vấn, lịch tài nguyên và tạo booking (page2.html)
+   ========================================================================== */
+
+/* ---- Avatar chung (dùng cả Màn 2) ---- */
+.gs-avatar {
+  display: grid;
+  place-items: center;
+  width: var(--gs-control-height);
+  aspect-ratio: 1;
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary-hover);
+  font-weight: var(--gs-weight-semibold);
+  flex-shrink: 0;
+}
+
+/* ---- Admin shell ---- */
+.admin-page {
+  min-height: 100dvh;
+  background: var(--gs-color-bg);
+  padding-bottom: calc(var(--gs-space-20) + var(--gs-space-8));
+}
+
+/* ---- Header admin ---- */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--gs-color-surface);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.admin-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gs-space-4);
+  min-height: calc(var(--gs-space-16) + var(--gs-space-2));
+  padding-inline: var(--gs-container-pad);
+  max-width: var(--gs-container-max-wide);
+  margin-inline: auto;
+}
+
+/* Logo (dùng lại từ index) */
+.admin-page .logo {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-h3);
+  white-space: nowrap;
+  font-style: italic;
+}
+.admin-page .logo span {
+  color: var(--gs-color-primary);
+}
+
+/* Nav desktop */
+.admin-nav {
+  display: none;
+  align-items: center;
+  gap: var(--gs-space-5);
+}
+
+.admin-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  min-height: var(--gs-control-height);
+  padding-inline: var(--gs-space-2);
+  border: 0;
+  background: transparent;
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-medium);
+  text-decoration: none;
+  cursor: default;
+}
+
+.admin-nav__link--active,
+.admin-nav__link[aria-current="page"] {
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+  cursor: pointer;
+}
+
+/* Profile admin */
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+  flex-shrink: 0;
+}
+
+.admin-profile__name {
+  font-size: var(--gs-text-sm);
+  font-weight: var(--gs-weight-medium);
+  white-space: nowrap;
+}
+
+/* ---- Panel switcher (mobile/tablet) ---- */
+.admin-panel-switcher {
+  background: var(--gs-color-surface);
+  border-bottom: 1px solid var(--gs-color-border);
+  padding: var(--gs-space-3) var(--gs-container-pad);
+  overflow-x: auto;
+}
+
+.admin-panel-switcher .gs-tabs {
+  min-width: max-content;
+}
+
+/* ---- Admin layout ---- */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ---- Admin pane (cột) ---- */
+.admin-pane {
+  min-width: 0;
+  padding: var(--gs-space-4);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+/* Mobile: chỉ hiện pane được chọn qua JS */
+.admin-pane--conversations,
+.admin-pane--resources {
+  display: none;
+}
+
+.admin-pane--chat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-4);
+}
+
+/* Khi JS kích hoạt panel qua class */
+.admin-pane--mobile-active {
+  display: block !important;
+}
+
+.admin-pane--chat.admin-pane--mobile-active {
+  display: flex !important;
+}
+
+/* Pane heading */
+.pane-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+  margin-bottom: var(--gs-space-4);
+}
+
+.pane-heading h1,
+.pane-heading h2 {
+  margin-top: var(--gs-space-1);
+}
+
+/* ---- Search field ---- */
+.p2-search-field {
+  margin-bottom: var(--gs-space-3);
+}
+
+/* ---- Bộ lọc hội thoại ---- */
+.conversation-filters {
+  margin-bottom: var(--gs-space-3);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.conversation-filters .gs-tabs {
+  min-width: max-content;
+}
+
+/* ---- Danh sách hội thoại ---- */
+.conversation-list {
+  display: grid;
+  gap: var(--gs-space-2);
+}
+
+.conversation {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gs-space-3);
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: var(--gs-radius-md);
+  background: transparent;
+  padding: var(--gs-space-3);
+  min-height: 44px;
+  cursor: pointer;
+  transition: background-color var(--gs-transition), border-color var(--gs-transition);
+}
+
+.conversation:hover {
+  background: var(--gs-color-surface-sunken);
+  border-color: var(--gs-color-border);
+}
+
+.conversation[aria-current="true"] {
+  background: var(--gs-color-primary-soft);
+  border-color: var(--gs-color-border);
+}
+
+.conversation__body {
+  min-width: 0;
+  display: grid;
+  gap: var(--gs-space-1);
+}
+
+.conversation__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-2);
+  flex-wrap: wrap;
+}
+
+.conversation__meta strong {
+  font-weight: var(--gs-weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.conversation__meta small {
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.conversation__preview {
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Customer bar (cột giữa) ---- */
+.customer-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+  flex-wrap: wrap;
+  padding-bottom: var(--gs-space-3);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.customer-id {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-3);
+  min-width: 0;
+}
+
+.customer-id strong {
+  font-weight: var(--gs-weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.customer-bar__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gs-space-2);
+}
+
+/* ---- Chat log ---- */
+.admin-chat-log {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-2);
+  min-height: 14rem;
+  max-height: 28rem;
+}
+
+.chat-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gs-space-1);
+}
+
+.chat-line--out {
+  align-items: flex-end;
+}
+
+/* Bubble thông báo booking */
+.p2-notice-bubble {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Báo giá trong chat */
+.quote-card {
+  max-width: 85%;
+  margin-left: auto;
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-primary);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+
+/* ---- Response box (mô phỏng phản hồi Linh) ---- */
+.response-box {
+  padding: var(--gs-space-4);
+  border: 1px dashed var(--gs-color-border-control);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-primary-soft);
+}
+
+.response-box strong {
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+.response-box p {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  margin-bottom: var(--gs-space-3);
+}
+
+.response-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-2);
+}
+
+/* ---- Chat composer ---- */
+.chat-composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--gs-space-2);
+  background: var(--gs-color-surface);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  padding: var(--gs-space-3);
+}
+
+.chat-composer .gs-btn {
+  min-width: var(--gs-control-height);
+  padding-inline: var(--gs-space-3);
+}
+
+/* ---- Section actions ---- */
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-3);
+}
+
+/* ---- Booking form ---- */
+.booking-form {
+  display: grid;
+  gap: var(--gs-space-4);
+  scroll-margin-top: var(--gs-space-8);
+}
+
+.booking-form h2 {
+  margin-top: var(--gs-space-1);
+}
+
+.booking-fields {
+  display: grid;
+  gap: var(--gs-space-4);
+}
+
+.field-stack {
+  display: block;
+}
+
+.field-control {
+  position: relative;
+  display: block;
+}
+
+.field-lock {
+  position: absolute;
+  right: var(--gs-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  pointer-events: none;
+}
+
+.booking-summary {
+  display: grid;
+  gap: var(--gs-space-2);
+  padding: var(--gs-space-4);
+  background: var(--gs-color-surface);
+  border-radius: var(--gs-radius-md);
+  border: 1px solid var(--gs-color-border);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gs-space-4);
+  flex-wrap: wrap;
+}
+
+.summary-row span {
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-sm);
+}
+
+/* ---- Resource pane ---- */
+.resource-pane {
+  background: var(--gs-color-surface);
+}
+
+/* ---- Chú thích lịch ---- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-3);
+  margin-block: var(--gs-space-4);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gs-space-2);
+}
+
+.legend-item::before {
+  content: '';
+  width: 1rem;
+  height: 0.625rem;
+  border-radius: var(--gs-radius-sm);
+  flex-shrink: 0;
+}
+
+.legend-item--confirmed::before { background: #E6DCCB; border: 1px solid var(--gs-color-border); }
+.legend-item--pending::before   { background: var(--gs-color-surface); border: 1px dashed var(--gs-color-primary); }
+.legend-item--conflict::before  { background: var(--gs-color-error-soft); border: 1px solid var(--gs-color-error); }
+.legend-item--off::before       { background: var(--gs-color-surface-sunken); border: 1px solid var(--gs-color-border); }
+
+/* ---- Calendar wrap ---- */
+.calendar-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: var(--gs-space-4);
+}
+
+/* ---- Resource calendar grid ---- */
+.resource-calendar {
+  min-width: 36rem;
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-md);
+  overflow: hidden;
+}
+
+.resource-time-spacer,
+.resource-time-axis {
+  min-height: var(--gs-control-height-sm);
+  background: var(--gs-color-surface-sunken);
+  border-bottom: 1px solid var(--gs-color-border);
+}
+
+.resource-time-spacer {
+  border-right: 1px solid var(--gs-color-border);
+}
+
+.resource-time-axis {
+  position: relative;
+}
+
+.resource-time-label {
+  position: absolute;
+  left: var(--resource-left);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gs-color-text-muted);
+  font-size: var(--gs-text-xs);
+  white-space: nowrap;
+}
+
+.resource-time-label:first-child {
+  transform: translate(0, -50%);
+}
+
+.resource-time-label--last {
+  transform: translate(-100%, -50%);
+}
+
+.resource-calendar-row {
+  display: contents;
+}
+
+.resource-calendar-label {
+  min-height: calc(var(--gs-control-height) + var(--gs-space-2));
+  display: flex;
+  align-items: center;
+  padding: var(--gs-space-2);
+  border-right: 1px solid var(--gs-color-border);
+  border-bottom: 1px solid var(--gs-color-border);
+  font-size: var(--gs-text-xs);
+  color: var(--gs-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.resource-calendar-track {
+  position: relative;
+  min-height: calc(var(--gs-control-height) + var(--gs-space-2));
+  border-bottom: 1px solid var(--gs-color-border);
+  background-image: linear-gradient(
+    to right,
+    var(--gs-color-border) 1px,
+    transparent 1px
+  );
+  background-size: 20% 100%;
+}
+
+.resource-event {
+  position: absolute;
+  z-index: 1;
+  left: var(--resource-left);
+  width: var(--resource-width);
+  top: var(--gs-space-1);
+  bottom: var(--gs-space-1);
+  min-width: var(--gs-space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-inline: var(--gs-space-2);
+  border-radius: var(--gs-radius-sm);
+  overflow: hidden;
+  font-size: var(--gs-text-xs);
+  line-height: var(--gs-leading-ui);
+}
+
+.resource-event span,
+.resource-event small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resource-event--pending {
+  background: var(--gs-color-surface);
+  border: 1px dashed var(--gs-color-primary);
+  color: var(--gs-color-primary-hover);
+}
+
+.resource-event--conflict {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--gs-color-error-soft),
+    var(--gs-color-error-soft) var(--gs-space-2),
+    var(--gs-color-surface) var(--gs-space-2),
+    var(--gs-color-surface) var(--gs-space-3)
+  );
+  border: 1px solid var(--gs-color-error);
+  color: var(--gs-color-error);
+}
+
+/* ---- Warning box ---- */
+.warning-box {
+  margin-bottom: var(--gs-space-4);
+  padding: var(--gs-space-4);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-error-soft);
+  color: var(--gs-color-error);
+}
+
+.warning-box strong {
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+/* ---- Suggestion list ---- */
+.suggestion-list {
+  display: grid;
+  gap: var(--gs-space-3);
+  margin-top: var(--gs-space-3);
+}
+
+.suggestion {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--gs-space-3);
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-surface);
+}
+
+.suggestion strong {
+  font-family: var(--gs-font-serif);
+  font-size: var(--gs-text-lg);
+  display: block;
+  margin-bottom: var(--gs-space-1);
+}
+
+.suggestion p {
+  font-size: var(--gs-text-sm);
+  color: var(--gs-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Demo dock (page2 dùng anchor <a> thay button) ---- */
+.demo-dock {
+  position: relative;
+  z-index: 20;
+  width: max-content;
+  max-width: calc(100% - var(--gs-space-6));
+  margin: var(--gs-space-8) auto var(--gs-space-3);
+  padding: var(--gs-space-2);
+  border-radius: var(--gs-radius-lg);
+  background: var(--gs-color-dark);
+  color: var(--gs-color-text-inverse);
+  box-shadow: var(--gs-shadow-md);
+}
+
+.demo-dock__label {
+  display: block;
+  padding-inline: var(--gs-space-2);
+  color: var(--gs-color-border);
+  font-size: var(--gs-text-xs);
+}
+
+.demo-dock__actions {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  gap: var(--gs-space-1);
+}
+
+.demo-dock__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--gs-control-height);
+  padding-inline: var(--gs-space-4);
+  border: 0;
+  border-radius: var(--gs-radius-md);
+  background: transparent;
+  color: var(--gs-color-text-inverse);
+  font-size: var(--gs-text-base);
+  font-weight: var(--gs-weight-regular);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.demo-dock__btn[aria-current="page"] {
+  background: var(--gs-color-surface);
+  color: var(--gs-color-text);
+  font-weight: var(--gs-weight-semibold);
+}
+
+.demo-dock__btn:hover:not([aria-current="page"]) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---- Chip (nếu chưa có) ---- */
+.gs-chip {
+  display: inline-flex;
+  padding: var(--gs-space-1) var(--gs-space-3);
+  border: 1px solid var(--gs-color-border-strong);
+  border-radius: var(--gs-radius-full);
+  background: var(--gs-color-primary-soft);
+  color: var(--gs-color-primary-hover);
+  font-size: var(--gs-text-sm);
+  line-height: var(--gs-leading-ui);
+  white-space: nowrap;
+}
+
+/* ========== RESPONSIVE — Màn 2 ========== */
+
+/* Tablet ≥ 768px */
+@media (min-width: 768px) {
+  .booking-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-profile__name {
+    display: inline;
+  }
+}
+
+/* Desktop ≥ 1280px */
+@media (min-width: 1280px) {
+  /* Hiện admin nav */
+  .admin-nav {
+    display: flex;
+  }
+
+  /* Ẩn panel switcher */
+  .admin-panel-switcher {
+    display: none;
+  }
+
+  /* 3-column layout */
+  .admin-layout {
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.6fr) minmax(18rem, 1fr);
+    height: calc(100dvh - 4.5rem);
+  }
+
+  /* Hiện tất cả pane */
+  .admin-pane--conversations,
+  .admin-pane--resources,
+  .admin-pane--chat {
+    display: block;
+  }
+
+  .admin-pane--chat {
+    display: flex;
+  }
+
+  .admin-pane {
+    border-bottom: 0;
+    border-right: 1px solid var(--gs-color-border);
+    overflow-y: auto;
+  }
+
+  .resource-pane {
+    border-right: 0;
+  }
+
+  /* Chat log cao hơn trên desktop */
+  .admin-chat-log {
+    min-height: 18rem;
+    max-height: none;
+    flex: 1;
+  }
+}
+
+/* Mobile: ẩn tên hồ sơ */
+@media (max-width: 767px) {
+  .admin-profile__name {
+    display: none;
+  }
+
+  .demo-dock__label {
+    display: none;
+  }
+
+  .demo-dock {
+    width: calc(100% - var(--gs-space-6));
+    max-width: calc(100% - var(--gs-space-6));
+  }
+
+  .customer-bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

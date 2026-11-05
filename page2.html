@@ -3,29 +3,486 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GradStudio – giao diện Admin tư vấn và xử lý lịch.">
+  <meta name="description" content="GradStudio – Admin tư vấn, kiểm tra lịch tài nguyên và tạo booking cho khách hàng.">
   <title>GradStudio | Quản lý tư vấn</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header class="site-header">
-    <nav class="site-nav" aria-label="Điều hướng chính">
-      <a href="index.html">Dịch vụ</a>
-      <a href="page2.html" aria-current="page">Quản lý tư vấn</a>
-      <a href="page3.html">Lịch chụp của tôi</a>
-    </nav>
+<body class="admin-page">
+
+  <a class="gs-skip-link" href="#admin-main">Bỏ qua đến nội dung chính</a>
+
+  <!-- ========== HEADER ADMIN ========== -->
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <span class="logo" aria-label="GradStudio">Grad<span>Studio</span></span>
+
+      <nav class="admin-nav" aria-label="Điều hướng quản trị">
+        <a href="page2.html" aria-current="page" class="admin-nav__link admin-nav__link--active">
+          Hội thoại <span class="gs-badge gs-badge--primary" aria-label="3 hội thoại">3</span>
+        </a>
+        <span class="admin-nav__link" aria-disabled="true">Booking</span>
+        <span class="admin-nav__link" aria-disabled="true">Lịch studio</span>
+        <span class="admin-nav__link" aria-disabled="true">Tài nguyên</span>
+        <span class="admin-nav__link" aria-disabled="true">Nhân sự</span>
+      </nav>
+
+      <div class="admin-profile">
+        <span class="gs-avatar" aria-hidden="true">T</span>
+        <span class="admin-profile__name">Thảo · Quản lý studio</span>
+      </div>
+    </div>
   </header>
 
-  <main class="site-main">
-    <!-- TODO: Thành viên B xây dựng Màn 2 theo docs/pa1/02-admin-scheduling.png và LINK.md. -->
-    <section class="page-placeholder" aria-labelledby="page-title">
-      <h1 id="page-title">GradStudio – Quản lý tư vấn và lịch</h1>
-      <p>Khung khởi tạo cho Màn 2. Hãy thay nội dung này bằng giao diện Admin gồm hội thoại, lịch tài nguyên và thông tin booking theo thiết kế PA#1.</p>
-    </section>
+  <!-- Panel switcher — mobile/tablet only -->
+  <div class="admin-panel-switcher">
+    <div class="gs-tabs" role="tablist" aria-label="Chọn khu vực làm việc">
+      <button class="gs-tab gs-tab--compact" role="tab" aria-selected="false"
+              id="tab-conversations" aria-controls="pane-conversations">
+        Hội thoại
+      </button>
+      <button class="gs-tab gs-tab--compact gs-tab--active-mobile" role="tab" aria-selected="true"
+              id="tab-chat" aria-controls="pane-chat">
+        Chat &amp; booking
+      </button>
+      <button class="gs-tab gs-tab--compact" role="tab" aria-selected="false"
+              id="tab-resources" aria-controls="pane-resources">
+        Lịch tài nguyên
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== MAIN 3-COLUMN LAYOUT ========== -->
+  <main class="admin-layout" id="admin-main">
+
+    <!-- ===== CỘT TRÁI: Danh sách hội thoại ===== -->
+    <aside class="admin-pane admin-pane--conversations"
+           id="pane-conversations"
+           data-admin-panel="conversations">
+
+      <div class="pane-heading">
+        <div>
+          <p class="eyebrow">Hội thoại</p>
+          <h1>Khách đang chờ</h1>
+        </div>
+      </div>
+
+      <div class="p2-search-field">
+        <label class="gs-label" for="search-customer">Tìm khách hàng</label>
+        <input
+          type="search"
+          id="search-customer"
+          class="gs-input"
+          placeholder="Tên hoặc số điện thoại…"
+        >
+      </div>
+
+      <!-- Bộ lọc hội thoại -->
+      <div class="conversation-filters">
+        <div class="gs-tabs" role="tablist" aria-label="Lọc hội thoại">
+          <button class="gs-tab gs-tab--compact" role="tab" aria-selected="true">
+            Tất cả <span class="gs-tab__count" aria-hidden="true">5</span>
+          </button>
+          <button class="gs-tab gs-tab--compact" role="tab" aria-selected="false">
+            Chưa trả lời <span class="gs-tab__count" aria-hidden="true">2</span>
+          </button>
+          <button class="gs-tab gs-tab--compact" role="tab" aria-selected="false">
+            Đang tư vấn <span class="gs-tab__count" aria-hidden="true">1</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Danh sách hội thoại -->
+      <div class="conversation-list">
+
+        <button class="conversation" aria-current="true" type="button">
+          <span class="gs-avatar" aria-hidden="true">N</span>
+          <span class="conversation__body">
+            <span class="conversation__meta">
+              <strong>Nguyễn Thùy Linh</strong>
+              <small>17:21</small>
+            </span>
+            <span class="conversation__preview">Gói tốt nghiệp có makeup còn lịch 24/10…</span>
+            <span class="gs-badge gs-badge--warning">Đang tư vấn</span>
+          </span>
+        </button>
+
+        <button class="conversation" type="button">
+          <span class="gs-avatar" aria-hidden="true">T</span>
+          <span class="conversation__body">
+            <span class="conversation__meta">
+              <strong>Trần Minh Khoa</strong>
+              <small>16:58</small>
+            </span>
+            <span class="conversation__preview">Chụp chân dung CV mất bao lâu ạ?</span>
+            <span class="gs-badge">Chưa trả lời</span>
+          </span>
+        </button>
+
+        <button class="conversation" type="button">
+          <span class="gs-avatar" aria-hidden="true">H</span>
+          <span class="conversation__body">
+            <span class="conversation__meta">
+              <strong>Hồ Gia Bảo · Lớp 12A3</strong>
+              <small>Hôm qua</small>
+            </span>
+            <span class="conversation__preview">Lớp mình chốt 24/10 nha studio</span>
+            <span class="gs-badge gs-badge--success">Đã xác nhận</span>
+          </span>
+        </button>
+
+        <button class="conversation" type="button">
+          <span class="gs-avatar" aria-hidden="true">L</span>
+          <span class="conversation__body">
+            <span class="conversation__meta">
+              <strong>Lê Ngọc Hân</strong>
+              <small>2 ngày</small>
+            </span>
+            <span class="conversation__preview">Gói gia đình 4 người giá sao ạ?</span>
+            <span class="gs-badge">Chưa trả lời</span>
+          </span>
+        </button>
+
+        <button class="conversation" type="button">
+          <span class="gs-avatar" aria-hidden="true">P</span>
+          <span class="conversation__body">
+            <span class="conversation__meta">
+              <strong>Phạm Hoàng Anh</strong>
+              <small>3 ngày</small>
+            </span>
+            <span class="conversation__preview">Cảm ơn studio, ảnh đẹp lắm!</span>
+            <span class="gs-badge gs-badge--success">Hoàn thành</span>
+          </span>
+        </button>
+
+      </div><!-- /conversation-list -->
+    </aside>
+
+    <!-- ===== CỘT GIỮA: Chat + Form booking ===== -->
+    <section class="admin-pane admin-pane--chat"
+             id="pane-chat"
+             data-admin-panel="chat">
+
+      <!-- Thanh thông tin khách -->
+      <div class="customer-bar">
+        <div class="customer-id">
+          <span class="gs-avatar" aria-hidden="true">L</span>
+          <div>
+            <strong>Nguyễn Thùy Linh</strong>
+            <p class="gs-chat-meta">linh.nguyen@email.com · 0901 234 567</p>
+          </div>
+        </div>
+        <div class="customer-bar__status">
+          <span class="gs-chip">Đang hỏi về: Gói Tốt nghiệp</span>
+          <span class="gs-badge gs-badge--warning" id="status-badge">Đang tư vấn</span>
+        </div>
+      </div>
+
+      <!-- Log chat -->
+      <div class="admin-chat-log" role="log" aria-live="polite" aria-label="Nội dung hội thoại">
+
+        <div class="chat-line chat-line--in">
+          <div class="gs-bubble gs-bubble--in">Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?</div>
+          <span class="gs-chat-meta">17:20</span>
+        </div>
+
+        <div class="chat-line chat-line--out">
+          <div class="gs-bubble gs-bubble--out">Để mình kiểm tra lịch cho bạn nhé</div>
+          <span class="gs-chat-meta">17:21</span>
+        </div>
+
+        <!-- Tin nhắn đề xuất giờ — hiện sau khi chọn 14:00 -->
+        <div class="chat-line chat-line--out" id="msg-propose" hidden>
+          <div class="gs-bubble gs-bubble--out">Studio đề xuất makeup 13:00–14:00 với Mai, chụp 14:00–16:00 với Tuấn tại Phòng B. Linh có chốt giờ này không?</div>
+        </div>
+
+        <!-- Phản hồi đồng ý của Linh -->
+        <div class="chat-line chat-line--in" id="msg-agree" hidden>
+          <div class="gs-bubble gs-bubble--in">Dạ em chốt lịch 14:00 ạ.</div>
+        </div>
+
+        <!-- Phản hồi từ chối của Linh -->
+        <div class="chat-line chat-line--in" id="msg-reject" hidden>
+          <div class="gs-bubble gs-bubble--in">Khung 14:00 chưa phù hợp với em ạ.</div>
+        </div>
+
+        <!-- Thông báo booking tạo xong -->
+        <div class="chat-line chat-line--out" id="msg-booking-created" hidden>
+          <div class="gs-bubble gs-bubble--out p2-notice-bubble">Đã tạo booking GS-1024 · Chờ thanh toán cọc 30%.</div>
+        </div>
+
+      </div><!-- /admin-chat-log -->
+
+      <!-- Mô phỏng phản hồi Linh — hiện sau khi studio đề xuất 14:00 -->
+      <div class="response-box" id="response-box" hidden>
+        <strong>Mô phỏng phản hồi của Linh</strong>
+        <p>Chỉ thao tác này thay đổi trạng thái khách đồng ý.</p>
+        <div class="response-actions">
+          <button class="gs-btn gs-btn--primary gs-btn--sm" type="button" id="btn-agree">Chốt giờ này</button>
+          <button class="gs-btn gs-btn--secondary gs-btn--sm" type="button" id="btn-reject">Từ chối</button>
+        </div>
+      </div>
+
+      <!-- Khung nhập tin nhắn -->
+      <form class="chat-composer" id="admin-chat-form">
+        <label class="gs-sr-only" for="admin-msg-input">Nhập tin nhắn</label>
+        <input
+          type="text"
+          id="admin-msg-input"
+          class="gs-input"
+          placeholder="Nhập tin nhắn…"
+          autocomplete="off"
+        >
+        <button class="gs-btn gs-btn--primary" type="submit" aria-label="Gửi tin nhắn">Gửi</button>
+      </form>
+
+      <!-- Hành động bổ sung -->
+      <div class="section-actions">
+        <button class="gs-btn gs-btn--secondary" type="button" id="btn-quote">Gửi báo giá vào chat</button>
+        <a class="gs-btn gs-btn--ghost" href="#booking-form" id="see-booking-btn" hidden>Xem booking ↓</a>
+      </div>
+
+      <!-- Thông báo screen reader -->
+      <p role="status" class="gs-sr-only" id="live-announce" aria-live="assertive" aria-atomic="true"></p>
+
+      <!-- Form tạo booking mới -->
+      <section class="gs-card gs-card--sunken booking-form" id="booking-form" aria-labelledby="booking-form-title">
+        <div>
+          <p class="eyebrow">Booking mới</p>
+          <h2 id="booking-form-title">Chụp ảnh tốt nghiệp</h2>
+          <p>Liên kết cuộc chat với Nguyễn Thùy Linh — booking sẽ hiện trong Lịch chụp của tôi.</p>
+        </div>
+
+        <div class="booking-fields">
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-customer">Khách hàng</label>
+            <div class="field-control">
+              <input class="gs-input" id="bf-customer" type="text" value="Nguyễn Thùy Linh" readonly aria-readonly="true">
+              <span class="field-lock" aria-hidden="true">Khóa</span>
+            </div>
+          </div>
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-shoot-type">Loại buổi chụp</label>
+            <select class="gs-select" id="bf-shoot-type">
+              <option>Tốt nghiệp cá nhân</option>
+            </select>
+          </div>
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-package">Gói</label>
+            <select class="gs-select" id="bf-package">
+              <option>Gói Tốt nghiệp Premium · 2 giờ · 30 ảnh chỉnh</option>
+            </select>
+          </div>
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-date">Ngày</label>
+            <input class="gs-input" id="bf-date" type="text" value="24/10/2026" readonly aria-readonly="true">
+            <span class="gs-help">Ngày theo lịch đã thống nhất với khách.</span>
+          </div>
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-time">Giờ bắt đầu chụp</label>
+            <select class="gs-select" id="bf-time">
+              <option>14:00</option>
+            </select>
+            <span class="gs-help">Makeup bắt đầu lúc 13:00.</span>
+          </div>
+
+          <div class="field-stack">
+            <label class="gs-label" for="bf-makeup">Makeup</label>
+            <select class="gs-select" id="bf-makeup">
+              <option>Có · Mai · 13:00–14:00</option>
+            </select>
+          </div>
+
+        </div><!-- /booking-fields -->
+
+        <div class="booking-summary" aria-label="Tóm tắt phân công và giá">
+          <div class="summary-row">
+            <span>Phân công</span>
+            <strong>Mai · Tuấn · Phòng B</strong>
+          </div>
+          <div class="summary-row">
+            <span>Giá gói</span>
+            <strong>1.800.000đ</strong>
+          </div>
+        </div>
+
+        <p class="gs-help" id="booking-warning">Cần khách đồng ý giờ trước khi tạo booking.</p>
+
+        <!-- Hiện sau khi tạo booking thành công -->
+        <span class="gs-badge gs-badge--warning" id="booking-created-badge" hidden>GS-1024 · Chờ thanh toán cọc 30%</span>
+
+        <button
+          class="gs-btn gs-btn--primary gs-btn--block"
+          id="btn-create-booking"
+          type="button"
+          disabled
+          aria-disabled="true"
+        >
+          Tạo booking
+        </button>
+
+      </section><!-- /booking-form -->
+
+    </section><!-- /pane-chat -->
+
+    <!-- ===== CỘT PHẢI: Lịch tài nguyên ===== -->
+    <aside class="admin-pane admin-pane--resources resource-pane"
+           id="pane-resources"
+           data-admin-panel="resources">
+
+      <div class="pane-heading">
+        <div>
+          <p class="eyebrow">Lịch tài nguyên</p>
+          <h2>Thứ Bảy, 24/10</h2>
+        </div>
+        <div>
+          <button class="gs-btn gs-btn--ghost gs-btn--sm" type="button" aria-label="Ngày trước">‹</button>
+          <button class="gs-btn gs-btn--ghost gs-btn--sm" type="button" aria-label="Ngày sau">›</button>
+        </div>
+      </div>
+
+      <!-- Chú thích -->
+      <div class="legend">
+        <span class="legend-item legend-item--confirmed">Đã xác nhận</span>
+        <span class="legend-item legend-item--pending">Yêu cầu đang xét</span>
+        <span class="legend-item legend-item--conflict">Trùng lịch</span>
+        <span class="legend-item legend-item--off">Nghỉ</span>
+      </div>
+
+      <!-- Timeline lịch tài nguyên -->
+      <div class="calendar-wrap">
+        <div class="resource-calendar" aria-label="Lịch tài nguyên từ 08:00 đến 18:00">
+
+          <!-- Trục giờ -->
+          <div class="resource-time-spacer" aria-hidden="true"></div>
+          <div class="resource-time-axis" aria-hidden="true">
+            <span class="resource-time-label" style="--resource-left: 0%">08:00</span>
+            <span class="resource-time-label" style="--resource-left: 20%">10:00</span>
+            <span class="resource-time-label" style="--resource-left: 40%">12:00</span>
+            <span class="resource-time-label" style="--resource-left: 60%">14:00</span>
+            <span class="resource-time-label" style="--resource-left: 80%">16:00</span>
+            <span class="resource-time-label resource-time-label--last" style="--resource-left: 100%">18:00</span>
+          </div>
+
+          <!-- Makeup · Mai -->
+          <div class="resource-calendar-row">
+            <div class="resource-calendar-label">Makeup · Mai</div>
+            <div class="resource-calendar-track">
+              <!-- 08:00–12:00: left=0%, width=40% (4h/10h) -->
+              <div class="resource-event resource-event--conflict"
+                   style="--resource-left: 0%; --resource-width: 40%"
+                   aria-label="Mai đã kín, 08:00–12:00">
+                <span>Mai đã kín</span>
+                <small>08:00–12:00</small>
+              </div>
+              <!-- 13:00–14:00: left=50%, width=10% (1h/10h) -->
+              <div class="resource-event resource-event--pending"
+                   style="--resource-left: 50%; --resource-width: 10%"
+                   aria-label="Linh makeup, 13:00–14:00">
+                <span>Linh · makeup</span>
+                <small>13:00–14:00</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thợ chụp · Tuấn -->
+          <div class="resource-calendar-row">
+            <div class="resource-calendar-label">Thợ chụp · Tuấn</div>
+            <div class="resource-calendar-track">
+              <!-- 14:00–16:00: left=60%, width=20% (2h/10h) -->
+              <div class="resource-event resource-event--pending"
+                   style="--resource-left: 60%; --resource-width: 20%"
+                   aria-label="Linh chụp, 14:00–16:00">
+                <span>Linh · chụp</span>
+                <small>14:00–16:00</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thợ chụp · Hà -->
+          <div class="resource-calendar-row">
+            <div class="resource-calendar-label">Thợ chụp · Hà</div>
+            <div class="resource-calendar-track"></div>
+          </div>
+
+          <!-- Phòng A -->
+          <div class="resource-calendar-row">
+            <div class="resource-calendar-label">Phòng A</div>
+            <div class="resource-calendar-track"></div>
+          </div>
+
+          <!-- Phòng B -->
+          <div class="resource-calendar-row">
+            <div class="resource-calendar-label">Phòng B</div>
+            <div class="resource-calendar-track">
+              <!-- 14:00–16:00: left=60%, width=20% -->
+              <div class="resource-event resource-event--pending"
+                   style="--resource-left: 60%; --resource-width: 20%"
+                   aria-label="Linh Phòng B, 14:00–16:00">
+                <span>Linh · Phòng B</span>
+                <small>14:00–16:00</small>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /resource-calendar -->
+      </div><!-- /calendar-wrap -->
+
+      <!-- Cảnh báo trùng lịch -->
+      <div class="warning-box" role="alert">
+        <strong>Trùng lịch tài nguyên</strong>
+        <p>Thợ makeup Mai đã có lịch 08:00–12:00. Không đủ nhân sự cho khung 09:00.</p>
+      </div>
+
+      <!-- Gợi ý giờ trống -->
+      <p class="eyebrow" id="suggestion-heading">Gợi ý giờ trống</p>
+      <div class="suggestion-list" aria-labelledby="suggestion-heading">
+
+        <div class="suggestion">
+          <div>
+            <strong>14:00</strong>
+            <p>Makeup 13:00–14:00 · Mai<br>Chụp 14:00–16:00 · Tuấn · Phòng B</p>
+          </div>
+          <button class="gs-btn gs-btn--primary gs-btn--sm" type="button" id="btn-choose-1400">Chọn 14:00</button>
+        </div>
+
+        <div class="suggestion">
+          <div>
+            <strong>15:00</strong>
+            <p>Khung giờ thay thế</p>
+          </div>
+          <button class="gs-btn gs-btn--secondary gs-btn--sm" type="button">Chọn</button>
+        </div>
+
+        <div class="suggestion">
+          <div>
+            <strong>25/10 · 09:00</strong>
+            <p>Ngày khác, đủ nhân sự</p>
+          </div>
+          <button class="gs-btn gs-btn--secondary gs-btn--sm" type="button">Chọn</button>
+        </div>
+
+      </div><!-- /suggestion-list -->
+
+    </aside><!-- /pane-resources -->
+
   </main>
 
-  <footer class="site-footer">
-    <p>GradStudio – Prototype giao diện PA#2</p>
-  </footer>
+  <!-- ===== DEMO DOCK ===== -->
+  <nav class="demo-dock gs-on-dark" aria-label="Điều khiển demo">
+    <span class="demo-dock__label">Điều khiển demo</span>
+    <div class="demo-dock__actions">
+      <a href="index.html" class="demo-dock__btn">Màn 1</a>
+      <a href="page2.html" class="demo-dock__btn" aria-current="page">Màn 2</a>
+      <a href="page3.html" class="demo-dock__btn">Màn 3</a>
+      <button class="demo-dock__btn" type="button" id="btn-reset-demo">Đặt lại demo</button>
+    </div>
+  </nav>
+
+  <script src="assets/js/page2.js"></script>
 </body>
 </html>
