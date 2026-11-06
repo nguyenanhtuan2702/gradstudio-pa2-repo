@@ -12,7 +12,7 @@ Prototype này trình bày ba màn hình Main Flow của GradStudio bằng HTML/
 ## Ba màn hình và luồng chính
 
 | Màn hình / file | Vai trò | Nội dung |
-|---|---|---|---|
+|---|---|---|
 | [`index.html`](index.html) — Dịch vụ và chat | Khách hàng Nguyễn Thùy Linh | Xem dịch vụ và giá tham khảo, rồi đọc hội thoại mẫu về yêu cầu chụp tốt nghiệp lúc 09:00 ngày 24/10/2026. |
 | [`studio.html`](studio.html) — Tư vấn và xử lý trùng lịch | Nhân viên studio Thảo | Xem xung đột 09:00 vì Mai bận 08:00–12:00, đề xuất makeup 13:00–14:00 và chụp 14:00–16:00 tại Phòng B; trạng thái mẫu cho biết Linh đã đồng ý. |
 | [`booking.html`](booking.html) — Xem lịch và khoản cọc | Khách hàng Nguyễn Thùy Linh | Xem booking GS-1024 đang chờ cọc 30%, lịch makeup/chụp và khoản tiền cần thanh toán. Nút thanh toán được vô hiệu hóa. |
