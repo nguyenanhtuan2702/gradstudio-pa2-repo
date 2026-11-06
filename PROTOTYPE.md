@@ -31,6 +31,8 @@ Luồng được mô phỏng là **khách hỏi dịch vụ → nhân viên ki�
 
 ## Phần chưa nối — Not wired yet
 
+Trên M2, chat và toàn bộ form Booking mới cuộn cùng trang. Lịch tài nguyên dùng các thẻ có tên, giờ và trạng thái đầy đủ thay cho lưới giờ của PA#1 để đọc được trên điện thoại. Form phân biệt loại buổi chụp “Tốt nghiệp cá nhân” với gói “Tốt nghiệp Premium”. Nút “Tạo booking” có ghi chú chuyển sang góc nhìn của Linh.
+
 - Hội thoại trên M1 và M2 là nội dung mẫu. Ô nhập tin nhắn và nút Gửi đang disabled; không gửi hoặc lưu tin nhắn.
 - Ba nút “Hỏi về gói này” ở M1 cùng dẫn đến một đoạn chat mẫu đang ghi “Đang hỏi về: Gói Tốt nghiệp”. Chúng không đổi nội dung chat theo gói.
 - Nút “Tạo booking” trên M2 điều hướng đến `booking.html` bằng GET, nhưng dữ liệu của form không được lưu hoặc truyền sang M3. M3 luôn hiển thị dữ liệu mẫu viết sẵn.
@@ -68,5 +70,5 @@ Các ảnh dùng trên M1 là tài nguyên cục bộ trong `assets/images/`:
 - [`docs/pa1/LINK.md`](docs/pa1/LINK.md) — câu chuyện và hành vi prototype PA#1 được mô tả trong tài liệu tham chiếu.
 - [`docs/pa2/GradStudio-final-project-brief.pdf`](docs/pa2/GradStudio-final-project-brief.pdf) — brief final project.
 - [`checks/manualcheckindex.md`](checks/manualcheckindex.md) — báo cáo manual check M1; kết quả kiểm tra cần được xác nhận bởi người thực hiện và minh chứng tương ứng.
--Mục check của B
+- [Báo cáo kiểm tra M2 của thành viên B](checks/manualcheckstudio.md) — số đo responsive, ảnh khi tắt JavaScript, điều hướng bàn phím và kết quả Nu Checker.
 -Mục Check của C

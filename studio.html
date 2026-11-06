@@ -16,7 +16,7 @@
       <nav class="site-nav" aria-label="Khu vực nhân viên studio">
         <a href="studio.html" aria-current="page">Hội thoại</a>
       </nav>
-      <p class="user-profile" aria-label="Đang xem với vai trò nhân viên studio Thảo">
+      <p class="user-profile">
         <span class="user-avatar" aria-hidden="true">T</span>
         <span>Thảo · Admin</span>
       </p>
@@ -61,7 +61,7 @@
               </li>
               <li class="msg msg--self">
                 <span class="meta">Thảo (GradStudio) · 17:24</span>
-                <p class="msg__bubble">Makeup artist Mai bận 08:00–12:00 nên chưa nhận được 09:00. Mình đề xuất makeup 13:00–14:00 và chụp 14:00–16:00 tại Phòng B nhé?</p>
+                <p class="msg__bubble">Mai bận trang điểm từ 08:00 đến 12:00 nên không thể nhận lịch 09:00. Bạn có thể trang điểm với Mai lúc 13:00–14:00 rồi chụp với Tuấn lúc 14:00–16:00 tại Phòng B được không?</p>
               </li>
               <li class="msg msg--other">
                 <span class="meta">Nguyễn Thùy Linh · 17:26</span>
@@ -88,6 +88,10 @@
                 <input class="gs-input" id="f-customer" type="text" value="Nguyễn Thùy Linh" readonly>
               </div>
               <div class="field field--full">
+                <label class="gs-label" for="f-session">Loại buổi chụp</label>
+                <input class="gs-input" id="f-session" type="text" value="Tốt nghiệp cá nhân" readonly>
+              </div>
+              <div class="field field--full">
                 <label class="gs-label" for="f-package">Gói dịch vụ (2 giờ chụp, 30 ảnh chỉnh)</label>
                 <select class="gs-select" id="f-package">
                   <option selected>Gói Tốt nghiệp Premium</option>
@@ -98,12 +102,12 @@
                 <input class="gs-input" id="f-date" type="text" value="Thứ Bảy, 24/10/2026" readonly>
               </div>
               <div class="field">
-                <label class="gs-label" for="f-time">Giờ được chọn</label>
-                <select class="gs-select" id="f-time">
+                <label class="gs-label" for="f-time">Giờ bắt đầu chụp</label>
+                <select class="gs-select" id="f-time" aria-describedby="time-note">
                   <option value="09:00" disabled>09:00 (không khả dụng)</option>
                   <option value="14:00" selected>14:00</option>
                 </select>
-                <p class="gs-help">09:00 không khả dụng vì Mai bận 08:00–12:00.</p>
+                <p class="gs-help" id="time-note">09:00 không khả dụng vì Mai bận 08:00–12:00.</p>
               </div>
               <div class="field">
                 <label class="gs-label" for="f-makeup">Makeup</label>
@@ -132,7 +136,8 @@
                 <input class="gs-input" id="f-rest" type="text" value="1.260.000đ" readonly>
               </div>
             </div>
-            <button class="gs-btn gs-btn--primary gs-btn--block" type="submit">Tạo booking</button>
+            <p class="gs-help" id="booking-next">Trong bản mẫu, nút này mở lịch GS-1024 để khách hàng xem lại.</p>
+            <button class="gs-btn gs-btn--primary gs-btn--block" type="submit" aria-describedby="booking-next">Tạo booking</button>
             <p class="gs-help">Booking mới có trạng thái Chờ cọc 30%. Lịch chưa được giữ cho đến khi cọc thành công và nhân sự, phòng được kiểm tra lại.</p>
           </form>
         </section>

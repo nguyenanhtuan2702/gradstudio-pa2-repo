@@ -775,3 +775,11 @@ Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung Phần III này 
 - `AGENTS.md` bản đính kèm ghi `styles.css` là stylesheet chung, còn Phần I và `AI-LOG.md` ghi nhóm đã thống nhất `style.css`. Ba trang assistant xuất ra đang liên kết `styles.css`; cần đồng bộ tên file (xem `AI-LOG.md`, mục ngày 2026-11-05).
 - Các kết quả kiểm tra (tràn ngang, vùng bấm 44px, liên kết, Nu Checker HTML 0 thông báo) do assistant chạy trong sandbox của nó, không phải trên máy nhóm. Chưa chạy: bàn phím/focus, tương phản, DevTools Accessibility, screenshot và kết quả lưu vào `screenshots/`, `checks/`. Brief này không khẳng định các mục đó đã đạt.
 - Assistant không thao tác Git: việc đổi tên `page2.html` → `studio.html`, `page3.html` → `booking.html` và xóa file cũ do nhóm tự thực hiện.
+
+## Phần IV — Thành viên B, rà soát Màn 2 (06/11/2026)
+
+Yêu cầu nguyên văn:
+
+> tôi là thành viên B, thực hiện code html màn 2 (trước kia là page2.html) giờ là studio.html, tôi được giao công việc sau: kiểm tra lại trang html như phần trước có thể tham khảo file check manualindex. Đồng thời đọc và bổ subg các dile brief + ailog + prototype,  trong lúc check nếu html có sai gì thì bạn cứ sửa,
+
+Phạm vi thực hiện là trang quản trị trên nhánh main, gồm danh sách hội thoại, đoạn chat sau khi Linh đồng ý, form Booking mới và lịch tài nguyên. Dùng cấu trúc báo cáo của M1 làm tham khảo và kiểm tra riêng M2. [Báo cáo và minh chứng M2](checks/manualcheckstudio.md)

@@ -103,3 +103,10 @@ Asked for: Bổ sung phần việc của assistant vào `AI-LOG.md` và `brief.m
 Kept: Toàn bộ nội dung các mục và phần brief của thành viên khác (A, C) không đổi.
 Changed: Khi đọc `AI-LOG.md` và `brief.md` được gửi sau, phát hiện `AGENTS.md` bản đã tải lên cho assistant ghi `styles.css` là stylesheet chung, trong khi nhóm đã thống nhất `style.css` là file chính thức (và `styles.css` chỉ xóa sau khi các trang chuyển xong). Hệ quả: ba trang assistant xuất ra đang `<link rel="stylesheet" href="styles.css">`. Cần nhóm đồng bộ: đổi tên file thành `style.css` và sửa 3 liên kết (hoặc ngược lại), tránh có hai file CSS trùng chức năng. Assistant cũng chưa đối chiếu với CSS thật ở nhánh `feat/gradstudio-foundation-css` (chỉ dùng `styles.css` tải lên). Đã nối thêm các mục này vào cuối `AI-LOG.md` và thêm Phần III vào `brief.md`.
 Rejected: Không sửa hay xóa các mục/phần của thành viên khác; không tự đổi tên stylesheet trong lượt này vì chưa được yêu cầu.
+
+## 2026-11-06 — Thành viên B nhờ Codex rà soát studio.html
+
+- **Yêu cầu:** Kiểm tra M2 theo mẫu manual check của M1, sửa HTML khi thấy lỗi và bổ sung tài liệu.
+- **Phát hiện:** Đối chiếu form với PA#1 cho thấy thiếu trường “Loại buổi chụp”. Nhãn “Giờ được chọn” chưa phân biệt giờ chụp với giờ trang điểm. Nút submit mở màn khách hàng nhưng chưa giải thích việc đổi vai trò ngay tại nút.
+- **Đã sửa:** Bổ sung trường “Tốt nghiệp cá nhân”, đặt nhãn “Giờ bắt đầu chụp”, liên kết lời giải thích xung đột với ô giờ và ghi rõ đích đến của nút. Bỏ aria-label dư trên đoạn văn giới thiệu Thảo.
+- **Kiểm chứng do Codex thực hiện:** Mở file trong Chrome, đo ba viewport, lưu ba ảnh toàn trang khi tắt JavaScript, thử cả hai đường sang booking bằng Enter và gửi HTML đã sửa đến W3C. [Kết quả và giới hạn kiểm tra](checks/manualcheckstudio.md)
