@@ -1,4 +1,0 @@
-studio.html — 06/11/2026
-W3C Nu HTML Checker — https://validator.w3.org/nu/?out=json
-POST text/html; charset=utf-8
-{"version":"26.11.4","messages":[]}

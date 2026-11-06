@@ -4,7 +4,7 @@
 
 Prototype này chuyển ba màn hình Main Flow của GradStudio thành các trang HTML/CSS tĩnh cho PA#2. Nội dung bám theo brief final project và câu chuyện PA#1; đây là bản mô phỏng giao diện, không phải website có thể vận hành nghiệp vụ thật.
 
-- **Thành viên nhóm:** 23120184-mssvB-mssvC-Nguyễn Anh Tuấn-Tên B-Tên C
+- **Thành viên nhóm:** 23120184-23120330-24120090-Nguyễn Anh Tuấn-Lê Công Phúc-Đặng Hồng Minh
 - **Công nghệ:** HTML5 và CSS3 thuần; stylesheet dùng chung là `styles.css`.
 - **Cách mở:** mở trực tiếp [`index.html`](index.html) bằng trình duyệt. Không cần cài package, chạy server hoặc build. Các trang chính dùng liên kết HTML; nội dung mẫu không phụ thuộc JavaScript.
 

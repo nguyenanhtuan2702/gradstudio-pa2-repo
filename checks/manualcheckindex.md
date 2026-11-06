@@ -73,7 +73,7 @@ Trang M1 không sử dụng JavaScript để dựng nội dung chính hoặc đi
 - **Công cụ:** W3C Nu HTML Checker.
 - **File kiểm tra:** `index.html`.
 - **Kết quả:** PASS — không ghi nhận lỗi HTML trong lần kiểm tra được thực hiện.
-- **Minh chứng:** [Ảnh W3C Validator](../screenshots/validator-index.png)
+- **Minh chứng:** [Ảnh W3C Validator](validator-index.png)
 
 ## 7. Semantic HTML và Accessibility
 

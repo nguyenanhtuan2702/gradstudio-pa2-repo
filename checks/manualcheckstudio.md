@@ -19,7 +19,7 @@ Ngày 06/11/2026. Codex mở file HTML trực tiếp bằng Google Chrome headle
 
 ## HTML và khả năng truy cập
 
-- Nu Checker trả về 0 lỗi, 0 cảnh báo. [Phản hồi gốc](validator-studio.txt)
+- Nu Checker trả về 0 lỗi, 0 cảnh báo. [Ảnh kết quả Nu Checker](validator-studio.png)
 - Trang khai báo tiếng Việt, có một h1, các vùng header, nav, main, footer. Tất cả input và select có label hiển thị. Cây accessibility của Chrome thể hiện tên, giờ và trạng thái của các tài nguyên bằng chữ, cùng tên liên kết chuyển vai trò.
 - Ở 360 px, phím Tab đầu tiên đến liên kết bỏ qua điều hướng. Enter chuyển tới main-content. Các phép thử Enter trên hai đường sang M3 bắt đầu bằng cách đặt focus vào từng điều khiển.
 - Tỷ lệ tương phản tính từ cặp màu CSS là 5,48:1 cho nút chính, 6,39:1 cho chữ phụ trên nền trang, 5,39:1 cho nhãn đã chốt, 5,85:1 cho nhãn đề xuất và 5,81:1 cho nhãn bận.
