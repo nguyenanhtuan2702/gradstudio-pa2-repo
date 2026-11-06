@@ -80,7 +80,7 @@ Changed:
 1. Sửa lỗi dòng 25 và 200: Gỡ thuộc tính `aria-label` khỏi hai thẻ generic `div` (`.user-profile` và `.booking-pricing-box`) vì theo đặc tả W3C HTML/ARIA, thẻ `div` vô danh không được phép mang `aria-label` trực tiếp (thay vào đó thông tin đã được thể hiện rõ ràng qua text và thẻ alt).
 2. Sửa lỗi dòng 49: Thẻ `<button role="tab" aria-selected="true">` bị lỗi do thiếu `role="tabpanel"` tương ứng. Khắc phục bằng cách chuyển container sang `<div class="booking-tabs" role="group" aria-label="Bộ lọc trạng thái lịch chụp">` và bỏ `role="tab"` khỏi các nút, sử dụng class trạng thái `.active` thuần HTML/CSS.
 3. Người dùng kiểm tra lại trên W3C Nu Checker đạt kết quả xanh lá: **0 Errors, 0 Warnings** và lưu minh chứng vào `checks/validator-page3.png` và `screenshots/validator-page3.png`.
-4. Biên soạn hồ sơ kiểm thử thủ công chi tiết `checks/manualcheckM3.md`.
+4. Biên soạn hồ sơ kiểm thử thủ công chi tiết `checks/manualcheckbooking.md`.
 Rejected: Không tạo các thẻ tabpanel rỗng để qua mặt validator, không viết JavaScript giả lập tương tác tab trái với bản chất prototype tĩnh.
 
 ## 2026-11-05 — Dựng lại ba màn hình theo brief cuối (index / studio / booking + styles.css)
