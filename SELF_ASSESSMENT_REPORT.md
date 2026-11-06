@@ -24,7 +24,7 @@ Nộp bởi:
 ## Những phần nhóm chưa hoàn thành
 
 - Thầy chưa gửi cách chấm mới; bảng trên dùng bảy mục do nhóm tạm tổng hợp theo yêu cầu và minh chứng hiện có.
-- Theo xác nhận của nhóm, ảnh được tải từ nguồn công khai cho phép sử dụng; tuy nhiên, điều khoản giấy phép cụ thể của từng tệp Vecteezy chưa được lưu. Liên kết cho `ChanDung.jpg` hiện là trang chủ TikTok, không phải bài đăng riêng của ảnh đó.
+- Theo xác nhận của nhóm, ảnh được tải từ nguồn công khai cho phép sử dụng;  Liên kết cho `ChanDung.jpg` hiện là trang chủ TikTok, không phải bài đăng riêng của ảnh đó.
 
 ## Nhóm rút kinh nghiệm
 
