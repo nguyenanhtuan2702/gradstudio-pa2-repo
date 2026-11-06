@@ -1,7 +1,8 @@
-# Báo cáo kiểm tra M2 — `studio.html`
+# Báo cáo kiểm tra — `studio.html`
 
 **Dự án:** GradStudio — PA#2 Responsive Prototype  
-**Màn hình:** Screen 2 — Tư vấn và xử lý trùng lịch (Admin)  
+**Trang được kiểm tra:** `studio.html` — Tư vấn và xử lý trùng lịch (Admin)\
+**Người phụ trách màn hình:** Lê Công Phúc (Thành viên B)\
 **Ngày ghi nhận:** 06/11/2026  
 **Phạm vi:** Responsive, nội dung, điều hướng, JavaScript-disabled, HTML và Accessibility.
 
@@ -10,7 +11,7 @@
 | Hạng mục | Kết quả | Ghi chú |
 |---|---|---|
 | Responsive | PASS | Đã kiểm tra tại 360px, 768px và 1280px. |
-| Nội dung và trạng thái | PASS | Hội thoại, xung đột lịch, giờ đề xuất và form booking phù hợp với luồng M2. |
+| Nội dung và trạng thái | PASS | Hội thoại, xung đột lịch, giờ đề xuất và form booking trên `studio.html` phù hợp với luồng. |
 | Điều hướng | PASS | Các liên kết trong luồng mở đúng trang đích. |
 | JavaScript tắt | PASS | Nội dung chính và liên kết HTML vẫn sử dụng được. |
 | W3C Nu Checker | PASS | Không có lỗi hoặc cảnh báo trong kết quả hiện có. |
@@ -36,7 +37,7 @@
 | Giờ đề xuất | PASS | Makeup với Mai 13:00–14:00; chụp với Tuấn tại Phòng B 14:00–16:00 ngày 24/10/2026. |
 | Thông tin booking | PASS | Gói Tốt nghiệp Premium; tổng 1.800.000đ; cọc 540.000đ; còn lại 1.260.000đ. |
 | Nút Gửi | PASS | Disabled và có ghi chú rằng gửi tin nhắn chưa khả dụng. |
-| Tiếp tục sang M3 | PASS | Điều hướng đến `booking.html`; nội dung sau đó vẫn là dữ liệu mẫu tĩnh. |
+| Tiếp tục sang `booking.html` | PASS | Điều hướng đến `booking.html`; nội dung sau đó vẫn là dữ liệu mẫu tĩnh. |
 
 ## 4. Kiểm tra khi tắt JavaScript
 
@@ -64,4 +65,4 @@
 
 ## 7. Kết luận
 
-Màn hình M2 (`studio.html`) đạt các hạng mục kiểm tra được liệt kê trong báo cáo tại 360px, 768px và 1280px. Đây là prototype tĩnh; nội dung hội thoại và booking không được lưu hoặc đồng bộ với M3 như dữ liệu thật.
+Trang `studio.html` đạt các hạng mục kiểm tra được liệt kê trong báo cáo tại 360px, 768px và 1280px. Đây là prototype tĩnh; nội dung hội thoại và booking không được lưu hoặc đồng bộ với `booking.html` như dữ liệu thật.

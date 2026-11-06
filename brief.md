@@ -1,6 +1,14 @@
 # Brief — GradStudio PA#2 Responsive Prototype
 
-Tài liệu này lưu lại prompt thực tế liên quan đến việc xây dựng và chỉnh Màn 1 theo thứ tự đã gửi. Prompt mở đầu bên dưới được chép nguyên văn từ tệp đính kèm `Pasted text.txt`; các follow-up được chép lại từ lời nhắn người dùng, còn ghi chú về ảnh chỉ mô tả tài liệu đính kèm. Quy tắc đội nhóm được ghi riêng ở phần sau để không nhầm với prompt tác vụ. Rubric PDF là tài liệu chấm điểm, không phải yêu cầu thiết kế của người dùng.
+Tài liệu này lưu lại prompt thực tế liên quan đến việc xây dựng và chỉnh `index.html` theo thứ tự đã gửi. Prompt mở đầu bên dưới được chép nguyên văn từ tệp đính kèm `Pasted text.txt`; các follow-up được chép lại từ lời nhắn người dùng, còn ghi chú về ảnh chỉ mô tả tài liệu đính kèm. Quy tắc đội nhóm được ghi riêng ở phần sau để không nhầm với prompt tác vụ. Rubric PDF là tài liệu chấm điểm, không phải yêu cầu thiết kế của người dùng.
+
+## Phân công phụ trách và tên file hiện tại
+
+- **Thành viên A — Nguyễn Anh Tuấn:** `index.html`.
+- **Thành viên B — Lê Công Phúc:** `studio.html`.
+- **Thành viên C — Đặng Hồng Minh:** `booking.html`.
+
+Trong các prompt lịch sử, “Màn 1/2/3” lần lượt tương ứng với `index.html`, `studio.html`, `booking.html`. Những prompt được trích nguyên văn vẫn giữ cách gọi tại thời điểm gửi; phần mô tả và tài liệu hiện hành dùng tên file HTML.
 
 ## Prompt mở đầu
 
@@ -290,8 +298,9 @@ Kèm rubric PA#2 để xác định các hạng mục và minh chứng cần ki�
 ## Ghi chú về phạm vi và tính trung thực
 
 - Prompt đính kèm ban đầu giới hạn công việc ở `index.html` và yêu cầu báo lỗi CSS chung thay vì tự ý sửa. Các follow-up sau đó mở rộng yêu cầu cụ thể: cập nhật README/AGENTS.md, xử lý font/vùng bấm và bố cục thẻ.
+- Prompt cũ có nhắc tới ảnh PA#1 trong `docs/pa1/`. Nhóm chủ động xóa các ảnh đó vì giảng viên xác nhận PA#2 không yêu cầu nộp lại ảnh màn hình PA#1; prompt được giữ nguyên để lưu lịch sử yêu cầu, không có nghĩa các ảnh hiện vẫn nằm trong repository.
 - Prompt ban đầu ghi có sự chưa thống nhất giữa `styles.css` và `style.css`; follow-up số 1 xác nhận nhóm đã thống nhất dùng `style.css`. Quy tắc dự án nêu rõ `styles.css` chỉ được xóa sau khi hai trang còn lại chuyển xong.
-- `manualcheckM1.md` là tài liệu minh chứng kiểm tra responsive/luồng do người dùng ghi nhận. Brief này không tự khẳng định đã chạy W3C, kiểm tra Accessibility hoặc xác minh đa trình duyệt.
+- Bản ghi tác vụ cũ có nhắc `manualcheckM1.md`; báo cáo kiểm tra hiện trong repository cho `index.html` là `checks/manualcheckindex.md`. Brief này không tự khẳng định đã chạy W3C, kiểm tra Accessibility hoặc xác minh đa trình duyệt.
 
 ---
 
@@ -641,28 +650,28 @@ Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung phần dựng l�
 
 ## 3. Ghi chú về phạm vi và tính trung thực
 
-- Prompt tác vụ yêu cầu đọc `GradStudio-final-project-brief.pdf`, nhưng file này không được đính kèm nên assistant không đọc được; kết quả chỉ bám prompt và `AGENTS.md` bản đã đính kèm. Cần nhóm đối chiếu với PDF.
-- `AGENTS.md` bản đính kèm ghi `styles.css` là stylesheet chung, còn Phần I và `AI-LOG.md` ghi nhóm đã thống nhất `style.css`. Ba trang assistant xuất ra đang liên kết `styles.css`; cần đồng bộ tên file (xem `AI-LOG.md`, mục ngày 2026-11-05).
+- Bản ghi tác vụ cho biết `GradStudio-final-project-brief.pdf` không được đính kèm ở lượt đó nên assistant chưa đọc được; kết quả chỉ dựa trên prompt và `AGENTS.md` đi kèm. Việc đối chiếu PDF chưa được thực hiện trong lượt đó.
+- `AGENTS.md` bản đính kèm ghi `styles.css` là stylesheet chung, còn Phần I và `AI-LOG.md` ghi nhóm đã thống nhất `style.css`. Ba trang assistant xuất ra đang liên kết `styles.css`; phản hồi ghi nhận sự khác biệt và nêu hai phương án đồng bộ tên file (xem `AI-LOG.md`, mục ngày 2026-11-05).
 - Các kết quả kiểm tra (tràn ngang, vùng bấm 44px, liên kết, Nu Checker HTML 0 thông báo) do assistant chạy trong sandbox của nó, không phải trên máy nhóm. Chưa chạy: bàn phím/focus, tương phản, DevTools Accessibility, screenshot và kết quả lưu vào `screenshots/`, `checks/`. Brief này không khẳng định các mục đó đã đạt.
 - Assistant không thao tác Git: việc đổi tên `page2.html` → `studio.html`, `page3.html` → `booking.html` và xóa file cũ do nhóm tự thực hiện.
 
 ---
 
-# PHẦN III: BRIEF VÀ PROMPT CỦA THÀNH VIÊN B (MÀN 2 — `studio.html`, 06/11/2026)
+# PHẦN III: BRIEF VÀ PROMPT CỦA THÀNH VIÊN B — LÊ CÔNG PHÚC (`studio.html`, 06/11/2026)
 
 Yêu cầu nguyên văn:
 
 > tôi là thành viên B, thực hiện code html màn 2 (trước kia là page2.html) giờ là studio.html, tôi được giao công việc sau: kiểm tra lại trang html như phần trước có thể tham khảo file check manualindex. Đồng thời đọc và bổ subg các dile brief + ailog + prototype,  trong lúc check nếu html có sai gì thì bạn cứ sửa,
 
-Phạm vi thực hiện là trang quản trị trên nhánh main, gồm danh sách hội thoại, đoạn chat sau khi Linh đồng ý, form Booking mới và lịch tài nguyên. Dùng cấu trúc báo cáo của M1 làm tham khảo và kiểm tra riêng M2. [Báo cáo và minh chứng M2](checks/manualcheckstudio.md)
+Phạm vi thực hiện là `studio.html` trên nhánh main, gồm danh sách hội thoại, đoạn chat sau khi Linh đồng ý, form Booking mới và lịch tài nguyên. Dùng báo cáo của `index.html` làm tham khảo và kiểm tra riêng trang này. [Báo cáo và minh chứng `studio.html`](checks/manualcheckstudio.md)
 
 ---
 
-# PHẦN IV: BRIEF VÀ PROMPT CỦA THÀNH VIÊN C (MÀN 3 — `booking.html`, 06/11/2026)
+# PHẦN IV: BRIEF VÀ PROMPT CỦA THÀNH VIÊN C — ĐẶNG HỒNG MINH (`booking.html`, 06/11/2026)
 
-Phần này ghi lại các prompt và chỉ dẫn thực tế của Thành viên C dùng để yêu cầu Assistant rà soát, hoàn thiện và khắc phục lỗi cho Màn 3 (`booking.html` — Customer appointment & deposit), đồng thời quản lý bộ ảnh kiểm thử (`screenshots/booking-*.png`, `checks/validator-booking.png`) và lập hồ sơ kiểm thử `checks/manualcheckbooking.md`.
+Phần này ghi lại các prompt và chỉ dẫn thực tế của Thành viên C dùng để yêu cầu Assistant rà soát, hoàn thiện và khắc phục lỗi cho `booking.html` (Customer appointment & deposit), đồng thời quản lý bộ ảnh kiểm thử (`screenshots/booking-*.png`, `checks/validator-booking.png`) và lập hồ sơ kiểm thử `checks/manualcheckbooking.md`.
 
-## 1. Prompt tác vụ cho Màn 3 (`booking.html`)
+## 1. Prompt tác vụ cho `booking.html`
 
 # TASK: Rà soát, hoàn thiện và kiểm thử Màn 3 (`booking.html`) – GradStudio PA#2
 
@@ -695,12 +704,12 @@ Tôi là thành viên C, chịu trách nhiệm phát triển và kiểm thử `b
 
 ---
 
-## 2. Các Follow-up Prompts thực tế của Thành viên C (theo thứ tự)
+## 2. Các Follow-up Prompts thực tế của Thành viên C — Đặng Hồng Minh (theo thứ tự)
 
 ### 1. Hướng dẫn thêm hình ảnh cho booking.html
 > hướng dẫn tôi thêm hình ảnh cho booking.html đi
 
-*Người dùng hỏi cách bổ sung hình ảnh vào `booking.html`. Assistant hướng dẫn 2 vị trí tối ưu: (1) thêm ảnh minh họa gói chụp `TotNghiep.jpg` vào card booking bằng class `.service-art` có sẵn trong `styles.css`; (2) tùy chọn ảnh avatar đại diện. Đồng thời nêu rõ 4 quy tắc bắt buộc: dùng ảnh cục bộ `assets/images/`, có thẻ `alt` mô tả, responsive không tràn layout và không dùng ảnh người thật vi phạm bản quyền.*
+*Người dùng hỏi vị trí có thể bổ sung hình vào `booking.html`. Phản hồi đề cập ảnh gói chụp `TotNghiep.jpg` trong card booking và ảnh avatar; đồng thời ghi nhận các yêu cầu về ảnh cục bộ, nội dung `alt`, hiển thị responsive và quyền sử dụng ảnh.*
 
 ### 2. Gửi kết quả W3C Nu Checker và khắc phục lỗi ARIA trên thẻ p
 > [Người dùng gửi ảnh chụp màn hình kết quả kiểm tra W3C Nu Html Checker cho booking.html báo lỗi tại dòng 20]  
@@ -721,3 +730,19 @@ Tôi là thành viên C, chịu trách nhiệm phát triển và kiểm thử `b
 - Toàn bộ nội dung của Thành viên C đã được đồng bộ với cấu trúc 3 màn hình mới: `index.html`, `studio.html`, `booking.html` và stylesheet chung `styles.css`.
 - Lỗi W3C duy nhất trên `booking.html` được phát hiện qua ảnh chụp kiểm tra thực tế bằng công cụ Nu Html Checker và được khắc phục triệt để bằng chuẩn HTML5 ngữ nghĩa.
 - Báo cáo kiểm thử `checks/manualcheckbooking.md` cùng bộ ảnh minh chứng trong `screenshots/` (`booking-360.png`, `booking-768.png`, `booking-1280.png`) và `checks/validator-booking.png` phản ánh chính xác kết quả kiểm thử thực tế trên trình duyệt khi tắt JavaScript.
+
+---
+
+# PHẦN V: PROMPT RÀ SOÁT HỒ SƠ PA#2 VÀ ẢNH PA#1 (06/11/2026)
+
+Yêu cầu nguyên văn:
+
+> Tui đã chỉnh lại làm ơn giúp tôi xem tôi có bỏ xót phần nào của AI không, xoá giúp tôi mấy phần dấu vết của AI kiur khuyên tôi này kia đồng thời file ảnh của pa1 là tôi chủ động xoá do thầy không yêu cầu nộp lại á tui không biết là đã chỉnh sửa vụ này ở các tài liệu liên quan chưa check dùm tôi xoá/ sửa nếu cần
+
+---
+
+# PHẦN VI: PROMPT ĐỒNG BỘ TÊN THÀNH VIÊN VÀ FILE HTML (06/11/2026)
+
+Yêu cầu nguyên văn:
+
+> uk quên nữa sẵn giúp tui dò lại các file luôn, là 1 số file ghi bạn B bạn C thì bận b LÀ Phúc Bạn C là Minh á, bô sung ghi đúng tên người chịu trách nhiệm bạn A hay bạn phụ trách index là Tuấn. Ngoài ra 1 số tài  liệu hiện ghi màn hình M1, M2,M3 ghi đúng tên file làm hình htlm

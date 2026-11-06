@@ -1,7 +1,8 @@
-# M1 Test Report — `index.html`
+# Báo cáo kiểm tra — `index.html`
 
 **Dự án:** GradStudio — PA#2 Responsive Prototype  
-**Màn hình:** Screen 1 — Services and chat (Customer)  
+**Trang được kiểm tra:** `index.html` — Dịch vụ và chat (Khách hàng)\
+**Người phụ trách màn hình:** Nguyễn Anh Tuấn (Thành viên A)\
 **Ngày kiểm thử:** 05/11/2026  
 **Phạm vi:** Kiểm thử giao diện, responsive, điều hướng, JavaScript-disabled, HTML và Accessibility.
 
@@ -10,7 +11,7 @@
 | Nhóm kiểm thử | Kết quả | Ghi chú |
 |---|---|---|
 | Responsive | PASS | Đã kiểm tra tại 360px, 768px và 1280px. |
-| Điều hướng và liên kết | PASS | Các liên kết/điểm điều hướng trong phạm vi M1 hoạt động đúng. |
+| Điều hướng và liên kết | PASS | Các liên kết/điểm điều hướng trong phạm vi `index.html` hoạt động đúng. |
 | JavaScript bật | PASS | Nội dung và điều hướng chính hoạt động; trang không phụ thuộc JavaScript. |
 | JavaScript tắt | PASS | Nội dung vẫn hiển thị và các liên kết chính vẫn sử dụng được. |
 | W3C HTML Validator | PASS | Kết quả kiểm tra được xác nhận không có lỗi HTML. |
@@ -30,9 +31,9 @@
 
 | Viewport | Thiết bị tham chiếu | Kết quả | Nội dung kiểm tra |
 |---:|---|---|---|
-| 360px | Điện thoại | PASS | Bố cục một cột; nội dung và nút không chồng lấn hoặc tràn ngang; các nút/liên kết độc lập đáp ứng chiều cao vùng bấm tối thiểu 44px. [Ảnh](../screenshots/index_360px.png) |
-| 768px | Tablet | PASS | Bố cục chuyển sang dạng phù hợp với tablet; các thẻ nội dung không bị ép quá hẹp hoặc chồng lấn. [Ảnh](../screenshots/index_768px.png) |
-| 1280px | Desktop | PASS | Bố cục desktop hiển thị đầy đủ; các khu vực nội dung và thẻ dịch vụ được sắp xếp phù hợp. [Ảnh](../screenshots/index_1280px.png) |
+| 360px | Điện thoại | PASS | Bố cục một cột; nội dung và nút không chồng lấn hoặc tràn ngang; các nút/liên kết độc lập đáp ứng chiều cao vùng bấm tối thiểu 44px. [Ảnh](../screenshots/index-360.png) |
+| 768px | Tablet | PASS | Bố cục chuyển sang dạng phù hợp với tablet; các thẻ nội dung không bị ép quá hẹp hoặc chồng lấn. [Ảnh](../screenshots/index-768.png) |
+| 1280px | Desktop | PASS | Bố cục desktop hiển thị đầy đủ; các khu vực nội dung và thẻ dịch vụ được sắp xếp phù hợp. [Ảnh](../screenshots/index-1280.png) |
 
 Các điểm responsive đã rà soát ở từng viewport:
 
@@ -51,7 +52,7 @@ Các điểm responsive đã rà soát ở từng viewport:
 | Liên kết Lịch chụp của tôi | PASS | Mở `booking.html`. |
 | Nút Xem gói chụp | PASS | Điều hướng đến khu vực danh sách dịch vụ. |
 | Nút Hỏi studio về lịch | PASS | Điều hướng đến khu vực chat mẫu. |
-| Nút Hỏi về gói này | PASS | Điều hướng đến khu vực chat mẫu của M1. |
+| Nút Hỏi về gói này | PASS | Điều hướng đến khu vực chat mẫu trên `index.html`. |
 | Liên kết chuyển vai trò | PASS | Mở `studio.html` và có nhãn cho biết người tiếp tục là nhân viên studio. |
 | Gửi tin nhắn | DISABLED AS SPECIFIED | Gửi tin nhắn chưa khả dụng trong PA#2; trường nhập và nút gửi được disable, có ghi chú hiển thị. |
 
@@ -59,7 +60,7 @@ Các chức năng gửi dữ liệu thật, lưu hội thoại hoặc đồng b�
 
 ## 5. JavaScript testing
 
-Trang M1 không sử dụng JavaScript để dựng nội dung chính hoặc điều hướng luồng chính.
+Trang `index.html` không sử dụng JavaScript để dựng nội dung chính hoặc điều hướng luồng chính.
 
 | Trạng thái | Kết quả | Ghi chú |
 |---|---|---|
@@ -93,7 +94,7 @@ Trang M1 không sử dụng JavaScript để dựng nội dung chính hoặc đi
 
 ## 8. Kết luận
 
-Màn hình M1 (`index.html`) đã PASS các nhóm kiểm thử được liệt kê trong báo cáo: responsive tại 360px, 768px và 1280px; điều hướng; hiển thị khi JavaScript bật/tắt; W3C HTML Validator; semantic HTML và Accessibility cơ bản.
+Trang `index.html` đã PASS các nhóm kiểm thử được liệt kê trong báo cáo: responsive tại 360px, 768px và 1280px; điều hướng; hiển thị khi JavaScript bật/tắt; W3C HTML Validator; semantic HTML và Accessibility cơ bản.
 
-M1 đáp ứng phạm vi của một responsive static prototype PA#2. Các chức năng gửi tin nhắn, lưu dữ liệu và xử lý nghiệp vụ thật không được triển khai; những điều khiển tương ứng được thể hiện là chưa khả dụng theo yêu cầu của brief.
+`index.html` đáp ứng phạm vi của một responsive static prototype PA#2. Các chức năng gửi tin nhắn, lưu dữ liệu và xử lý nghiệp vụ thật không được triển khai; những điều khiển tương ứng được thể hiện là chưa khả dụng theo yêu cầu của brief.
 

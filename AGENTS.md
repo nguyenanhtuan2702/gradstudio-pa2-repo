@@ -5,29 +5,39 @@
 
 ## 1. Tài liệu căn cứ và mục tiêu
 
-- PA#2 là prototype tĩnh bằng HTML/CSS của ba màn hình Main Flow. Tiếp tục dùng cùng nhóm và repository của PA#1.
-- Dùng đồng thời hai tài liệu do giảng viên cung cấp:
+- PA#2 gồm ba màn hình Main Flow. Nhóm được tự quyết định thiết kế, bố cục, nội dung trình bày và màu sắc; các hình màn hình trong brief là điểm khởi đầu để hiểu tính năng, không phải mẫu bắt buộc phải sao chép.
+- Giảng viên cho phép chọn static HTML/CSS hoặc React. Repository hiện chọn static HTML/CSS; không tự chuyển stack nếu nhóm chưa thống nhất.
+- Dùng các tài liệu và cập nhật mới nhất do giảng viên cung cấp:
   - Rubric **PA#2 — Responsive prototype**: quy định tiêu chí chấm, responsive, HTML, accessibility, minh chứng và cách nộp PA#2.
   - **GradStudio — final project brief**: quy định sản phẩm GradStudio, luồng nghiệp vụ, dữ liệu mẫu và các điểm phải sửa trên ba màn hình.
-- Khi thực hiện PA#2, phải đáp ứng cả rubric PA#2 và các yêu cầu cho ba màn hình trong GradStudio final project brief. Không tự thay đổi nội dung nghiệp vụ được quy định trong brief.
-- Đây là **responsive static prototype**, không phải website vận hành hoàn chỉnh. Nội dung mẫu được viết trực tiếp trong HTML; không giả vờ rằng dữ liệu đã được lưu, thanh toán hoặc đồng bộ thật.
+- Thông báo mới của giảng viên thay thế chỉ dẫn cũ “You do not design your own three screens”. Dùng brief và rubric PA#2 bản cập nhật cùng danh sách **Fix these** mới nhất; hạn nộp không thay đổi.
+- Đáp ứng các tính năng/luồng mà brief hiện hành yêu cầu và tránh mọi vấn đề trong **Fix these**. Có thể thay đổi cách trình bày và nội dung phụ; không được làm mất tính năng, gây hiểu sai nghiệp vụ hoặc trình bày dữ liệu mẫu như dữ liệu thật.
+- Đây là prototype responsive, không phải website vận hành hoàn chỉnh. Với lựa chọn static hiện tại, nội dung mẫu được viết trong HTML; không giả vờ rằng dữ liệu đã được lưu, thanh toán hoặc đồng bộ thật.
 - Brief mới áp dụng làm nền tảng cho PA#2 đến PA#6. Phạm vi triển khai của PA#2 vẫn chỉ là ba màn hình được chỉ định ở Mục 2; không tự mở rộng thành sản phẩm hoàn chỉnh.
 
-## 2. Ba màn hình và tên file bắt buộc
+## 2. Ba màn hình và đường dẫn trong repository hiện tại
 
-Dùng đúng tên file sau; không tiếp tục dùng `page2.html` hoặc `page3.html`:
+Repository hiện dùng lựa chọn static; giữ ba file sau và không dùng lại tên cũ `page2.html` hoặc `page3.html`:
 
 1. `index.html` – **Screen 1: Services and chat (Customer)**. Linh xem danh mục dịch vụ và hỏi studio về lịch 09:00.
 2. `studio.html` – **Screen 2: Advice and clash handling (Admin)**. Admin Thảo xem hội thoại, xử lý xung đột lịch, thống nhất thời gian với Linh và chuẩn bị tạo booking.
 3. `booking.html` – **Screen 3: Review the appointment and pay the deposit (Customer)**. Linh xem lịch đã thống nhất và booking đang chờ cọc 30%.
 
 - `index.html` là trang đầu tiên.
-- Tên file, liên kết trong HTML, README, PROTOTYPE.md, screenshot và các tài liệu liên quan phải được đồng bộ theo ba tên file này.
+- Với static, tên file và liên kết phải được đồng bộ theo ba tên ở trên. Nếu nhóm thống nhất chuyển sang React, các screen path có thể theo cấu trúc React; phải ghi chính xác đường dẫn/route của cả ba màn hình trong `PROTOTYPE.md`.
 - Không tạo thêm trang HTML ngoài ba màn hình PA#2, trừ khi giảng viên yêu cầu rõ ràng.
 
-## 3. Câu chuyện và dữ liệu chuẩn phải thống nhất
+### Phân công phụ trách hiện tại
 
-Mọi trang phải dùng cùng một câu chuyện, tên, thời gian, gói dịch vụ, giá và mã booking:
+- Thành viên A — **Nguyễn Anh Tuấn**: `index.html`.
+- Thành viên B — **Lê Công Phúc**: `studio.html`.
+- Thành viên C — **Đặng Hồng Minh**: `booking.html`.
+
+## 3. Dữ liệu mẫu hiện tại và tính nhất quán
+
+Các tên, thời gian, gói, giá và mã dưới đây là bộ dữ liệu demo hiện dùng trong repository, không phải mẫu nội dung bắt buộc phải chép nguyên. Theo hướng dẫn mới, nhóm có thể chọn câu chuyện và dữ liệu khác nếu brief/rubric cập nhật không yêu cầu giữ dữ kiện cụ thể. Dù chọn bộ dữ liệu nào, các màn hình phải nhất quán và vẫn thể hiện đủ tính năng/luồng bắt buộc. Nếu tài liệu môn học hiện hành yêu cầu một dữ kiện cụ thể thì ưu tiên dữ kiện đó.
+
+Nếu tiếp tục dùng câu chuyện hiện tại, giữ nhất quán các dữ liệu sau:
 
 - Khách hàng: **Nguyễn Thùy Linh**.
 - Admin: **Thảo**.
@@ -48,7 +58,7 @@ Mọi trang phải dùng cùng một câu chuyện, tên, thời gian, gói dị
 
 Không đổi các thông tin trên giữa ba trang. Phân biệt rõ 13:00 là giờ bắt đầu make-up, còn 14:00 là giờ bắt đầu chụp.
 
-## 4. Trạng thái và trạng thái hiển thị cố định trên từng trang
+## 4. Trạng thái và nội dung của từng trang
 
 ### 4.1. Tên trạng thái dùng thống nhất
 
@@ -63,21 +73,19 @@ Không đổi các thông tin trên giữa ba trang. Phân biệt rõ 13:00 là 
 - `Đã đặt lịch`
 - `Hoàn thành`
 
-Ở Screen 3, có thể hiển thị đầy đủ `Đã thống nhất lịch · Chờ cọc 30%` theo brief.
-
-Không dùng tên trạng thái thay thế hoặc không thống nhất như `Đã xác nhận` cho hội thoại.
+Các nhãn trên là cách gọi hiện dùng trong repository. Có thể chọn câu chữ tương đương nếu rubric/brief cập nhật không yêu cầu nhãn chính xác; trạng thái và ý nghĩa nghiệp vụ phải rõ, nhất quán giữa các trang. Trên `booking.html`, phải phân biệt khách đã thống nhất giờ với booking đã được đặt sau khi trả cọc; tránh nhãn mơ hồ khiến người xem hiểu nhầm giờ đã được giữ hoặc đã thanh toán.
 
 ### 4.2. Screen 1 – `index.html`
 
 - Nội dung hiển thị trên giao diện (điều hướng, nhãn, nút, trạng thái và ghi chú) phải bằng tiếng Việt như prototype GradStudio.
-- Giới thiệu studio và giữ nội dung portfolio/ảnh mẫu, đánh giá khách hàng, loại buổi chụp và gói dịch vụ theo thiết kế PA#1 khi các nội dung đó xuất hiện trên màn hình.
-- Hiển thị ba dịch vụ và giá tham khảo:
+- Màn hình cần giúp khách khám phá dịch vụ và bắt đầu hỏi studio. Nhóm được chọn cách giới thiệu, nội dung phụ và bố cục; không bắt buộc giữ portfolio, đánh giá, hình ảnh hoặc cách trình bày từ PA#1 nếu chúng không cần cho tính năng của màn hình.
+- Prototype hiện hiển thị ba ví dụ dịch vụ và giá tham khảo; nhóm được chọn ví dụ/nội dung phù hợp nếu tài liệu cập nhật không bắt buộc dữ kiện cụ thể:
   - Kỷ yếu lớp: từ **350.000đ/người**.
   - Tốt nghiệp: từ **1.800.000đ**.
   - Chân dung/CV: từ **690.000đ**.
-- Chat phải thể hiện đúng câu hỏi của Linh: **“Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?”**
-- Tin nhắn phản hồi của studio thể hiện đang kiểm tra lịch, ví dụ: **“Để mình kiểm tra lịch cho bạn nhé.”**
-- Đây là trạng thái câu hỏi ban đầu; không hiển thị trước kết quả thống nhất 13:00/14:00 ở Screen 1.
+- Chat phải thể hiện ý chính: khách hỏi về gói tốt nghiệp có makeup và lịch 24/10 lúc 09:00; có thể diễn đạt bằng câu chữ tự nhiên khác.
+- Phản hồi studio phải thể hiện đang kiểm tra lịch; câu ví dụ là **“Để mình kiểm tra lịch cho bạn nhé.”**
+- Đây là trạng thái hỏi ban đầu; không hiển thị trước kết quả thống nhất giờ trên `index.html`. Giờ 09:00 và các giờ 13:00/14:00 là dữ liệu của câu chuyện hiện tại.
 - Phần quy trình không được nói hoặc tạo cảm giác rằng studio giữ chỗ ngay khi hai bên chốt giờ. Chỉ giữ khung giờ sau khi thanh toán cọc thành công và hệ thống kiểm tra lại tài nguyên.
 - Khung chat nổi hiện tại đang có nguy cơ che nội dung. Ở viewport **360px**, chat không được che bất kỳ nội dung, nút hoặc liên kết nào. Ưu tiên đưa chat vào luồng nội dung bình thường trên mobile; chỉ dùng vị trí nổi khi đã chứng minh không che nội dung ở kích thước đó.
 
@@ -90,19 +98,19 @@ Trang phải thể hiện **trạng thái sau khi Linh đã đồng ý thời gi
   2. Hội thoại với Linh và toàn bộ form **Booking mới** đặt bên dưới.
   3. Lịch tài nguyên và các thời gian đề xuất.
 - Hội thoại của Linh ở trạng thái **`Đã chốt lịch`**.
-- Thời gian 14:00 được chọn; dữ liệu thể hiện make-up 13:00–14:00 và buổi chụp 14:00–16:00.
+- Trong câu chuyện demo hiện tại, thời gian 14:00 được chọn; dữ liệu thể hiện make-up 13:00–14:00 và buổi chụp 14:00–16:00. Nếu nhóm chọn bộ dữ liệu khác, vẫn phải thể hiện rõ xung đột, giờ thay thế được khách đồng ý và các khoảng thời gian khớp nhau.
 - Nút/hành động **`Tạo booking`** phải ở trạng thái enabled vì Linh đã đồng ý.
-- Phải giải thích rõ 09:00 không khả dụng vì Mai bận 08:00–12:00; không chỉ dùng màu hoặc họa tiết để biểu thị xung đột.
+- Phải giải thích rõ nguyên nhân giờ ban đầu không khả dụng; trong câu chuyện hiện tại, Mai bận 08:00–12:00 nên không thể nhận lúc 09:00. Không chỉ dùng màu hoặc họa tiết để biểu thị xung đột.
 - Lịch tài nguyên phải đọc được đầy đủ tên khách, tên dịch vụ, thời gian và trạng thái ở mọi viewport; không cắt chữ kiểu `Linh · yê…` hoặc `Tốt nghiệ…`.
 - Chat và toàn bộ form Booking mới phải đọc được bằng cách cuộn trang. Không đặt chúng trong một cột có scrollbar riêng khiến người xem không thể nhìn thấy cả chat và form bằng cách cuộn trang thông thường.
 - Bố cục mobile phải xếp các khu vực theo thứ tự hợp lý; không cố thu nhỏ ba cột desktop xuống 360px.
 
 ### 4.4. Screen 3 – `booking.html`
 
-- Hiển thị booking **GS-1024** với trạng thái **`Đã thống nhất lịch · Chờ cọc 30%`**.
-- Hiển thị gói, ngày, make-up 13:00–14:00, buổi chụp 14:00–16:00, giá 1.800.000đ, cọc 540.000đ và còn lại 1.260.000đ.
-- Timeline phải gạch ngang mốc 09:00 ban đầu và thể hiện đúng hai mốc make-up, chụp đã thống nhất; trạng thái 09:00 không khả dụng không được chỉ biểu thị bằng màu.
-- Week view đánh dấu ngày 24/10/2026 theo brief.
+- Trong câu chuyện demo hiện tại, hiển thị booking **GS-1024** với trạng thái **`Đã thống nhất lịch · Chờ cọc 30%`**.
+- Hiển thị gói, ngày, make-up 13:00–14:00, buổi chụp 14:00–16:00, giá 1.800.000đ, cọc 540.000đ và còn lại 1.260.000đ. Nếu nhóm chọn bộ dữ liệu khác, các khoản tiền và mốc giờ phải nhất quán, tính toán đúng.
+- Timeline phải phân biệt giờ ban đầu không khả dụng với giờ thay thế đã thống nhất; trong câu chuyện hiện tại, gạch ngang mốc 09:00 và thể hiện hai mốc make-up, chụp. Trạng thái không khả dụng không được chỉ biểu thị bằng màu.
+- Week view đánh dấu ngày của booking; trong câu chuyện hiện tại là 24/10/2026.
 - Nút **`Thanh toán cọc 30%`** phải hiển thị disabled trong prototype PA#2 và có ghi chú ngắn, nhìn thấy được, rằng thanh toán chưa khả dụng trong prototype.
 
 ### 4.5. Quy tắc giữ chỗ và thanh toán
@@ -119,9 +127,9 @@ Trang phải thể hiện **trạng thái sau khi Linh đã đồng ý thời gi
 - Mọi điều hướng giữa ba trang phải dùng liên kết tương đối tới đúng file tồn tại: `index.html`, `studio.html`, `booking.html`.
 - Dùng `<a href="...">` cho điều hướng. Có thể dùng submit button của form với `action="..."` khi đúng ngữ nghĩa.
 - Không dùng đường dẫn tuyệt đối bắt đầu bằng `/`, `href="#"`, URL chỉ hoạt động trên server hoặc JavaScript `onclick` để thay thế điều hướng.
-- Luồng đổi vai trò hai lần và PA#2 không có màn hình đăng nhập. Vì vậy, các liên kết chuyển vai trò phải có nhãn nói rõ ai tiếp tục, ví dụ **“Nhân viên studio: mở hội thoại này”** khi đi từ Screen 1 sang Screen 2. Không để người dùng hiểu nhầm rằng cùng một tài khoản khách hàng tự chuyển sang giao diện Admin.
-- Từ Screen 2, đường dẫn tiếp tục sang Screen 3 phải được đặt tên rõ ràng, ví dụ **“Mở booking GS-1024 – Khách hàng tiếp tục”**. Đây chỉ là điều hướng giữa các trạng thái minh họa, không phải thao tác lưu booking thật.
-- Liên kết `Lịch chụp của tôi` trên Screen 1 có thể mở `booking.html` vì đây là màn hình khách hàng.
+- Luồng đổi vai trò hai lần và PA#2 không có màn hình đăng nhập. Vì vậy, liên kết chuyển vai trò từ `index.html` sang `studio.html` phải có nhãn nói rõ ai tiếp tục, ví dụ **“Nhân viên studio: mở hội thoại này”**. Không để người dùng hiểu nhầm rằng cùng một tài khoản khách hàng tự chuyển sang giao diện Admin.
+- Từ `studio.html`, đường dẫn tiếp tục sang `booking.html` phải được đặt tên rõ ràng, ví dụ **“Mở booking GS-1024 – Khách hàng tiếp tục”**. Đây chỉ là điều hướng giữa các trạng thái minh họa, không phải thao tác lưu booking thật.
+- Liên kết `Lịch chụp của tôi` trên `index.html` có thể mở `booking.html` vì đây là trang khách hàng.
 
 ### 5.2. Các thành phần demo phải bỏ
 
@@ -156,31 +164,19 @@ Các mục không mở được màn hình trong PA#2 như `Booking`, `Lịch st
 
 ## 7. Công nghệ và cấu trúc CSS/JavaScript
 
-- Dùng HTML5 và CSS3 thuần (**plain CSS**). Không dùng Bootstrap, Tailwind, Bulma hoặc CSS framework khác.
-- Dùng stylesheet chung **`styles.css`** cho cả ba trang, đúng với repository hiện tại.
-- Trước khi tạo token hoặc component CSS mới, kiểm tra `styles.css`; tái sử dụng các custom properties và class pattern hiện có. Không tự tạo một hệ token thứ hai hoặc đổi tên stylesheet tùy tiện.
-- Không dùng React, Vue, Angular, Svelte hoặc JavaScript framework; không thêm thư viện giao diện, icon, package hay dependency bên ngoài.
-- Không dùng CDN, font tải từ Internet hoặc tài nguyên từ xa làm điều kiện để giao diện hiển thị đúng.
-- Trang phải mở được trực tiếp từ file HTML mà không yêu cầu Node.js, npm, bundler hoặc build step.
-- Không thêm JavaScript. Nội dung, trạng thái chính và điều hướng phải hoạt động khi JavaScript bị tắt; ưu tiên HTML/CSS tĩnh cho ba màn hình PA#2.
-- Không dùng JavaScript để giả lập gửi tin nhắn, thanh toán, tạo dữ liệu đã lưu, xác nhận booking hoặc đồng bộ giữa các trang. Những hành động không có trang đích phải được thể hiện disabled và có ghi chú nhìn thấy được.
+- PA#2 cho phép chọn static HTML/CSS hoặc React. Lựa chọn hiện tại của repository là HTML5/CSS3 thuần trong `index.html`, `studio.html`, `booking.html` và stylesheet chung `styles.css`.
+- Khi tiếp tục static, không cần thêm JavaScript, Node.js, npm hoặc build step; ba trang phải mở trực tiếp từ file HTML và nội dung/điều hướng chính phải dùng được khi JavaScript tắt.
+- Nếu cả nhóm đổi sang React, phải nộp thư mục build `dist/`, mở prototype qua local server với JavaScript bật, và liệt kê chính xác screen path/route của từng màn hình trong `PROTOTYPE.md`.
+- Không dùng framework khác ngoài lựa chọn React mà giảng viên cho phép; không dùng framework CSS như Bootstrap, Tailwind hoặc Bulma. Không dùng CDN, font tải từ Internet hoặc tài nguyên từ xa làm điều kiện để giao diện hiển thị đúng.
+- Với lựa chọn static hiện tại, kiểm tra `styles.css` và tái sử dụng token/class phù hợp trước khi thêm mới. Có thể tổ chức CSS khác nếu nhóm chuyển sang React và đã thống nhất cách triển khai.
+- Dù dùng stack nào, không tạo backend, thanh toán thật, đồng bộ dữ liệu hoặc tuyên bố rằng dữ liệu mẫu đã được lưu/booking đã được giữ chỗ. Các hành động không được hỗ trợ trong prototype phải được thể hiện trung thực và giải thích rõ.
 
-## 8. Nhận diện và Design System GradStudio
+## 8. Thiết kế và hệ thống thị giác
 
-- Giữ nhận diện GradStudio theo PA#1: thanh lịch, nền kem/trắng ấm, nâu trầm và điểm nhấn nâu vàng.
-- Typography có thể dùng serif cho logo/tiêu đề và sans-serif cho nội dung, biểu mẫu, điều khiển.
-- Dùng các CSS custom properties trong `:root` của `styles.css` làm nguồn màu chung:
-  - `--color-background: #faf6f0`
-  - `--color-surface: #fffdfa`
-  - `--color-text: #2c2219`
-  - `--color-muted: #65584c`
-  - `--color-accent: #806044`
-  - `--color-border: #e7ddd1`
-- Khai báo và tái sử dụng spacing tokens theo bội số 4px trong `styles.css`: `--space-1: 0.25rem`, `--space-2: 0.5rem`, `--space-3: 0.75rem`, `--space-4: 1rem`, `--space-6: 1.5rem`, `--space-8: 2rem`, `--space-12: 3rem`, `--space-16: 4rem`.
-- Ưu tiên dùng spacing tokens cho margin, padding và gap; chỉ dùng giá trị ngoài scale khi thật sự cần cho đường viền, kích thước icon hoặc căn chỉnh chi tiết.
-- Body text tối thiểu **16px**; chữ thường và chữ trên nút đạt tỷ lệ tương phản tối thiểu **4.5:1** với nền tương ứng.
-- Mỗi trang có một khu vực/nội dung thị giác chính rõ ràng. Không làm mọi thành phần nổi bật ngang nhau.
-- Có thể thay đổi cách sắp xếp, kích thước, khoảng cách và thứ tự hiển thị để phù hợp mobile/tablet; không cần giữ từng pixel của PA#1.
+- Nhóm tự chọn bảng màu, typography, nhận diện, thứ bậc thị giác, bố cục và spacing. Không bắt buộc sao chép PA#1, hình minh họa trong brief hay palette được dùng trước đó.
+- Có thể tái sử dụng custom properties, spacing tokens và component patterns hiện có trong `styles.css`; chúng là tài nguyên hỗ trợ, không phải giới hạn thiết kế.
+- Dù chọn phong cách nào, nội dung phải dễ đọc, điều khiển rõ ràng, trạng thái không chỉ dựa vào màu sắc và đáp ứng tiêu chí accessibility trong rubric hiện hành.
+- Thay đổi cách sắp xếp, kích thước, khoảng cách và thứ tự hiển thị để phù hợp mobile/tablet; không cần giữ từng pixel của PA#1.
 
 ## 9. Responsive và bố cục
 
@@ -195,7 +191,7 @@ Thiết kế mobile-first. Hai breakpoint dùng chung trong stylesheet là **768
 - Ảnh phải co theo khung chứa, thường dùng `max-width: 100%; height: auto;`.
 - Tên khách, tên gói, nội dung chat và thông tin lịch phải xuống dòng thay vì đẩy rộng trang.
 - Ở 360px, button và link đứng độc lập phải cao tối thiểu **44px**. Link nằm trong câu văn được miễn yêu cầu này theo rubric.
-- Screen 2 phải xếp khu hội thoại, form booking và lịch tài nguyên theo thứ tự hợp lý trên mobile; không cố thu nhỏ ba cột desktop xuống 360px.
+- `studio.html` phải xếp khu hội thoại, form booking và lịch tài nguyên theo thứ tự hợp lý trên mobile; không cố thu nhỏ ba cột desktop xuống 360px.
 - Không dùng `overflow-x: hidden` trên `html`, `body` hoặc wrapper để che lỗi tràn.
 - Không chỉ đổi zoom trình duyệt; phải dùng Device Toolbar với đúng viewport.
 
@@ -235,13 +231,13 @@ Repository cần giữ/cập nhật các tài liệu sau:
 
 - `README.md`: cách mở và cấu trúc repository.
 - `AGENTS.md`: file quy tắc ở thư mục gốc.
-- `index.html`, `studio.html`, `booking.html` và `styles.css`.
-- `docs/pa1/`: lưu các màn hình PA#1 và tài liệu so sánh.
+- Với lựa chọn static hiện tại: `index.html`, `studio.html`, `booking.html` và `styles.css`. Nếu nhóm chuyển sang React: nộp `dist/` đã build và ghi đường dẫn/route từng màn hình trong `PROTOTYPE.md`.
+- `docs/pa1/`: giữ `LINK.md` và thông tin tham chiếu PA#1. Theo hướng dẫn của giảng viên, PA#2 không yêu cầu nộp lại ảnh màn hình PA#1; nhóm chủ động không giữ các ảnh đó trong repository.
 - `PROTOTYPE.md`: thông tin nhóm; cách mở; bảng ba màn hình và luồng liên kết; **Changed since PA#1**; **Not wired yet**; CSS/spacing/breakpoints; nguồn và giấy phép ảnh nếu dùng ảnh được cấp phép; giải thích các thay đổi theo final project brief.
 - `brief.md`: ghi lại prompt/thông tin thực tế đã đưa cho AI, theo đúng thứ tự; đây không phải bản chép lại đề bài của giảng viên.
 - `AI-LOG.md`: ghi từng task/page, công cụ và yêu cầu thật, điều AI làm sai/được sửa/bị từ chối, kiểm tra nào phát hiện và kết quả thực tế. Không bịa trải nghiệm hoặc test.
 - `SELF_ASSESSMENT_REPORT.md`: một dòng cho mỗi tiêu chí rubric, điểm tự chấm, đường dẫn bằng chứng và phần việc chưa hoàn thành.
-- `screenshots/`: screenshot **full-page** mỗi trang tại 360px, 768px, 1280px khi JavaScript tắt. Tên file: `index-360.png`, `index-768.png`, `index-1280.png`; `studio-360.png`, `studio-768.png`, `studio-1280.png`; `booking-360.png`, `booking-768.png`, `booking-1280.png`.
+- `screenshots/`: screenshot **full-page** theo kích thước và trạng thái chạy mà rubric PA#2 cập nhật yêu cầu. Với static, chụp khi JavaScript tắt; với React, chạy qua local server và bật JavaScript. Bộ tên hiện dùng cho repository static: `index-360.png`, `index-768.png`, `index-1280.png`; `studio-360.png`, `studio-768.png`, `studio-1280.png`; `booking-360.png`, `booking-768.png`, `booking-1280.png`.
 - `checks/`: kết quả W3C cho từng trang, ví dụ `validator-index.png` hoặc `.txt`, `validator-studio.png` hoặc `.txt`, `validator-booking.png` hoặc `.txt`.
 
 Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ chưa chạy thay vì ghi PASS.
@@ -250,11 +246,11 @@ Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ 
 
 ### Trước khi sửa
 
-1. Đọc `README.md`, file `AGENTS.md` này và yêu cầu/tài liệu được giao.
-2. Đọc đúng phần của `GradStudio-final-project-brief.pdf` và rubric PA#2 liên quan đến trang đang sửa.
-3. Xem ảnh PA#1 và `docs/pa1/LINK.md` khi cần đối chiếu.
+1. Đọc `README.md`, file `AGENTS.md` này, thông báo mới nhất của giảng viên, brief và rubric PA#2 bản cập nhật, bao gồm danh sách **Fix these**.
+2. Đối chiếu các tính năng cần có của màn hình đang sửa; xem các màn hình trong brief là hướng dẫn về tính năng, không phải yêu cầu sao chép nguyên thiết kế.
+3. Dùng `docs/pa1/LINK.md` để tham khảo PA#1 khi cần; ảnh chụp màn hình PA#1 không được nộp lại theo hướng dẫn của giảng viên.
 4. Kiểm tra `styles.css`, asset và cấu trúc hiện tại trước khi tạo file hoặc token mới.
-5. Xác định rõ trang/tệp được giao; không tự ý sửa phần của thành viên khác hoặc thay đổi stack chung.
+5. Xác định rõ trang/tệp được giao và stack nhóm đã chọn; không tự ý sửa phần của thành viên khác hoặc đổi từ static sang React (hay ngược lại) nếu chưa thống nhất.
 6. Nếu yêu cầu chưa đủ hoặc mâu thuẫn, nêu giả định và xin nhóm thống nhất; không tự suy diễn nghiệp vụ.
 
 ### Khi thực hiện
@@ -270,7 +266,7 @@ Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ 
 1. Nêu rõ file nào đã tạo/sửa và các thay đổi chính.
 2. Kiểm tra đường dẫn stylesheet, ảnh và liên kết giữa ba trang.
 3. Kiểm tra 360px, 768px, 1280px trên từng trang.
-4. Kiểm tra với JavaScript tắt; nội dung và điều hướng chính vẫn phải dùng được.
+4. Với static, kiểm tra khi JavaScript tắt; nội dung và điều hướng chính vẫn phải dùng được. Với React, kiểm tra qua local server với JavaScript bật.
 5. Chạy W3C Nu Checker cho trang đã sửa; lưu kết quả nếu đã thực sự chạy.
 6. Kiểm tra heading, landmarks, label hiển thị, alt, accessible name, keyboard focus và contrast.
 7. Không báo “đã kiểm tra”, “đạt 0 lỗi” hoặc “không tràn” nếu chưa thực sự chạy kiểm tra.
@@ -304,8 +300,8 @@ Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ 
 - [ ] Kết quả là `[]`, ngoại trừ nội dung nằm trong vùng cuộn ngang riêng được phép (nếu có và đúng brief).
 - [ ] Không dùng `overflow-x: hidden` để che lỗi.
 - [ ] Nút/link độc lập cao tối thiểu 44px tại 360px.
-- [ ] Nội dung dài xuống dòng, ảnh không tràn, chat không che nội dung trên M1.
-- [ ] Trên M2, chat và form Booking mới đều đọc được bằng cách cuộn trang; lịch tài nguyên đọc được đầy đủ.
+- [ ] Nội dung dài xuống dòng, ảnh không tràn, chat trên `index.html` không che nội dung.
+- [ ] Trên `studio.html`, chat và form Booking mới đều đọc được bằng cách cuộn trang; lịch tài nguyên đọc được đầy đủ.
 
 ### HTML, Accessibility và thiết kế
 
@@ -320,7 +316,7 @@ Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ 
 
 ### Minh chứng và tài liệu
 
-- [ ] Có screenshot full-page ba kích thước khi JavaScript tắt.
+- [ ] Có screenshot full-page theo rubric cập nhật: JavaScript tắt cho static; local server với JavaScript bật cho React.
 - [ ] Có W3C result trong `checks/` cho trang.
 - [ ] Các thay đổi so với PA#1 và brief mới được ghi vào PROTOTYPE.md.
 - [ ] Prompt, lỗi AI, cách phát hiện và cách sửa thực tế được ghi vào `brief.md`/`AI-LOG.md` đúng vai trò.
@@ -328,4 +324,4 @@ Không tạo bằng chứng giả. Nếu một kiểm tra chưa chạy, ghi rõ 
 
 ---
 
-**Nguyên tắc cuối cùng:** Làm đúng ba màn hình `index.html`, `studio.html`, `booking.html`; dùng dữ liệu và trạng thái thống nhất theo GradStudio final project brief; xử lý rõ quyền sử dụng hình ảnh, điều hướng đổi vai trò, trạng thái chờ cọc và giới hạn của prototype tĩnh; đồng thời đáp ứng responsive, semantic HTML, accessibility và minh chứng theo rubric PA#2.
+**Nguyên tắc cuối cùng:** Hoàn thành ba màn hình và các tính năng trong brief PA#2 cập nhật, tránh các lỗi trong **Fix these**, đồng thời đáp ứng responsive, semantic HTML, accessibility và minh chứng theo rubric. Nhóm tự quyết định thiết kế, bố cục, nội dung trình bày, màu sắc và chọn static HTML/CSS hoặc React. Với lựa chọn static hiện tại, giữ các đường dẫn `index.html`, `studio.html`, `booking.html`; nếu đổi sang React, nộp `dist/` và ghi screen path của từng màn hình trong `PROTOTYPE.md`.

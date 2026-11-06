@@ -2,28 +2,29 @@
 
 ## Thông tin dự án
 
-Prototype này chuyển ba màn hình Main Flow của GradStudio thành các trang HTML/CSS tĩnh cho PA#2. Nội dung bám theo brief final project và câu chuyện PA#1; đây là bản mô phỏng giao diện, không phải website có thể vận hành nghiệp vụ thật.
+Prototype này trình bày ba màn hình Main Flow của GradStudio bằng HTML/CSS tĩnh cho PA#2. Bố cục và cách trình bày do nhóm lựa chọn; nội dung mẫu hiện dùng câu chuyện từ brief final project và PA#1. Đây là bản mô phỏng giao diện, không phải website có thể vận hành nghiệp vụ thật.
 
-- **Thành viên nhóm:** 23120184-23120330-24120090-Nguyễn Anh Tuấn-Lê Công Phúc-Đặng Hồng Minh
+- **Thành viên nhóm:** Nguyễn Anh Tuấn (23120184), Lê Công Phúc (23120330), Đặng Hồng Minh (24120090).
+- **Phân công phụ trách:** Thành viên A — Nguyễn Anh Tuấn (`index.html`); Thành viên B — Lê Công Phúc (`studio.html`); Thành viên C — Đặng Hồng Minh (`booking.html`).
 - **Công nghệ:** HTML5 và CSS3 thuần; stylesheet dùng chung là `styles.css`.
 - **Cách mở:** mở trực tiếp [`index.html`](index.html) bằng trình duyệt. Không cần cài package, chạy server hoặc build. Các trang chính dùng liên kết HTML; nội dung mẫu không phụ thuộc JavaScript.
 
 ## Ba màn hình và luồng chính
 
-| Màn hình | File | Vai trò | Nội dung |
+| Màn hình / file | Vai trò | Nội dung |
 |---|---|---|---|
-| 1 — Dịch vụ và chat | [`index.html`](index.html) | Khách hàng Nguyễn Thùy Linh | Xem dịch vụ và giá tham khảo, rồi đọc hội thoại mẫu về yêu cầu chụp tốt nghiệp lúc 09:00 ngày 24/10/2026. |
-| 2 — Tư vấn và xử lý trùng lịch | [`studio.html`](studio.html) | Nhân viên studio Thảo | Xem xung đột 09:00 vì Mai bận 08:00–12:00, đề xuất makeup 13:00–14:00 và chụp 14:00–16:00 tại Phòng B; trạng thái mẫu cho biết Linh đã đồng ý. |
-| 3 — Xem lịch và khoản cọc | [`booking.html`](booking.html) | Khách hàng Nguyễn Thùy Linh | Xem booking GS-1024 đang chờ cọc 30%, lịch makeup/chụp và khoản tiền cần thanh toán. Nút thanh toán được vô hiệu hóa. |
+| [`index.html`](index.html) — Dịch vụ và chat | Khách hàng Nguyễn Thùy Linh | Xem dịch vụ và giá tham khảo, rồi đọc hội thoại mẫu về yêu cầu chụp tốt nghiệp lúc 09:00 ngày 24/10/2026. |
+| [`studio.html`](studio.html) — Tư vấn và xử lý trùng lịch | Nhân viên studio Thảo | Xem xung đột 09:00 vì Mai bận 08:00–12:00, đề xuất makeup 13:00–14:00 và chụp 14:00–16:00 tại Phòng B; trạng thái mẫu cho biết Linh đã đồng ý. |
+| [`booking.html`](booking.html) — Xem lịch và khoản cọc | Khách hàng Nguyễn Thùy Linh | Xem booking GS-1024 đang chờ cọc 30%, lịch makeup/chụp và khoản tiền cần thanh toán. Nút thanh toán được vô hiệu hóa. |
 
-Luồng được mô phỏng là **khách hỏi dịch vụ → nhân viên kiểm tra lịch và thống nhất giờ → khách xem booking và khoản cọc**. Từ M1, liên kết đổi vai trò mở M2; M1 cũng có liên kết đến lịch chụp M3. M2 có liên kết xem M3, còn M3 có liên kết quay về M1. Các liên kết nội bộ dùng đường dẫn tương đối.
+Luồng được mô phỏng là **`index.html`: khách hỏi dịch vụ → `studio.html`: nhân viên kiểm tra lịch và thống nhất giờ → `booking.html`: khách xem booking và khoản cọc**. Từ `index.html`, liên kết đổi vai trò mở `studio.html`; `index.html` cũng có liên kết đến lịch chụp `booking.html`. `studio.html` có liên kết xem `booking.html`, còn `booking.html` có liên kết quay về `index.html`. Các liên kết nội bộ dùng đường dẫn tương đối.
 
 **Giờ cần phân biệt:** 13:00 là giờ bắt đầu makeup với Mai; 14:00 là giờ bắt đầu chụp với Tuấn. Việc khách đồng ý giờ chưa giữ chỗ. Lịch chỉ được giữ sau khi cọc thành công và studio kiểm tra lại nhân sự, phòng.
 
 ## Thay đổi so với PA#1 — Changed since PA#1
 
 - Dùng đúng ba file của PA#2: `index.html`, `studio.html`, `booking.html`; thay cho tên trang cũ `page2.html` và `page3.html` được dùng ở bản PA#1.
-- Chốt mỗi trang ở trạng thái được brief mới yêu cầu: M1 thể hiện câu hỏi ban đầu lúc 09:00; M2 thể hiện xung đột đã được xử lý và khách đã đồng ý giờ mới; M3 thể hiện booking đang chờ cọc 30%.
+- Chốt mỗi trang ở trạng thái được brief mới yêu cầu: `index.html` thể hiện câu hỏi ban đầu lúc 09:00; `studio.html` thể hiện xung đột đã được xử lý và khách đã đồng ý giờ mới; `booking.html` thể hiện booking đang chờ cọc 30%.
 - Giữ câu chuyện và dữ liệu mẫu của PA#1, đồng thời trình bày nhất quán theo brief mới: 09:00 không khả dụng; makeup với Mai 13:00–14:00; chụp với Tuấn tại Phòng B 14:00–16:00; booking GS-1024 chờ cọc 30%.
 - Thể hiện rõ các giới hạn của prototype tĩnh. Gửi chat và thanh toán không được giả lập là giao dịch thật; trạng thái booking và lịch trên các trang không được đồng bộ.
 - Bố cục được tổ chức lại theo viewport: nội dung xếp dọc ở màn hình nhỏ, tablet dùng bố cục một hoặc hai cột, desktop mở rộng thành nhiều cột.
@@ -31,12 +32,12 @@ Luồng được mô phỏng là **khách hỏi dịch vụ → nhân viên ki�
 
 ## Phần chưa nối — Not wired yet
 
-Trên M2, chat và toàn bộ form Booking mới cuộn cùng trang. Lịch tài nguyên dùng các thẻ có tên, giờ và trạng thái đầy đủ thay cho lưới giờ của PA#1 để đọc được trên điện thoại. Form phân biệt loại buổi chụp “Tốt nghiệp cá nhân” với gói “Tốt nghiệp Premium”. Nút “Tạo booking” có ghi chú chuyển sang góc nhìn của Linh.
+Trên `studio.html`, chat và toàn bộ form Booking mới cuộn cùng trang. Lịch tài nguyên dùng các thẻ có tên, giờ và trạng thái đầy đủ thay cho lưới giờ của PA#1 để đọc được trên điện thoại. Form phân biệt loại buổi chụp “Tốt nghiệp cá nhân” với gói “Tốt nghiệp Premium”. Nút “Tạo booking” có ghi chú chuyển sang góc nhìn của Linh.
 
-- Hội thoại trên M1 và M2 là nội dung mẫu. Ô nhập tin nhắn và nút Gửi đang disabled; không gửi hoặc lưu tin nhắn.
-- Ba nút “Hỏi về gói này” ở M1 cùng dẫn đến một đoạn chat mẫu đang ghi “Đang hỏi về: Gói Tốt nghiệp”. Chúng không đổi nội dung chat theo gói.
-- Nút “Tạo booking” trên M2 điều hướng đến `booking.html` bằng GET, nhưng dữ liệu của form không được lưu hoặc truyền sang M3. M3 luôn hiển thị dữ liệu mẫu viết sẵn.
-- Nút “Thanh toán cọc 30%” trên M3 đang disabled. Không có cổng thanh toán, giao dịch thật hoặc trạng thái đã trả cọc.
+- Hội thoại trên `index.html` và `studio.html` là nội dung mẫu. Ô nhập tin nhắn và nút Gửi đang disabled; không gửi hoặc lưu tin nhắn.
+- Ba nút “Hỏi về gói này” trên `index.html` cùng dẫn đến một đoạn chat mẫu đang ghi “Đang hỏi về: Gói Tốt nghiệp”. Chúng không đổi nội dung chat theo gói.
+- Nút “Tạo booking” trên `studio.html` điều hướng đến `booking.html` bằng GET, nhưng dữ liệu của form không được lưu hoặc truyền sang trang đích. `booking.html` luôn hiển thị dữ liệu mẫu viết sẵn.
+- Nút “Thanh toán cọc 30%” trên `booking.html` đang disabled. Không có cổng thanh toán, giao dịch thật hoặc trạng thái đã trả cọc.
 - Lịch tài nguyên chỉ minh họa các mốc bận và đề xuất. Trang không tự giữ giờ, kiểm tra tài nguyên trực tiếp, phân công nhân viên hoặc gửi nhắc lịch.
 - Nhãn vai trò khách hàng/nhân viên chỉ giúp người xem theo dõi câu chuyện; không có đăng nhập hay phân quyền.
 - Các chức năng ngoài ba màn hình PA#2 như gửi email/SMS, quản lý tài khoản, dữ liệu nhiều studio và xử lý booking thật chưa được triển khai.
@@ -52,16 +53,18 @@ Trên M2, chat và toàn bộ form Booking mới cuộn cùng trang. Lịch tài
 
 ## Hình ảnh và nguồn
 
-Các ảnh dùng trên M1 là tài nguyên cục bộ trong `assets/images/`:
+Theo xác nhận của nhóm, phần lớn ảnh trong bộ được tạo bằng AI. Các đường dẫn trong bảng là nguồn nhóm cung cấp cho những tệp đã tải về; công cụ tạo ảnh và cách tạo của từng tệp chưa được ghi riêng. Tất cả ảnh được lưu cục bộ, trang không tải ảnh từ các URL này khi mở.
 
-| File | Vị trí sử dụng |
-|---|---|
-| `assets/images/hero1.avif` | Ảnh minh họa hero |
-| `assets/images/KyYeu.jpg` | Thẻ Kỷ yếu lớp |
-| `assets/images/TotNghiep.jpg` | Thẻ Tốt nghiệp |
-| `assets/images/ChanDung.jpg` | Thẻ Chân dung/CV |
+Các ảnh dùng trên `index.html` là tài nguyên cục bộ trong `assets/images/`:
 
-Đây là bộ ảnh mèo được chọn dùng cho prototype theo trao đổi của nhóm; ảnh không được tải từ URL ngoài khi trang mở. Repository hiện không ghi nguồn gốc hoặc giấy phép ban đầu của các ảnh. Nếu ảnh lấy từ bên ngoài, nhóm cần bổ sung nguồn và giấy phép phù hợp trước khi nộp.
+| Tệp | Vị trí sử dụng | Nguồn và thông tin sử dụng |
+|---|---|---|
+| `assets/images/hero1.avif` | Ảnh minh họa hero | [Trang ảnh Pexels](https://www.pexels.com/vi-vn/anh/c-n-c-nh-m-t-chu-meo-calico-d-i-anh-n-ng-m-t-tr-i-29235334/). Theo [Pexels License](https://www.pexels.com/legal-pages/license/), ảnh được dùng miễn phí và không bắt buộc ghi công. |
+| `assets/images/KyYeu.jpg` | Thẻ Kỷ yếu lớp | [Trang ảnh Vecteezy](https://nl.vecteezy.com/foto/75232376-drie-katten-resting-aan-park-bank-gedurende-herfst). Nhóm xác nhận đã tải và dùng miễn phí; không lưu loại giấy phép được chọn hoặc thông tin tác giả của lần tải. Theo [điều khoản Vecteezy](https://www.vecteezy.com/licensing-agreement), Free License yêu cầu ghi công. |
+| `assets/images/TotNghiep.jpg` | Thẻ Tốt nghiệp | [Trang ảnh Vecteezy](https://www.vecteezy.com/photo/73765005-cat-with-striking-green-eyes-peering-through-lush-greenery-showcasing-a-close-encounter-with-nature-in-a-serene-and-tranquil-environment-perfect-for-minimalist-photography). Nhóm xác nhận đã tải và dùng miễn phí; không lưu loại giấy phép được chọn hoặc thông tin tác giả của lần tải. Theo [điều khoản Vecteezy](https://www.vecteezy.com/licensing-agreement), Free License yêu cầu ghi công. |
+| `assets/images/ChanDung.jpg` | Thẻ Chân dung/CV | [TikTok](https://www.tiktok.com/) — đây là liên kết trang chủ do nhóm cung cấp, không phải liên kết tới bài đăng cụ thể của ảnh. |
+
+Nhóm xác nhận bộ ảnh lấy từ các nguồn công khai cho phép tải và sử dụng. Với hai ảnh Vecteezy, repository chưa ghi loại giấy phép được chọn và tên tác giả; liên kết cho `ChanDung.jpg` cũng chưa xác định được nội dung gốc.
 
 ## Tài liệu liên quan
 
@@ -69,6 +72,6 @@ Các ảnh dùng trên M1 là tài nguyên cục bộ trong `assets/images/`:
 - [`AGENTS.md`](AGENTS.md) — quy tắc và yêu cầu PA#2 của nhóm.
 - [`docs/pa1/LINK.md`](docs/pa1/LINK.md) — câu chuyện và hành vi prototype PA#1 được mô tả trong tài liệu tham chiếu.
 - [`docs/pa2/GradStudio-final-project-brief.pdf`](docs/pa2/GradStudio-final-project-brief.pdf) — brief final project.
-- [`checks/manualcheckindex.md`](checks/manualcheckindex.md) — báo cáo manual check M1; kết quả kiểm tra cần được xác nhận bởi người thực hiện và minh chứng tương ứng.
-- [Báo cáo kiểm tra M2 của thành viên B](checks/manualcheckstudio.md) — số đo responsive, ảnh khi tắt JavaScript, điều hướng bàn phím và kết quả Nu Checker.
-- [Báo cáo kiểm tra M3 của thành viên C](checks/manualcheckbooking.md) — số đo responsive, ảnh khi tắt JavaScript, W3C 0 errors và ngữ nghĩa.
+- [Báo cáo `index.html` — Nguyễn Anh Tuấn, Thành viên A](checks/manualcheckindex.md) — số đo responsive, ảnh khi tắt JavaScript, W3C 0 errors và ngữ nghĩa.
+- [Báo cáo `studio.html` — Lê Công Phúc, Thành viên B](checks/manualcheckstudio.md) — số đo responsive, ảnh khi tắt JavaScript, điều hướng bàn phím và kết quả Nu Checker.
+- [Báo cáo `booking.html` — Đặng Hồng Minh, Thành viên C](checks/manualcheckbooking.md) — số đo responsive, ảnh khi tắt JavaScript, W3C 0 errors và ngữ nghĩa.

@@ -10,6 +10,10 @@
 2. [Màn 2 — Admin tư vấn và xử lý lịch](https://proxy-swept-63177389.figma.site/#/studio/hoi-thoai)
 3. [Màn 3 — Lịch chụp của Linh](https://proxy-swept-63177389.figma.site/#/lich-chup)
 
+Theo hướng dẫn của giảng viên, PA#2 không yêu cầu nộp lại ảnh chụp màn hình PA#1; nhóm đã chủ động không giữ các ảnh đó trong repository. Các liên kết ảnh cục bộ cũ đã được gỡ. Có thể xem các màn hình PA#1 qua prototype gốc ở các liên kết trên.
+
+Trong tài liệu này, “Màn 1”, “Màn 2”, “Màn 3” chỉ thứ tự màn của prototype PA#1 trên Figma, không phải tên file HTML. Các file PA#2 tương ứng là `index.html`, `studio.html` và `booking.html`.
+
 ## Câu chuyện xuyên suốt và cách xem
 
 Linh muốn chụp tốt nghiệp có makeup ngày **24/10/2026 lúc 09:00**. Studio kiểm tra và thấy thợ makeup Mai đã bận buổi sáng, nên đề xuất **makeup 13:00–14:00, chụp 14:00–16:00**. Linh đồng ý trong chat; Admin tạo booking; Linh xem lại lịch và thanh toán cọc để giữ lịch chính thức.
@@ -20,11 +24,11 @@ Prototype dùng dữ liệu mẫu để có thể mở và xem từng màn trự
 
 ## Màn 1 — Khách xem dịch vụ và mở cuộc tư vấn
 
-[Mở Màn 1](https://proxy-swept-63177389.figma.site/#/) · [Xem ảnh Màn 1](01-customer-services-chat.png)
+[Mở Màn 1](https://proxy-swept-63177389.figma.site/#/)
 
 ### Màn hình thể hiện điều gì?
 
-Đây là trang dịch vụ nhìn từ phía **khách hàng Linh**. Khách xem phong cách ảnh, các gói và giá tham khảo trước khi hỏi studio. Phần đầu giới thiệu GradStudio; cuộn xuống có thẻ dịch vụ, ảnh mẫu, quy trình và nội dung giới thiệu. Khung chat ở góc trang giúp khách hỏi ngay trong lúc xem dịch vụ. Nguồn ảnh minh họa được ghi trong [IMAGE_SOURCES.md](IMAGE_SOURCES.md).
+Đây là trang dịch vụ nhìn từ phía **khách hàng Linh**. Khách xem phong cách ảnh, các gói và giá tham khảo trước khi hỏi studio. Phần đầu giới thiệu GradStudio; cuộn xuống có thẻ dịch vụ, ảnh mẫu, quy trình và nội dung giới thiệu. Khung chat ở góc trang giúp khách hỏi ngay trong lúc xem dịch vụ.
 
 ### Luồng bấm chính
 
@@ -44,7 +48,7 @@ Prototype dùng dữ liệu mẫu để có thể mở và xem từng màn trự
 
 ## Màn 2 — Admin tư vấn, xử lý trùng lịch và tạo booking
 
-[Mở Màn 2](https://proxy-swept-63177389.figma.site/#/studio/hoi-thoai) · [Xem ảnh Màn 2](02-admin-scheduling.png)
+[Mở Màn 2](https://proxy-swept-63177389.figma.site/#/studio/hoi-thoai)
 
 ### Màn hình thể hiện điều gì?
 
@@ -75,25 +79,18 @@ Yêu cầu **09:00** ban đầu bị trùng vì **Mai đã bận 08:00–12:00**
 | **Chọn 14:00 → Từ chối** | Chat thêm lời Linh từ chối; chưa chuyển sang **Đã chốt lịch** và chưa thể tạo booking. Admin có thể đề xuất một giờ khác. Dùng **Đặt lại demo** nếu muốn quay về và thử lại luồng 14:00. |
 | **Gửi báo giá vào chat** | Thêm thẻ báo giá vào cuộc trò chuyện. Nút này không thay cho bước Linh đồng ý và không tạo booking. |
 | Nhập tin nhắn trong hội thoại Admin | Thêm lời tư vấn vào chat đang mở. Để demo nhận trạng thái Linh đồng ý, dùng **Chốt giờ này**; tự gõ một câu đồng ý không thay thế nút mô phỏng này. |
-| Chọn một gợi ý giờ khác | Thử phương án khác trong cùng màn. Khi theo dõi câu chuyện và ba ảnh chính, dùng phương án **14:00 ngày 24/10** để giữ thông tin xuyên suốt. |
+| Chọn một gợi ý giờ khác | Thử phương án khác trong cùng màn. Khi theo dõi câu chuyện mẫu, dùng phương án **14:00 ngày 24/10** để giữ thông tin xuyên suốt. |
 | **Đặt lại demo** | Khôi phục dữ liệu minh họa của Màn 2 để thử lại từ yêu cầu ban đầu. |
 
 **Phân biệt tên:** **Tốt nghiệp cá nhân** là *loại buổi chụp*; **Tốt nghiệp Premium** là *tên gói*. Hai trường này không thay thế cho nhau.
 
-### Lưu ý về ảnh Màn 2 bị cắt
+### Ảnh tham chiếu PA#1
 
-**Ảnh Màn 2 bị cắt, chưa hiển thị đầy đủ form. Vui lòng xem thêm hai ảnh trong [reference/](../reference/README.md) và xem kỹ trên link prototype ở trên.**
-
-Chat và form **Booking mới** cùng nằm trong cột giữa có vùng cuộn riêng. Ảnh ở một vị trí cuộn không thể hiện hết cả đoạn chat lẫn phần cuối form:
-
-- [02b-admin-linh-agrees.png](../reference/02b-admin-linh-agrees.png): cho thấy lời đề xuất và câu Linh đồng ý; phần cuối form còn nằm ngoài khung ảnh.
-- [02c-admin-booking-ready.png](../reference/02c-admin-booking-ready.png): cuộn xuống để thấy đầy đủ form và nút **Tạo booking** đã bật; đoạn chat nằm phía trên vùng đang xem.
-
-Hai ảnh bổ sung là **hai vị trí cuộn của cùng Màn 2 sau khi Linh đồng ý**, không phải hai màn mới. Khi xem trực tiếp, đặt con trỏ trong **cột giữa** để cuộn phần chat/form.
+Ảnh chụp màn hình PA#1, gồm các ảnh cuộn bổ sung của Màn 2, không được lưu lại trong repository theo hướng dẫn nộp PA#2. Mô tả luồng ở tài liệu này và prototype Figma gốc vẫn được giữ làm tài liệu tham khảo.
 
 ## Màn 3 — Khách xem lịch đã thống nhất và thanh toán cọc
 
-[Mở Màn 3](https://proxy-swept-63177389.figma.site/#/lich-chup) · [Xem ảnh Màn 3](03-customer-appointment.png)
+[Mở Màn 3](https://proxy-swept-63177389.figma.site/#/lich-chup)
 
 ### Màn hình thể hiện điều gì?
 
@@ -128,4 +125,4 @@ Linh xem lại booking đã thống nhất với studio, biết mình cần đ�
 
 ## Các phần giao diện ngoài luồng minh họa chính
 
-Các mục menu quản trị khác như **Booking, Lịch studio, Tài nguyên, Nhân sự**, menu tài khoản, liên kết thư viện/chân trang và **Xem đường đi** có phần đang là chỗ giữ chỗ hoặc chưa dẫn đến một màn chức năng riêng. Sự xuất hiện của chúng trên giao diện không có nghĩa prototype đã minh họa đầy đủ các chức năng đó. Phạm vi sản phẩm được mô tả riêng trong [PROPOSAL.md](../PROPOSAL.md).
+Các mục menu quản trị khác như **Booking, Lịch studio, Tài nguyên, Nhân sự**, menu tài khoản, liên kết thư viện/chân trang và **Xem đường đi** có phần đang là chỗ giữ chỗ hoặc chưa dẫn đến một màn chức năng riêng. Sự xuất hiện của chúng trên giao diện không có nghĩa prototype đã minh họa đầy đủ các chức năng đó. Phạm vi PA#2 được mô tả trong [brief final project](../pa2/GradStudio-final-project-brief.pdf).

@@ -1,7 +1,8 @@
-# Báo cáo kiểm tra M3 — `booking.html`
+# Báo cáo kiểm tra — `booking.html`
 
 **Dự án:** GradStudio — PA#2 Responsive Prototype  
-**Màn hình:** Screen 3 — Xem lịch và khoản cọc (Khách hàng)  
+**Trang được kiểm tra:** `booking.html` — Xem lịch và khoản cọc (Khách hàng)\
+**Người phụ trách màn hình:** Đặng Hồng Minh (Thành viên C)\
 **Ngày ghi nhận:** 06/11/2026  
 **Phạm vi:** Responsive, nội dung, điều hướng, JavaScript-disabled, HTML và Accessibility.
 
@@ -37,7 +38,7 @@
 | Mốc đã thống nhất | PASS | Makeup với Mai 13:00–14:00; Chụp với Tuấn 14:00–16:00 (Phòng B). |
 | Chi tiết cọc | PASS | Tổng 1.800.000đ; Cọc 30% 540.000đ; Còn lại 70% 1.260.000đ. |
 | Nút "Thanh toán cọc 30%" | PASS | Disabled kèm ghi chú hiển thị rõ ràng tính năng chưa khả dụng trong prototype. |
-| Quay lại M1 | PASS | Link `<a class="gs-btn gs-btn--secondary" href="index.html">Quay lại trang dịch vụ</a>`. |
+| Quay lại `index.html` | PASS | Link `<a class="gs-btn gs-btn--secondary" href="index.html">Quay lại trang dịch vụ</a>`. |
 
 ## 4. Kiểm tra khi tắt JavaScript
 
@@ -63,5 +64,5 @@
 
 ## 7. Kết luận
 
-Trang `booking.html` (Màn 3) đạt 100% các tiêu chí rubric PA#2.
+Trang `booking.html` đạt các hạng mục kiểm tra được liệt kê trong báo cáo này. Kết luận này chỉ phản ánh các hạng mục đã kiểm tra, không thay thế điểm đánh giá theo toàn bộ rubric PA#2.
 
