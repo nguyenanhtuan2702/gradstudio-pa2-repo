@@ -295,137 +295,7 @@ Kèm rubric PA#2 để xác định các hạng mục và minh chứng cần ki�
 
 ---
 
-# PHẦN II: BRIEF VÀ PROMPT CỦA THÀNH VIÊN C (MÀN 3 — `page3.html`)
-
-Tài liệu dưới đây lưu lại nguyên văn các prompt và chỉ dẫn thực tế của Thành viên C dùng để yêu cầu Assistant xây dựng, tinh chỉnh và khắc phục lỗi cho Màn 3 (`page3.html`), đồng thời quản lý bộ ảnh kiểm thử (`screenshots/`, `checks/`) và nhật ký AI (`AI-LOG.md`).
-
-## 1. Prompt tác vụ khởi tạo cho Màn 3
-
-# TASK: Xây dựng Màn 3 – GradStudio Responsive Prototype (PA#2)
-
-Bạn là Frontend Assistant. Hãy hỗ trợ tôi xây dựng màn hình thứ ba của dự án GradStudio PA#2 bằng HTML5 và CSS3 thuần.  
-Tôi là thành viên C, chịu trách nhiệm phát triển `page3.html`, tổng hợp bộ ảnh kiểm thử (`screenshots/`, `checks/`) và ghi chép nhật ký AI (`AI-LOG.md`).
-
-### A. Đọc tài liệu tham chiếu bắt buộc
-1. `AGENTS.md` – Quy tắc bắt buộc của cả nhóm (HTML/CSS thuần, không framework CSS/JS, không dependency, không backend, mobile-first, spacing 4px).
-2. `docs/pa1/03-customer-appointment.png` – Ảnh thiết kế gốc Màn 3 đã nộp ở PA#1.
-3. `docs/pa1/LINK.md` – Kịch bản dữ liệu và câu chuyện thống nhất:
-   - Khách hàng: Nguyễn Thùy Linh.
-   - Ngày chụp: Thứ Bảy, 24/10/2026.
-   - Makeup với Mai: 13:00–14:00 (có mặt sớm 10 phút để chuẩn bị).
-   - Chụp ảnh với Tuấn: 14:00–16:00 (studio đề xuất · trong nhà và sân vườn).
-   - Gói dịch vụ: Tốt nghiệp Premium.
-   - Tổng giá: 1.800.000đ.
-   - Cọc 30%: 540.000đ.
-   - Còn lại 70%: 1.260.000đ (thanh toán sau buổi chụp).
-   - Mã booking minh họa: GS-1024.
-   - Lý do đề xuất: Studio đề xuất 14:00 vì khung makeup lúc 09:00 đã kín lịch.
-
-### B. Phạm vi xây dựng `page3.html`
-1. **Header & Navigation:**
-   - Logo GradStudio liên kết về `index.html`.
-   - Menu điều hướng: "Dịch vụ" (`index.html`) và "Lịch chụp của tôi" (`page3.html` với `aria-current="page"`).
-   - Khối tài khoản khách hàng "Linh" có ảnh đại diện bo tròn.
-2. **Page Heading & Bộ lọc trạng thái:**
-   - Tiêu đề trang cấp cao nhất `<h1>` duy nhất: "Lịch chụp của tôi".
-   - Đoạn mô tả: "Xem lại lịch đã thống nhất với studio và thanh toán cọc để giữ lịch."
-   - 4 tab bộ lọc trạng thái: "Tất cả 1", "Chờ cọc 1", "Đã đặt lịch 0", "Hoàn thành 0".
-3. **Lịch tuần và Dòng thời gian chi tiết (Cột trái):**
-   - Thẻ Lịch Tháng 10, 2026 (Tuần 43) hiển thị 7 ngày trong tuần, ngày Thứ Bảy 24 được chọn nổi bật.
-   - Banner ngày: "THỨ BẢY, 24/10 · NGÀY CỦA LINH".
-   - Dòng thời gian (Timeline) với 3 mốc rõ ràng:
-     + 09:00 (gạch ngang `<del>`): Giờ bạn yêu cầu ban đầu (Thợ makeup đã kín lịch).
-     + 13:00–14:00: Makeup với Mai (Có mặt sớm 10 phút để chuẩn bị).
-     + 14:00–16:00: Chụp ảnh với Tuấn (Studio đề xuất · Trong nhà và sân vườn).
-4. **Chi tiết Booking & Khoản thanh toán cọc (Cột phải):**
-   - Mã booking GS-1024, nhãn trạng thái "Đã thống nhất lịch · Chờ cọc 30%".
-   - Tiêu đề "Chụp ảnh tốt nghiệp", thông tin gói Tốt nghiệp Premium, dịch vụ bao gồm, ngày và giờ bắt đầu makeup 13:00.
-   - Hộp chi phí cọc: Giá gói 1.800.000đ, Cọc 30% 540.000đ, Còn lại 70% 1.260.000đ (thanh toán sau buổi chụp).
-   - Nút hành động nổi bật CTA: "Thanh toán cọc 30%".
-   - Thẻ địa điểm Studio với bản đồ vector SVG minh họa và liên kết "Xem đường đi".
-   - Khung ghi chú `.schedule-proposal-callout`: "Studio đề xuất 14:00 vì khung makeup lúc 09:00 đã kín lịch."
-5. **Footer & Thanh điều hướng Demo vai trò:**
-   - Footer thông tin prototype và kịch bản minh họa.
-   - Thanh demo switcher cố định góc màn hình giúp người chấm chuyển nhanh giữa Màn 1 (`index.html`), Màn 2 (`page2.html`) và Màn 3 (`page3.html`).
-
-### C. Ràng buộc kỹ thuật & Tiêu chí hoàn thành (AGENTS.md & Rubric PA#2)
-- Sử dụng HTML5 và CSS3 thuần, kết nối tới stylesheet chung `style.css`.
-- Không dùng Bootstrap, Tailwind, React, Vue, jQuery hay bất kỳ thư viện bên ngoài nào.
-- Toàn bộ nội dung và điều hướng phải hoạt động 100% khi JavaScript bị tắt (Progressive Enhancement).
-- Thiết kế Mobile First, đảm bảo hiển thị hoàn hảo tại 360px, 768px và 1280px.
-- Tuyệt đối không bị cuộn ngang (`scrollWidth === clientWidth`) và không dùng `overflow-x: hidden` để che lỗi.
-- Nút bấm và liên kết độc lập phải đạt chiều cao tối thiểu 44px trên mobile (360px).
-- Đạt 0 Errors trên công cụ kiểm tra W3C HTML Nu Checker.
-- Ghi lại trung thực nhật ký tương tác vào `AI-LOG.md` và lưu kết quả kiểm thử vào `screenshots/`, `checks/`.
-
----
-
-## 2. Các Follow-up Prompts thực tế của Thành viên C (theo thứ tự)
-
-### 1. Hỏi cách mở và kiểm tra file trên 3 thiết bị
-> vậy làm sao tôi mở file html trên 3 thiết bị đó
-
-*Assistant hướng dẫn mở trực tiếp file HTML trên trình duyệt, kích hoạt DevTools (`F12`), bật Device Toolbar (`Ctrl + Shift + M`) và thiết lập kiểm tra tại các kích thước 360px, 768px, 1280px.*
-
-### 2. Yêu cầu tạo file nhật ký AI-LOG.md
-> Bạn hãy tạo cho tôi file AI-LOG.md dựa trên template trước đó đi.
-
-*Assistant khởi tạo cấu trúc chuẩn của `AI-LOG.md` với các trường bắt buộc của rubric: Asked for, Kept, Changed, Rejected.*
-
-### 3. Bổ sung các mục tương tác vào nhật ký
-> có thể ghi cho tôi thêm vài cái được không
-
-*Assistant mở rộng nhật ký ghi lại các lượt làm việc và quyết định kỹ thuật thực tế.*
-
-### 4. Kéo cập nhật từ remote branch
-> git pull cho tôi branch feat nay đi
-
-*Assistant chuyển sang nhánh `feat/gradstudio-foundation-css`, giải quyết xung đột CSS và tích hợp đồng bộ mã nguồn Màn 1 và Màn 3 vào file chung `style.css`.*
-
-### 5. Sửa avatar hình tròn và thêm khung ghi chú đề xuất của Studio
-> Tôi muốn phần ảnh avarta trên html của page3 phải hình tròn chứ không phải hình chữ nhật như hiện tại, đồng thời thêm cho tôi phần giao diện như hình trên
-
-*Người dùng đính kèm ảnh chụp màn hình chỉ rõ avatar tròn của khách hàng Nguyễn Thùy Linh và khối ghi chú studio đề xuất lịch. Assistant cập nhật CSS `.user-avatar-img` có `border-radius: 50%` và xây dựng khối `.schedule-proposal-callout` kèm icon SVG.*
-
-### 6. Kiểm tra và sửa lỗi font tiếng Việt
-> Tại sao phần này của tôi lại bị lỗi vậy, bạn hãy kiểm tra cho tôi đi
-
-*Người dùng đính kèm ảnh chụp cho thấy tiêu đề "Chụp ảnh tố ́ t nghiệp" bị tách rời dấu sắc trên Windows. Assistant phân tích lỗi glyph fallback của font `Georgia` và chuyển sang dùng `Cambria, "Times New Roman", serif` trong `--gs-font-serif`.*
-
-### 7. Hướng dẫn chụp ảnh minh chứng và quy ước đặt tên file theo rubric
-> Bạn hãy dựa vào file @[d:\10_Web\PA2\gradstudio-pa2-repo\pa2_responsive_prototype_rubric.md] và hướng dẫn tôi cách chụp screenshot và đặt tên sao cho phù hợp với yêu cầu
-
-*Người dùng đính kèm file rubric PA#2. Assistant hướng dẫn tắt JavaScript, sử dụng lệnh "Capture full size screenshot" trong DevTools và tuân thủ quy tắc đặt tên: `<page>-360.png`, `<page>-768.png`, `<page>-1280.png`.*
-
-### 8. Chạy kiểm tra đo đạc tràn layout (Horizontal Scroll)
-> document.documentElement.scrollWidth
-> 1280
-> document.documentElement.clientWidth
-> 1280
-
-*Người dùng chạy lệnh console xác nhận `page3.html` tại 1280px không có cuộn ngang (`scrollWidth === clientWidth === 1280`).*
-
-### 9. Gửi kết quả W3C Nu Checker và khắc phục 3 lỗi ARIA
-> [Người dùng gửi ảnh chụp màn hình W3C Nu Checker báo 3 lỗi: dòng 25 và dòng 200 lỗi aria-label trên thẻ div generic, dòng 49 lỗi role=tab thiếu role=tabpanel tương ứng]
-
-*Assistant giải thích chuẩn W3C/ARIA, gỡ bỏ `aria-label` trên các thẻ `div` thuần (thông tin đã có text và alt đầy đủ), chuyển container tab sang `role="group"` với action buttons tiêu chuẩn. Sau khi sửa, kiểm tra lại đạt **0 Errors, 0 Warnings** và người dùng lưu ảnh minh chứng `validator-page3.png`.*
-
-### 10. Rà soát kiểm tra toàn diện trước khi bàn giao
-> còn gì check nữa không
-
-*Assistant đối chiếu toàn diện rubric PA#2, xác nhận các checklist hoàn thành của Thành viên C (W3C 0 errors, touch targets $\ge 44\text{px}$, responsive 3 widths, JS disabled, file minh chứng trong `screenshots/` và `checks/`).*
-
----
-
-## 3. Ghi chú về phạm vi và tính minh bạch của Thành viên C
-
-- Toàn bộ các yêu cầu của Thành viên C bám sát thiết kế PA#1 màn hình `03-customer-appointment.png` và kịch bản booking của khách hàng Nguyễn Thùy Linh.
-- Mọi lỗi kỹ thuật (font tiếng Việt, layout avatar, 3 lỗi W3C ARIA) đều được phát hiện qua ảnh chụp kiểm tra thực tế của người dùng và được sửa đúng gốc rễ bằng HTML/CSS ngữ nghĩa, không dùng mẹo che giấu (`overflow-x: hidden`, `!important`, tabpanel rỗng hay script giả lập).
-- Bộ ảnh minh chứng trong `screenshots/` (`page3-360.png`, `page3-768.png`, `page3-1280.png`) và kết quả kiểm tra `checks/validator-page3.png` phản ánh chính xác kết quả thực tế thu được trên trình duyệt khi tắt JavaScript.
-
----
-
-# PHẦN III: BRIEF VÀ PROMPT DỰNG LẠI BA MÀN HÌNH THEO FINAL BRIEF (Claude, 2026-11-05)
+# PHẦN II: BRIEF VÀ PROMPT DỰNG LẠI BA MÀN HÌNH THEO FINAL BRIEF (Claude, 2026-11-05)
 
 Phần này ghi lại prompt thực tế đã gửi cho assistant (Claude, claude.ai) để dựng lại `index.html`, `studio.html`, `booking.html` và `styles.css`, theo đúng thứ tự gửi. Prompt tác vụ được chép nguyên văn; ghi chú về tệp đính kèm chỉ mô tả những gì thực sự được đính kèm.
 
@@ -767,7 +637,7 @@ The goal is a complete, coherent, responsive GradStudio PA#2 prototype that foll
 
 > bổ sung phần của bạn nãy giờ tui nhắn vô 2 file sau
 
-Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung Phần III này vào `brief.md` và ba mục ngày 2026-11-05 vào cuối `AI-LOG.md`; không sửa các phần của thành viên khác.
+Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung phần dựng lại này vào `brief.md` và ba mục ngày 2026-11-05 vào `AI-LOG.md`; không sửa các phần của thành viên khác.
 
 ## 3. Ghi chú về phạm vi và tính trung thực
 
@@ -776,10 +646,78 @@ Kèm hai tệp: `brief.md` và `AI-LOG.md`. Assistant bổ sung Phần III này 
 - Các kết quả kiểm tra (tràn ngang, vùng bấm 44px, liên kết, Nu Checker HTML 0 thông báo) do assistant chạy trong sandbox của nó, không phải trên máy nhóm. Chưa chạy: bàn phím/focus, tương phản, DevTools Accessibility, screenshot và kết quả lưu vào `screenshots/`, `checks/`. Brief này không khẳng định các mục đó đã đạt.
 - Assistant không thao tác Git: việc đổi tên `page2.html` → `studio.html`, `page3.html` → `booking.html` và xóa file cũ do nhóm tự thực hiện.
 
-## Phần IV — Thành viên B, rà soát Màn 2 (06/11/2026)
+---
+
+# PHẦN III: BRIEF VÀ PROMPT CỦA THÀNH VIÊN B (MÀN 2 — `studio.html`, 06/11/2026)
 
 Yêu cầu nguyên văn:
 
 > tôi là thành viên B, thực hiện code html màn 2 (trước kia là page2.html) giờ là studio.html, tôi được giao công việc sau: kiểm tra lại trang html như phần trước có thể tham khảo file check manualindex. Đồng thời đọc và bổ subg các dile brief + ailog + prototype,  trong lúc check nếu html có sai gì thì bạn cứ sửa,
 
 Phạm vi thực hiện là trang quản trị trên nhánh main, gồm danh sách hội thoại, đoạn chat sau khi Linh đồng ý, form Booking mới và lịch tài nguyên. Dùng cấu trúc báo cáo của M1 làm tham khảo và kiểm tra riêng M2. [Báo cáo và minh chứng M2](checks/manualcheckstudio.md)
+
+---
+
+# PHẦN IV: BRIEF VÀ PROMPT CỦA THÀNH VIÊN C (MÀN 3 — `booking.html`, 06/11/2026)
+
+Phần này ghi lại các prompt và chỉ dẫn thực tế của Thành viên C dùng để yêu cầu Assistant rà soát, hoàn thiện và khắc phục lỗi cho Màn 3 (`booking.html` — Customer appointment & deposit), đồng thời quản lý bộ ảnh kiểm thử (`screenshots/booking-*.png`, `checks/validator-booking.png`) và lập hồ sơ kiểm thử `checks/manualcheckbooking.md`.
+
+## 1. Prompt tác vụ cho Màn 3 (`booking.html`)
+
+# TASK: Rà soát, hoàn thiện và kiểm thử Màn 3 (`booking.html`) – GradStudio PA#2
+
+Bạn là Frontend Assistant. Hãy hỗ trợ tôi rà soát và kiểm thử màn hình thứ ba của dự án GradStudio PA#2 bằng HTML5 và CSS3 thuần.  
+Tôi là thành viên C, chịu trách nhiệm phát triển và kiểm thử `booking.html`, tổng hợp bộ ảnh minh chứng responsive (`screenshots/`) và kết quả W3C (`checks/`).
+
+### A. Tài liệu tham chiếu bắt buộc
+1. `AGENTS.md` – Quy tắc bắt buộc của cả nhóm (HTML5/CSS3 thuần, stylesheet chung `styles.css`, không framework, không dependency, không backend, mobile-first, spacing 4px).
+2. `PROTOTYPE.md` – Mô tả luồng 3 màn hình:
+   - Màn 1: `index.html` (Khách xem dịch vụ và hỏi studio).
+   - Màn 2: `studio.html` (Nhân viên studio tư vấn, xử lý xung đột 09:00 và chuẩn bị booking).
+   - Màn 3: `booking.html` (Khách hàng Nguyễn Thùy Linh xem lịch đã thống nhất và booking đang chờ cọc 30%).
+3. Dữ liệu chuẩn thống nhất:
+   - Khách hàng: Nguyễn Thùy Linh.
+   - Ngày chụp: Thứ Bảy, 24/10/2026.
+   - Mốc ban đầu: 09:00 bị xung đột do Mai bận 08:00–12:00, gạch ngang `<del>09:00</del>` kèm nhãn "Không khả dụng".
+   - Giờ đã thống nhất: Makeup với Mai 13:00–14:00; Chụp ảnh với Tuấn 14:00–16:00 (Phòng B).
+   - Gói: Gói Tốt nghiệp Premium (2 giờ chụp · 30 ảnh chỉnh).
+   - Chi phí: Tổng 1.800.000đ; Cọc 30% 540.000đ; Còn lại 70% 1.260.000đ (thanh toán sau buổi chụp).
+   - Mã booking: GS-1024.
+   - Trạng thái: "Đã thống nhất lịch · Chờ cọc 30%".
+   - Nút "Thanh toán cọc 30%": disabled kèm ghi chú giải thích tính năng chưa khả dụng trong prototype.
+
+### B. Phạm vi công việc của Thành viên C
+1. **Kiểm tra ngữ nghĩa & W3C HTML:** Đảm bảo `booking.html` đạt 0 lỗi trên W3C Nu Html Checker.
+2. **Kiểm tra Responsive:** Đảm bảo trang co giãn chuẩn trên 3 kích thước: 360px (mobile), 768px (tablet), 1280px (desktop), không có thanh cuộn ngang, nút bấm độc lập cao tối thiểu 44px.
+3. **Kiểm tra khi tắt JavaScript:** Đảm bảo toàn bộ nội dung lịch tuần, timeline, chi tiết booking và khoản cọc hiển thị 100% khi tắt JS.
+4. **Minh chứng kiểm thử:** Chụp ảnh full-page lưu vào `screenshots/booking-360.png`, `screenshots/booking-768.png`, `screenshots/booking-1280.png` và lưu kết quả W3C vào `checks/validator-booking.png`.
+5. **Báo cáo kiểm thử:** Soạn thảo `checks/manualcheckbooking.md` và liên kết vào `PROTOTYPE.md`.
+
+---
+
+## 2. Các Follow-up Prompts thực tế của Thành viên C (theo thứ tự)
+
+### 1. Hướng dẫn thêm hình ảnh cho booking.html
+> hướng dẫn tôi thêm hình ảnh cho booking.html đi
+
+*Người dùng hỏi cách bổ sung hình ảnh vào `booking.html`. Assistant hướng dẫn 2 vị trí tối ưu: (1) thêm ảnh minh họa gói chụp `TotNghiep.jpg` vào card booking bằng class `.service-art` có sẵn trong `styles.css`; (2) tùy chọn ảnh avatar đại diện. Đồng thời nêu rõ 4 quy tắc bắt buộc: dùng ảnh cục bộ `assets/images/`, có thẻ `alt` mô tả, responsive không tràn layout và không dùng ảnh người thật vi phạm bản quyền.*
+
+### 2. Gửi kết quả W3C Nu Checker và khắc phục lỗi ARIA trên thẻ p
+> [Người dùng gửi ảnh chụp màn hình kết quả kiểm tra W3C Nu Html Checker cho booking.html báo lỗi tại dòng 20]  
+> `Error: The aria-label attribute must not be specified on any p element unless the element has a role value other than caption, code, deletion, emphasis, generic, insertion, paragraph, presentation, strong, subscript, or superscript.`  
+> `From line 20, column 7; to line 20, column 92: <p class="user-profile" aria-label="Đang xem với vai trò khách hàng Nguyễn Thùy Linh">`
+
+*Assistant phân tích nguyên nhân lỗi: thẻ `<p>` mặc định mang vai trò paragraph, chuẩn ARIA cấm đặt `aria-label` trực tiếp lên thẻ `<p>` nếu không có role khác; hơn nữa văn bản bên trong đã có sẵn `<span>Linh · Khách hàng</span>`. Assistant sửa trực tiếp bằng cách gỡ bỏ `aria-label` trên thẻ `<p class="user-profile">` trong `booking.html` (đồng bộ hoàn toàn với `index.html` và `studio.html`). Sau khi sửa, người dùng kiểm tra lại trên W3C đạt **0 Errors, 0 Warnings** và lưu minh chứng vào `checks/validator-booking.png`.*
+
+### 3. Lập báo cáo kiểm thử Màn 3 và cập nhật tài liệu dự án
+> Tôi hiện tại cần bạn sửa cho tôi phần II trong file brief.md, loại bỏ những gì liên quan đến page3 đi và cập nhật cho tôi thành booking.html, lưu ý để sau phần Dựng lại 3 màn hình
+
+*Assistant biên soạn tài liệu `checks/manualcheckbooking.md`, cập nhật liên kết trong `PROTOTYPE.md`, đồng thời cơ cấu lại `brief.md` đưa phần việc của Thành viên C với `booking.html` đặt sau phần Dựng lại 3 màn hình theo đúng trình tự thời gian.*
+
+---
+
+## 3. Ghi chú về phạm vi và tính minh bạch của Thành viên C
+
+- Toàn bộ nội dung của Thành viên C đã được đồng bộ với cấu trúc 3 màn hình mới: `index.html`, `studio.html`, `booking.html` và stylesheet chung `styles.css`.
+- Lỗi W3C duy nhất trên `booking.html` được phát hiện qua ảnh chụp kiểm tra thực tế bằng công cụ Nu Html Checker và được khắc phục triệt để bằng chuẩn HTML5 ngữ nghĩa.
+- Báo cáo kiểm thử `checks/manualcheckbooking.md` cùng bộ ảnh minh chứng trong `screenshots/` (`booking-360.png`, `booking-768.png`, `booking-1280.png`) và `checks/validator-booking.png` phản ánh chính xác kết quả kiểm thử thực tế trên trình duyệt khi tắt JavaScript.

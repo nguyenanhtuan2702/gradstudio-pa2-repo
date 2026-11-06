@@ -110,3 +110,14 @@ Rejected: Không sửa hay xóa các mục/phần của thành viên khác; khô
 - **Phát hiện:** Đối chiếu form với PA#1 cho thấy thiếu trường “Loại buổi chụp”. Nhãn “Giờ được chọn” chưa phân biệt giờ chụp với giờ trang điểm. Nút submit mở màn khách hàng nhưng chưa giải thích việc đổi vai trò ngay tại nút.
 - **Đã sửa:** Bổ sung trường “Tốt nghiệp cá nhân”, đặt nhãn “Giờ bắt đầu chụp”, liên kết lời giải thích xung đột với ô giờ và ghi rõ đích đến của nút. Bỏ aria-label dư trên đoạn văn giới thiệu Thảo.
 - **Kiểm chứng do Codex thực hiện:** Mở file trong Chrome, đo ba viewport, lưu ba ảnh toàn trang khi tắt JavaScript, thử cả hai đường sang booking bằng Enter và gửi HTML đã sửa đến W3C. [Kết quả và giới hạn kiểm tra](checks/manualcheckstudio.md)
+
+## 2026-11-06 — Thành viên C rà soát, sửa lỗi W3C và kiểm thử booking.html
+Tool: Antigravity (Google DeepMind).
+Asked for: Hướng dẫn thêm ảnh, kiểm tra và sửa lỗi W3C Nu Html Checker trên `booking.html`, cập nhật `brief.md` và `PROTOTYPE.md`, chuẩn hóa bộ ảnh minh chứng responsive.
+Kept: Cấu trúc 3 màn hình và dữ liệu kịch bản chuẩn GS-1024 (Nguyễn Thùy Linh, makeup Mai 13:00–14:00, chụp Tuấn 14:00–16:00, 1.800.000đ / 540.000đ / 1.260.000đ), stylesheet chung `styles.css`.
+Changed:
+1. Phát hiện và sửa lỗi W3C Nu Html Checker tại dòng 20 của `booking.html`: thẻ `<p>` mặc định có vai trò paragraph nên ARIA cấm gán `aria-label` trực tiếp; gỡ bỏ thuộc tính `aria-label` trên `<p class="user-profile">` (đồng bộ với `index.html` và `studio.html`), kiểm tra lại đạt 0 Errors, 0 Warnings và lưu `checks/validator-booking.png`.
+2. Tạo hồ sơ kiểm thử chi tiết `checks/manualcheckbooking.md` và liên kết vào `PROTOTYPE.md`.
+3. Đồng bộ bộ ảnh responsive full-page khi tắt JavaScript: `screenshots/booking-360.png`, `screenshots/booking-768.png`, `screenshots/booking-1280.png`.
+4. Cập nhật `brief.md`: chuyển phần việc của Thành viên C thành Phần IV đặt sau phần Dựng lại 3 màn hình, loại bỏ các chi tiết cũ về `page3.html`.
+Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng ảnh bên ngoài chưa xác minh bản quyền.

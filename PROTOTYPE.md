@@ -71,4 +71,4 @@ Các ảnh dùng trên M1 là tài nguyên cục bộ trong `assets/images/`:
 - [`docs/pa2/GradStudio-final-project-brief.pdf`](docs/pa2/GradStudio-final-project-brief.pdf) — brief final project.
 - [`checks/manualcheckindex.md`](checks/manualcheckindex.md) — báo cáo manual check M1; kết quả kiểm tra cần được xác nhận bởi người thực hiện và minh chứng tương ứng.
 - [Báo cáo kiểm tra M2 của thành viên B](checks/manualcheckstudio.md) — số đo responsive, ảnh khi tắt JavaScript, điều hướng bàn phím và kết quả Nu Checker.
--Mục Check của C
+- [Báo cáo kiểm tra M3 của thành viên C](checks/manualcheckbooking.md) — số đo responsive, ảnh khi tắt JavaScript, W3C 0 errors và ngữ nghĩa.
