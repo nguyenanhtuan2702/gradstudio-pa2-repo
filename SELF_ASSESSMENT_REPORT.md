@@ -1,33 +1,39 @@
-# Báo cáo tự đánh giá — PA#2
+# Báo cáo tự đánh giá — PA#2 Responsive Prototype
 
-Nộp bởi:
+## Thông tin nhóm
 
 - 23120184 — Nguyễn Anh Tuấn (Thành viên A, phụ trách `index.html`)
 - 23120330 — Lê Công Phúc (Thành viên B, phụ trách `studio.html`)
 - 24120090 — Đặng Hồng Minh (Thành viên C, phụ trách `booking.html`)
 
-**Tổng điểm nhóm tự chấm: 100 / 100**
+**Tổng điểm nhóm tự đánh giá: 100/100**
 
-> **Ghi chú về cách chấm:** Thầy đã cho biết rubric cũ không còn phù hợp và sẽ có cách chấm mới, nhưng nhóm chưa nhận được tiêu chí cụ thể. Vì vậy, bảy mục và trọng số dưới đây là cách nhóm tạm tự đánh giá trên thang 100, dựa vào yêu cầu dự án và minh chứng hiện có. Đây không phải rubric chính thức hay điểm dự đoán của giảng viên.
+Bảng tự đánh giá được xây dựng theo 7 tiêu chí và trọng số trong rubric chính thức PA#2 — Responsive Prototype.
 
-| Tiêu chí | Điểm tối đa | Điểm tự chấm | Minh chứng |
-|---|---:|---:|---|
-| Màn hình bắt buộc và luồng chính | 20 | 20 | [`index.html`](index.html) có phần khám phá dịch vụ và chat ban đầu; [`studio.html`](studio.html) thể hiện xung đột lịch, giờ thay thế được khách đồng ý và form booking; [`booking.html`](booking.html) hiển thị lịch và khoản cọc 30% đang chờ. Ba màn hình mô phỏng lại câu chuyện theo brief mới và các điểm cần chỉnh trong “Fix these”. Báo cáo tương ứng: [`manualcheckindex.md`](checks/manualcheckindex.md), [`manualcheckstudio.md`](checks/manualcheckstudio.md), [`manualcheckbooking.md`](checks/manualcheckbooking.md). Các nút hỏi về gói cùng dẫn tới một chat mẫu; giới hạn này được ghi trong mục “Phần chưa nối” của [`PROTOTYPE.md`](PROTOTYPE.md). |
-| Thiết kế giao diện và độ rõ nội dung | 15 | 15 | Ảnh toàn trang: [`index-1280.png`](screenshots/index-1280.png), [`studio-1280.png`](screenshots/studio-1280.png), [`booking-1280.png`](screenshots/booking-1280.png). Ba trang có phong cách nhất quán, phân khu rõ và trạng thái dễ nhận biết. Các liên kết nguồn ảnh được ghi trong mục “Hình ảnh và nguồn” của [`PROTOTYPE.md`](PROTOTYPE.md). |
-| Bố cục responsive | 20 | 20 | Chín ảnh toàn trang ghi lại ba màn hình ở 360px, 768px và 1280px: bộ ảnh [`index`](screenshots/index-360.png), [`studio`](screenshots/studio-360.png) và [`booking`](screenshots/booking-360.png). Kết quả và nhận xét theo từng kích thước có trong ba báo cáo kiểm tra ở trên. Bản tự đánh giá này dựa trên minh chứng nhóm đã lưu, không chạy lại kiểm tra viewport. |
-| HTML ngữ nghĩa và Nu Checker | 15 | 15 | [`validator-index.png`](checks/validator-index.png), [`validator-studio.png`](checks/validator-studio.png) và [`validator-booking.png`](checks/validator-booking.png) đều hiển thị không có lỗi hoặc cảnh báo. Cấu trúc trang được mô tả thêm trong mục “Semantic HTML và Accessibility” của các báo cáo manual check. |
-| Khả năng tiếp cận | 10 | 10 | Các báo cáo manual check ghi nhận việc rà soát nhãn, tên truy cập, focus bàn phím, văn bản thay thế và độ tương phản. [`index_HTMLSematic.png`](screenshots/index_HTMLSematic.png) là ảnh minh chứng cấu trúc bổ sung cho `index.html`. |
-| Kiểm tra và chất lượng minh chứng | 10 | 10 | [`manualcheckindex.md`](checks/manualcheckindex.md), [`manualcheckstudio.md`](checks/manualcheckstudio.md) và [`manualcheckbooking.md`](checks/manualcheckbooking.md) ghi kết quả responsive, tắt JavaScript, điều hướng và validator cho `index.html`, `studio.html` và `booking.html`. Mục “2026-11-06 — Nhóm kiểm tra lại `studio.html`” trong [`AI-LOG.md`](AI-LOG.md) ghi nhận nhóm đã tự kiểm tra lại trang này. |
-| Tài liệu và ghi nhận việc dùng AI | 10 | 10 | [`README.md`](README.md), [`AGENTS.md`](AGENTS.md), [`PROTOTYPE.md`](PROTOTYPE.md), [`brief.md`](brief.md) và [`AI-LOG.md`](AI-LOG.md) mô tả sản phẩm, phạm vi, prompt, thay đổi, nguồn ảnh và kiểm tra. |
-| **Tổng điểm** | **100** | **100** | |
+## 1. Bảng tự đánh giá
 
-## Những phần nhóm chưa hoàn thành
+| STT | Tiêu chí theo rubric | Điểm tối đa | Điểm tự chấm | Minh chứng và giải thích |
+|---|---|---:|---:|---|
+| 1 | Three linked screens that trace back to the GradStudio brief | 20 | 20 | Ba trang `index.html`, `studio.html` và `booking.html` thể hiện đầy đủ Main Flow: khách xem dịch vụ và chat, nhân viên tư vấn và xử lý xung đột lịch, khách xem lại lịch và khoản cọc. Các liên kết chính sử dụng đường dẫn tương đối và chuyển đến đúng trang. Các tính năng được trình bày dưới dạng prototype tĩnh theo lựa chọn của nhóm và yêu cầu PA#2. Minh chứng: ba file HTML và `PROTOTYPE.md`. |
+| 2 | Responsive at 360, 768 and 1280 px | 25 | 25 | Nhóm có 9 ảnh chụp toàn trang tương ứng ba màn hình ở các kích thước 360px, 768px và 1280px. Đã kiểm tra cuộn ngang, nội dung tràn, bố cục, kích thước vùng bấm và khả năng hiển thị khi tắt JavaScript. Minh chứng: thư mục `screenshots/` và các báo cáo `checks/manualcheckindex.md`, `checks/manualcheckstudio.md`, `checks/manualcheckbooking.md`. |
+| 3 | Semantic, valid HTML | 20 | 20 | Cả ba trang đã được kiểm tra bằng W3C Nu Checker. Kết quả lưu trong `checks/validator-index.png`, `checks/validator-studio.png` và `checks/validator-booking.png` đều không có lỗi hoặc cảnh báo. Nhóm đã rà soát landmark, heading, label, alt text, liên kết và thành phần tương tác. |
+| 4 | Design you can check | 10 | 10 | Dự án sử dụng stylesheet chung `styles.css`, CSS custom properties cho màu sắc, typography và spacing scale. Nội dung chính sử dụng cỡ chữ cơ bản 16px; nhóm đã rà soát độ tương phản, breakpoint và cách bố trí giao diện. Không sử dụng `!important` trong CSS tự viết. Minh chứng: `styles.css`, `PROTOTYPE.md` và bộ ảnh responsive. |
+| 5 | The brief and the rules file | 10 | 10 | `brief.md` lưu lại các prompt thực tế được sử dụng trong quá trình phát triển. `AGENTS.md` quy định công nghệ, spacing tokens, thiết kế mobile-first, breakpoint, giới hạn dependency, semantic HTML, accessibility, relative links và quy trình kiểm tra. Minh chứng: `brief.md` và `AGENTS.md`. |
+| 6 | AI-LOG.md | 10 | 10 | `AI-LOG.md` ghi nhận công cụ, yêu cầu, nội dung giữ lại, thay đổi và phần bị từ chối trong quá trình sử dụng AI. Nhật ký cũng ghi lại những vấn đề được phát hiện qua kiểm tra, chẳng hạn lỗi ARIA/W3C và cách khắc phục, kèm kết quả kiểm chứng tương ứng. |
+| 7 | Commit history | 5 | 5 | Repository có lịch sử commit từ giai đoạn khởi tạo với `AGENTS.md`, các commit phát triển từng trang và các commit điều chỉnh CSS/bố cục responsive. Minh chứng: commit `34d8ad2` (khởi tạo và thêm rules file), `44d248b` (index), `39dc42a` (studio), `54872a2` (booking), `23f4b57` (stylesheet chung) và `9f68ec7` (điều chỉnh bố cục ba trang). |
+| | **Tổng điểm** | **100** | **100** | |
 
-- Thầy chưa gửi cách chấm mới; bảng trên dùng bảy mục do nhóm tạm tổng hợp theo yêu cầu và minh chứng hiện có.
-- Theo xác nhận của nhóm, ảnh được tải từ nguồn công khai cho phép sử dụng;  Liên kết cho `ChanDung.jpg` hiện là trang chủ TikTok, không phải bài đăng riêng của ảnh đó.
+## 2. Những phần nhóm chưa hoàn thành hoàn toàn
 
-## Nhóm rút kinh nghiệm
+- Một số thông tin nguồn ảnh chưa được lưu đầy đủ. Hai ảnh Vecteezy chưa xác định được tên tác giả tại thời điểm tải; liên kết của `ChanDung.jpg` hiện dẫn đến trang chủ TikTok thay vì bài đăng cụ thể.
+- Prototype sử dụng static HTML/CSS theo lựa chọn được rubric cho phép. Chat, dữ liệu booking và thanh toán được mô phỏng bằng nội dung mẫu; không có backend hoặc giao dịch thật. Những giới hạn này được ghi trong mục `Not wired yet` của `PROTOTYPE.md`.
 
-Qua PA#2, nhóm nhận thấy hồ sơ nguồn của hai ảnh Vecteezy và `ChanDung.jpg` chưa đủ chi tiết để xác định đầy đủ giấy phép, tác giả hoặc bài đăng gốc.
+## 3. Kinh nghiệm sau khi thực hiện
 
-**Tên ZIP theo tổng điểm nhóm tự chấm:** `23120184--23120330--24120090_100.zip`.
+Qua PA#2, nhóm đã thực hành xây dựng prototype responsive, tổ chức HTML semantic, sử dụng CSS design tokens, kiểm tra W3C và rà soát khả năng tiếp cận.
+
+Nhóm cũng nhận thấy việc lưu lại prompt, thay đổi do AI thực hiện, lỗi phát hiện và cách kiểm chứng là cần thiết để đảm bảo sản phẩm có thể được rà soát và giải thích lại.
+
+**Tổng điểm nhóm tự đánh giá: 100/100.**
+
+**Tên file ZIP:** `23120184-23120330-24120090_100.zip`
