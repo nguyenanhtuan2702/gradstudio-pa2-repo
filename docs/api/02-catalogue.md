@@ -1,0 +1,36 @@
+# Catalogue
+
+## List catalogue
+
+**GET** `/api/catalogue`
+
+This endpoint is public.
+
+```http
+GET /api/catalogue
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "services":[
+    {"id":"svc-yearbook","name":"Kỷ yếu lớp","fromPrice":350000},
+    {"id":"svc-graduation","name":"Tốt nghiệp","fromPrice":1800000},
+    {"id":"svc-portrait","name":"Chân dung/CV","fromPrice":690000}
+  ],
+  "packages":[
+    {"id":"pkg-premium","name":"Gói Tốt nghiệp Premium","shootHours":2,"editedPhotos":30,"price":1800000}
+  ],
+  "extras":[{"id":"extra-makeup","name":"Makeup","price":300000}],
+  "photos":[{"id":"photo-1","alt":"Ảnh minh họa dịch vụ"}],
+  "reviews":[{"id":"review-1","customerName":"Khách hàng","rating":5,"comment":"Tư vấn rõ ràng"}]
+}
+```
+
+- `500` server unavailable.
+
+## Changes
+
+- 2026-11-23: Initial catalogue contract created for PA#3.
