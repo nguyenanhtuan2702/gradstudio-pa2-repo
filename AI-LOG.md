@@ -146,3 +146,25 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Yêu cầu:** Xác nhận Thành viên A là Nguyễn Anh Tuấn phụ trách `index.html`, Thành viên B là Lê Công Phúc phụ trách `studio.html`, Thành viên C là Đặng Hồng Minh phụ trách `booking.html`; rà soát cách gọi M1/M2/M3 trong tài liệu và ghi rõ tên file HTML.
 - **Đã cập nhật:** Bổ sung bảng phân công trong `README.md`, `AGENTS.md`, `PROTOTYPE.md`, `brief.md` và `SELF_ASSESSMENT_REPORT.md`; thêm tên người phụ trách vào ba báo cáo kiểm tra; dùng tên file HTML trong phần mô tả hiện hành. Các prompt lịch sử được giữ nguyên và có chú giải ánh xạ Màn 1/2/3 sang file hiện tại.
 - **Kiểm tra:** Chưa chạy HTML/W3C vì không sửa mã nguồn trong lượt này.
+
+# AI-LOG.md — GradStudio PA#3
+
+## 2026-11-23 — Khởi tạo hạ tầng và hợp đồng API cho Ngày 1 — Tuấn
+
+- **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0; npm 11.12.1.
+- **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 1 theo kế hoạch PA#3: di chuyển PA#2 vào React/Vite, cấu hình React Router và proxy API, thiết lập dữ liệu demo, tạo hợp đồng API ban đầu và tài liệu `FRONTEND.md`.
+- **Đầu vào đã đọc:** [README.md](README.md), [AGENTS.md](AGENTS.md), [PROTOTYPE.md](PROTOTYPE.md), [PhanCongPA3.md](PhanCongPA3.md), [Rubric PA#3](docs/pa3/PA3-rubric-react-front-end.pdf) và [Final project brief PA#3](docs/pa3/GradStudio-final-project-brief.pdf).
+- **Đã giữ lại:** Dữ liệu chuẩn PA#2: Khách Linh, Admin Thảo, makeup artist Mai, photographer Tuấn, Phòng B, booking GS-1024, gói Tốt nghiệp Premium, tổng giá 1.800.000đ, cọc 540.000đ và còn lại 1.260.000đ.
+- **Đã thay đổi:**
+  - Tạo thư mục [client/](client/) bằng Vite và cài `react-router-dom`.
+  - Chuyển các luồng/cảnh PA#2 thành route React cơ bản: `/`, `/studio` và `/bookings/GS-1024`.
+  - Cấu hình `/api` proxy tới `http://localhost:3001` cho cả `server.proxy` và `preview.proxy` trong [client/vite.config.js](client/vite.config.js).
+  - Sao chép `styles.css` và các ảnh cục bộ vào ứng dụng React.
+  - Tạo hợp đồng ban đầu trong [docs/api/README.md](docs/api/README.md) và các file `01-auth.md`, `02-catalogue.md`, `03-chat.md`, `04-bookings.md`, `05-staff.md`, `06-admin.md`.
+  - Tạo tài liệu [FRONTEND.md](FRONTEND.md), gồm thông tin nhóm, hướng dẫn chạy, demo accounts và danh sách route ban đầu.
+- **Đã kiểm chứng:** Chạy `npm run build` trong `client/` thành công và tạo `client/dist/`. Git working tree sạch sau hai commit.
+- **Commit:**
+  - `22a47a9` — chuyển prototype PA#2 sang React và cấu hình Vite.
+  - `dc6334f` — bổ sung hợp đồng API và tài liệu frontend PA#3 Ngày 1.
+- **Chưa thực hiện:** Mock server, tài nguyên `mock/data/`, `AuthContext`, `ProtectedRoute`, API integration, luồng G2–G11 hoàn chỉnh và `contract-check.mjs`. Các phần này thuộc các giai đoạn/Ngày tiếp theo trong kế hoạch.
+- **Không thực hiện:** Không thêm nút demo hoặc đổi vai trò giả; không thay đổi dữ liệu mẫu, không tuyên bố booking đã thanh toán hoặc giữ chỗ; không viết mock/API implementation trong lượt Ngày 1.
