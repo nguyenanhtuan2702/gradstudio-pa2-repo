@@ -136,3 +136,4 @@ Content-Type: application/json
 - 2026-11-23: Initial admin, superadmin, booking-update and settings contract created.
 - 2026-11-24: Documented the complete booking response shape returned by the mock.
 - 2026-11-24: Updated the successful receive example to return the booking object directly.
+- 2026-11-24: Synchronized booking response fields (`maxEditedPhotos`, `previewPhotos`, `selectedPhotoIds`, `reminders`, `finalFileLink`) with `04-bookings.md`.

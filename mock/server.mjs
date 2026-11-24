@@ -239,8 +239,13 @@ const server = http.createServer(async (req, res) => {
       if (!conversation || body.proposalId !== conversation.proposal?.proposalId) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy đề xuất.')); }
       else if (!['agree', 'decline'].includes(body.decision)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Quyết định không hợp lệ.', { decision: 'Chọn agree hoặc decline.' })); }
       else {
-        if (body.decision === 'agree') conversation.status = 'Đã chốt lịch'
-        conversation.proposal.status = body.decision === 'agree' ? 'agreed' : 'declined'
+        if (body.decision === 'agree') {
+          conversation.status = 'Đã chốt lịch'
+          if (conversation.proposal) conversation.proposal.status = 'agreed'
+        } else {
+          conversation.status = 'Đang tư vấn'
+          if (conversation.proposal) conversation.proposal.status = 'declined'
+        }
         sendJson(res, 200, {
           status: conversation.status,
           decision: body.decision,

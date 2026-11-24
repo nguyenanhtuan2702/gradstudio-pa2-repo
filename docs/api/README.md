@@ -70,3 +70,4 @@ Roles: `visitor`, `customer`, `admin`, `staff`, `superadmin`.
 
 - 2026-11-24: Reviewed the endpoint inventory and aligned it with the resource contracts.
 - 2026-11-24: Added payment-result confirmation and the customer photo-receipt endpoint from the technical agreement.
+- 2026-11-24: Added payment confirmation (`/api/bookings/:id/payments/confirm`) and customer photo receipt (`/api/bookings/:id/receive`) endpoints after customer-flow contract review.

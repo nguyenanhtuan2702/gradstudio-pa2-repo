@@ -99,7 +99,7 @@ Content-Type: application/json
 
 **POST** `/api/bookings/:id/deposit/payment`
 
-This only creates a test payment session. It does not mark the booking as booked.
+Creates a test payment session and returns its `gatewayUrl` and `paymentId`. It does not hold the slot or mark the booking as booked.
 
 ```http
 POST /api/bookings/GS-1024/deposit/payment
@@ -151,7 +151,6 @@ Content-Type: application/json
 - `409` resources are unavailable after a successful deposit result.
 
 ## Start deposit payment retry
-
 ```http
 POST /api/bookings/GS-1024/deposit/payment
 Authorization: Bearer {{token:linh}}
@@ -244,6 +243,8 @@ Content-Type: application/json
 
 ## Start remaining payment retry
 
+Validates and stores `selectedPhotoIds` (1 to `maxEditedPhotos`, maximum 30 photos) and returns a test payment URL without marking the remaining balance as paid until gateway confirmation.
+
 ```http
 POST /api/bookings/GS-1024/payments/remaining
 Authorization: Bearer {{token:linh}}
@@ -321,3 +322,4 @@ On success, the endpoint returns the updated booking object directly, including 
 - 2026-11-24: Documented the complete booking response shape and the exact deposit gateway URL.
 - 2026-11-24: Added payment confirmation, reminders, preview gallery, selected photo, and receive-photo workflow per the technical agreement.
 - 2026-11-24: Clarified that successful receive returns the updated booking object directly.
+- 2026-11-24: Added `reminders` (scheduledAt, channel, recipient, emailStatus), `maxEditedPhotos`, `previewPhotos`, `selectedPhotoIds`, `finalFileLink`, `/api/bookings/:id/payments/confirm` and `/api/bookings/:id/receive`.

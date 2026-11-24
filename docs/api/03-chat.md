@@ -167,6 +167,8 @@ Content-Type: application/json
 
 - `400` decision is not agree or decline.
 - `404` proposal not found.
+- When `decision` is `agree`, the proposal status becomes `agreed` and the conversation status becomes `Đã chốt lịch`.
+- When `decision` is `decline`, the proposal status becomes `declined` and the conversation remains in `Đang tư vấn`.
 
 ## Changes
 
@@ -174,3 +176,4 @@ Content-Type: application/json
 - 2026-11-24: Aligned the message response example with the mock identifier and retained the 09:00 conflict response.
 - 2026-11-24: Clarified that the conversation starts in consultation and transitions after the customer's agreement.
 - 2026-11-24: Documented full conversation messages/proposal and both decline-then-agree proposal outcomes.
+- 2026-11-24: Included `messages` and `proposal` in the conversation list response and documented the `decline` behavior keeping the conversation in `Đang tư vấn`.
