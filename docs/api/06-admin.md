@@ -18,7 +18,7 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"id":"GS-1024","status":"Chờ cọc 30%","date":"2026-10-24","shoot":"14:00–16:00","room":"Phòng B","finalFileLink":"https://example.test/GS-1024"}
+{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000,"finalFileLink":"https://example.test/GS-1024"}
 ```
 
 - `400` field validation failed.
@@ -118,3 +118,4 @@ Content-Type: application/json
 ## Changes
 
 - 2026-11-23: Initial admin, superadmin, booking-update and settings contract created.
+- 2026-11-24: Documented the complete booking response shape returned by the mock.

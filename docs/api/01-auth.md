@@ -24,7 +24,7 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"token":"{{token:linh}}","user":{"id":"u-linh","name":"Nguyễn Thùy Linh","role":"customer"}}
+{"token":"…","user":{"id":"u-linh","name":"Nguyễn Thùy Linh","role":"customer"}}
 ```
 
 ### Errors
@@ -53,3 +53,4 @@ Content-Type: application/json
 ## Changes
 
 - 2026-11-23: Initial contract created for PA#3.
+- 2026-11-24: Use the documented ellipsis wildcard for the generated login token.

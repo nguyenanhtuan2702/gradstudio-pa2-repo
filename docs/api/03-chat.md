@@ -43,7 +43,7 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"id":"msg-1","conversationId":"conv-linh","text":"Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?","sender":"customer"}
+{"id":"msg-2","conversationId":"conv-linh","text":"Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?","sender":"customer"}
 ```
 
 - `400` text is required or too long.
@@ -141,3 +141,4 @@ Content-Type: application/json
 ## Changes
 
 - 2026-11-23: Initial chat, booking-request and clash-check contract created.
+- 2026-11-24: Aligned the message response example with the mock identifier and retained the 09:00 conflict response.

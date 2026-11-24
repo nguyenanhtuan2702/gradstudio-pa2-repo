@@ -63,3 +63,7 @@ Roles: `visitor`, `customer`, `admin`, `staff`, `superadmin`.
 | GET | `/api/admin/accounts` | superadmin | `06-admin.md` |
 | GET | `/api/admin/settings` | superadmin | `06-admin.md` |
 | PUT | `/api/admin/settings` | superadmin | `06-admin.md` |
+
+## Changes
+
+- 2026-11-24: Reviewed the endpoint inventory and aligned it with the resource contracts.

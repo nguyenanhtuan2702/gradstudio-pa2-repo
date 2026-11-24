@@ -26,7 +26,7 @@ Content-Type: application/json
 HTTP/1.1 201 Created
 Content-Type: application/json
 
-{"id":"GS-1024","status":"Chờ cọc 30%","customerName":"Nguyễn Thùy Linh","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","total":1800000,"deposit":540000,"remaining":1260000}
+{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000}
 ```
 
 - `400` required field missing.
@@ -47,7 +47,7 @@ Authorization: Bearer {{token:linh}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"items":[{"id":"GS-1024","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","date":"2026-10-24"}]}
+{"items":[{"id":"GS-1024","conversationId":"conv-linh","customerName":"Nguyễn Thùy Linh","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000}]}
 ```
 
 - `401` missing or invalid token.
@@ -66,7 +66,7 @@ Authorization: Bearer {{token:linh}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"id":"GS-1024","status":"Chờ cọc 30%","customerName":"Nguyễn Thùy Linh","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","total":1800000,"deposit":540000,"remaining":1260000,"paymentStatus":"Chờ cọc"}
+{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000}
 ```
 
 - `404` booking not found.
@@ -87,7 +87,7 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"gatewayUrl":"/payments/test/GS-1024?kind=deposit","paymentId":"pay-deposit-1024"}
+{"gatewayUrl":"/payments/test/GS-1024?kind=deposit&scenario=success","paymentId":"pay-deposit-1024"}
 ```
 
 - `400` scenario is not success or failure.
@@ -118,3 +118,4 @@ Content-Type: application/json
 ## Changes
 
 - 2026-11-23: Initial booking and test-payment contract created.
+- 2026-11-24: Documented the complete booking response shape and the exact deposit gateway URL.
