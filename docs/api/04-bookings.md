@@ -313,10 +313,11 @@ Content-Type: application/json
 - `404` booking not found.
 - `409` payment is incomplete or final files are not available. The example reaches this response because the Admin has not added `finalFileLink` yet.
 
-On success, the endpoint returns `{ "booking": <updated booking>, "conversationStatus": "Hoàn thành" }`, with both the booking and conversation marked `Hoàn thành`. A successful request is exercised after the Admin adds `finalFileLink` in `06-admin.md`.
+On success, the endpoint returns the updated booking object directly, including its non-empty `finalFileLink` and `status: "Hoàn thành"`. The associated conversation is also updated to `Hoàn thành`; its state can be verified through `GET /api/conversations`. A successful request is exercised after the Admin adds `finalFileLink` in `06-admin.md`.
 
 ## Changes
 
 - 2026-11-23: Initial booking and test-payment contract created.
 - 2026-11-24: Documented the complete booking response shape and the exact deposit gateway URL.
 - 2026-11-24: Added payment confirmation, reminders, preview gallery, selected photo, and receive-photo workflow per the technical agreement.
+- 2026-11-24: Clarified that successful receive returns the updated booking object directly.
