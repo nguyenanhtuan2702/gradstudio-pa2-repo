@@ -15,7 +15,7 @@ Authorization: Bearer {{token:thao}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"items":[{"id":"conv-linh","customerName":"Nguyễn Thùy Linh","status":"Đang tư vấn","date":"2026-10-24"}]}
+{"items":[{"id":"conv-linh","customerName":"Nguyễn Thùy Linh","status":"Đang tư vấn","date":"2026-10-24","messages":[{"id":"msg-1","text":"Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?","sender":"customer"}],"proposal":{"proposalId":"proposal-linh","status":"pending","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B"}}]}
 ```
 
 - `401` missing or invalid token.
@@ -137,9 +137,12 @@ Content-Type: application/json
 
 - `400` decision is not agree or decline.
 - `404` proposal not found.
+- When `decision` is `agree`, the proposal status becomes `agreed` and the conversation status becomes `Đã chốt lịch`.
+- When `decision` is `decline`, the proposal status becomes `declined` and the conversation remains in `Đang tư vấn`.
 
 ## Changes
 
 - 2026-11-23: Initial chat, booking-request and clash-check contract created.
 - 2026-11-24: Aligned the message response example with the mock identifier and retained the 09:00 conflict response.
 - 2026-11-24: Clarified that the conversation starts in consultation and transitions after the customer's agreement.
+- 2026-11-24: Included `messages` and `proposal` in the conversation list response and documented the `decline` behavior keeping the conversation in `Đang tư vấn`.

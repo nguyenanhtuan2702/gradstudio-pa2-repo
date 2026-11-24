@@ -62,7 +62,7 @@ curl -i http://localhost:3001/api/bookings/GS-1024/photos/preview \
 HTTP/1.1 201 Created
 Content-Type: application/json
 
-{"id":"photo-1","bookingId":"GS-1024","title":"Preview","url":"…"}
+{"id":"photo-2","bookingId":"GS-1024","title":"Preview","url":"…"}
 ```
 
 - `400` wrong file type or file too large.
@@ -71,3 +71,4 @@ Content-Type: application/json
 ## Changes
 
 - 2026-11-23: Initial staff jobs and preview-upload contract created.
+- 2026-11-24: Updated uploaded preview identifier (`photo-2`) as the uploaded photo is appended to the booking's `previewPhotos` list.

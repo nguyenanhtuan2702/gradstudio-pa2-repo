@@ -58,6 +58,8 @@ node mock/server.mjs
 
 ## 3. Demo accounts
 
+The application uses **5 demo accounts** across **4 sign-in roles** (`customer`, `admin`, `staff`, `superadmin`); `mai` and `tuan` share the `staff` role.
+
 | Name in examples | Role | E-mail or user name | Password |
 |---|---|---|---|
 | linh | Customer | linh@gradstudio.test | linh-demo |
@@ -68,14 +70,17 @@ node mock/server.mjs
 
 ## 4. Routes
 
+Current implemented routes and target routes for G1–G11:
+
 | Route | Role | PA#3 steps | Endpoints |
 |---|---|---|---|
-| `/` | Visitor | G1 | `/api/catalogue` |
-| `/studio` | Admin | G4–G6 | `/api/conversations`, `/api/clash-check`, `/api/bookings` |
-| `/bookings/GS-1024` | Customer | G7 | `/api/bookings/GS-1024`, `/api/bookings/GS-1024/deposit/payment` |
-| `/payments/test/GS-1024` | Customer | G7 test payment | Exists after a payment is created; `/api/bookings/GS-1024/deposit/payment` |
-
-The route list will be expanded as G2–G11 are implemented.
+| `/` | Visitor, Customer | G1, G3, G6 | `/api/catalogue`, `/api/conversations`, `/api/conversations/:id/messages`, `/api/conversations/:id/request`, `/api/conversations/:id/agree` |
+| `/login` *(target)* | Visitor | G2 | `/api/auth/login`, `/api/auth/logout` |
+| `/studio` | Admin | G4–G6, G10 | `/api/conversations`, `/api/clash-check`, `/api/conversations/:id/proposal`, `/api/bookings`, `/api/bookings/:id` |
+| `/bookings/GS-1024` | Customer | G7, G9 | `/api/bookings/GS-1024`, `/api/bookings/GS-1024/deposit/payment`, `/api/bookings/GS-1024/payments/remaining`, `/api/bookings/GS-1024/receive` |
+| `/payments/test/GS-1024` | Customer | G7, G9 test payment | Exists after a payment is created; `/api/bookings/GS-1024/payments/confirm` |
+| `/staff` *(target)* | Staff | G8 | `/api/staff/jobs`, `/api/staff/jobs/:id`, `/api/bookings/:id/photos/preview` |
+| `/superadmin` *(target)* | Superadmin | G11 | `/api/admin/accounts`, `/api/admin/settings` |
 
 ## 5. Product owner decisions
 

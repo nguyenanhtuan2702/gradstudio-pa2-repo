@@ -18,7 +18,7 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000,"finalFileLink":"https://example.test/GS-1024"}
+{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Đã đặt lịch","paymentStatus":"Đã cọc 30%","total":1800000,"deposit":540000,"remaining":1260000,"maxEditedPhotos":30,"previewPhotos":[{"id":"photo-1","bookingId":"GS-1024","title":"Ảnh tốt nghiệp mẫu 01","url":"/assets/images/TotNghiep.jpg"},{"id":"photo-2","bookingId":"GS-1024","title":"Preview","url":"/uploads/photo-2.jpg"}],"selectedPhotoIds":["photo-1"],"reminders":[{"id":"rem-1024-24h","title":"Nhắc lịch make-up và chụp trước 24 giờ","scheduledAt":"2026-10-23T13:00:00+07:00","channel":"Email","recipient":"linh@gradstudio.test","emailStatus":"Đã gửi"}],"finalFileLink":"https://example.test/GS-1024"}
 ```
 
 - `400` field validation failed.
@@ -119,3 +119,4 @@ Content-Type: application/json
 
 - 2026-11-23: Initial admin, superadmin, booking-update and settings contract created.
 - 2026-11-24: Documented the complete booking response shape returned by the mock.
+- 2026-11-24: Synchronized booking response fields (`maxEditedPhotos`, `previewPhotos`, `selectedPhotoIds`, `reminders`, `finalFileLink`) with `04-bookings.md`.
