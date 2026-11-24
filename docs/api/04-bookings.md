@@ -222,7 +222,7 @@ Content-Type: application/json
 - `400` `selectedPhotoIds` must contain 1–30 photos included in the booking preview gallery.
 - `401` missing or invalid token.
 - `403` caller is not the booking customer.
-- `404` booking or selected photo not found.
+- `404` booking not found.
 - `409` deposit has not been paid.
 
 ## Confirm remaining payment failure
