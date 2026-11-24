@@ -189,3 +189,11 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Commit:** `86227f8` — bổ sung mock server và contract checker PA#3 Ngày 2.
 - **Chưa thực hiện:** Chưa thêm `AuthContext`, `ProtectedRoute`, UI component loading/error/empty hoặc kết nối React với API; việc này thuộc Ngày 3 và các luồng tiếp theo.
 - **Không thực hiện:** Không thêm dependency hoặc backend ngoài; mock chỉ dùng Node built-in modules và không giả thanh toán, giữ lịch hoặc đồng bộ dữ liệu thật.
+
+## 2026-11-24 — Chỉnh quy trình nghiệm thu theo nguyên tắc contract-first
+
+- **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0; Git.
+- **Yêu cầu:** Sau khi rà lại `PhanCongPA3.md`, điều chỉnh việc triển khai để hợp đồng API được commit riêng trước các thay đổi mock tiếp theo; nâng checker cho đúng các điều kiện nghiệm thu được mô tả trong tài liệu contract-check.
+- **Đã thay đổi:** Commit riêng các cập nhật hợp đồng trong `b91fdab` và `56e89a4`; sau đó mới commit đồng bộ dữ liệu/server mock và viết lại checker trong `b326226`. Checker hiện nhận HTTP và upload `curl`, so khớp tên field hai chiều, kiểm tra ví dụ có đủ trong bảng endpoint và báo khác biệt giá trị dưới dạng note khi không bật `--strict-values`.
+- **Đã kiểm chứng:** `node tools/contract-check.mjs --base http://localhost:3001 --repo .` đạt `PASS 100% - 0 FAIL (22 examples, 22 endpoints)` trên mock mới khởi động. Đã kiểm tra mode `slow` (khoảng 2 giây), `empty` (các endpoint danh sách trả `[]`), `error` (HTTP 500) và xác nhận login vẫn dùng được ở mode error. `node --check` cho server/checker và `git diff --check` đều thành công.
+- **Giới hạn lịch sử:** Các commit cũ `22a47a9` (React scaffold) và `86227f8` (mock ban đầu) đã tồn tại trước khi hoàn thiện contract. Không sửa/rebase/squash lịch sử vì PhanCongPA3.md cấm làm sai lệch tiến trình commit; do đó không thể khẳng định toàn bộ lịch sử từ đầu đã đúng thứ tự. Các commit chỉnh sửa trong lượt này giữ thứ tự contract rồi mới đến mock. React scaffold ban đầu chưa gọi API.
