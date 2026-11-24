@@ -1,0 +1,18 @@
+[
+  {
+    "id": "conv-linh",
+    "customerName": "Nguyễn Thùy Linh",
+    "status": "Đã chốt lịch",
+    "date": "2026-10-24",
+    "messages": [
+      { "id": "msg-1", "text": "Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?", "sender": "customer" }
+    ],
+    "proposal": {
+      "proposalId": "proposal-linh",
+      "status": "pending",
+      "makeup": "13:00–14:00",
+      "shoot": "14:00–16:00",
+      "room": "Phòng B"
+    }
+  }
+]

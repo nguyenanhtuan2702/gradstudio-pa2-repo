@@ -1,0 +1,7 @@
+{
+  "linh@gradstudio.test": { "password": "linh-demo", "id": "u-linh", "name": "Nguyễn Thùy Linh", "role": "customer" },
+  "thao@gradstudio.test": { "password": "thao-demo", "id": "u-thao", "name": "Thảo", "role": "admin" },
+  "mai@gradstudio.test": { "password": "mai-demo", "id": "u-mai", "name": "Mai", "role": "staff" },
+  "tuan@gradstudio.test": { "password": "tuan-demo", "id": "u-tuan", "name": "Tuấn", "role": "staff" },
+  "superadmin@gradstudio.test": { "password": "superadmin-demo", "id": "u-superadmin", "name": "Superadmin", "role": "superadmin" }
+}

@@ -62,7 +62,7 @@ curl -i http://localhost:3001/api/bookings/GS-1024/photos/preview \
 HTTP/1.1 201 Created
 Content-Type: application/json
 
-{"id":"photo-1","bookingId":"GS-1024","title":"Preview","url":"{{}}"}
+{"id":"photo-1","bookingId":"GS-1024","title":"Preview","url":"…"}
 ```
 
 - `400` wrong file type or file too large.

@@ -62,10 +62,10 @@ Content-Type: application/json
 ```
 
 ```http
-HTTP/1.1 201 Created
+HTTP/1.1 409 Conflict
 Content-Type: application/json
 
-{"requestId":"req-linh","conversationId":"conv-linh","shootType":"Tốt nghiệp cá nhân","preferredDate":"2026-10-24","preferredTime":"09:00","extras":["Makeup"],"status":"Đang tư vấn"}
+{"error":{"code":"CONFLICT","message":"Mai bận 08:00–12:00 nên khung giờ 09:00 không khả dụng.","fields":{"preferredTime":"Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00."}}}
 ```
 
 - `400` a field is missing or invalid.

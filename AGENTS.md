@@ -3,6 +3,16 @@
 > **Đọc toàn bộ file này trước khi tạo hoặc sửa mã nguồn trong repository.**
 > Đây là quy tắc chung của nhóm dành cho AI coding assistant. Không tự ý bỏ qua yêu cầu của giảng viên hoặc brief GradStudio mới. Khi gặp mâu thuẫn hoặc thiếu thông tin nghiệp vụ, phải nêu rõ và hỏi nhóm; không tự suy diễn.
 
+## PA#3 — Quy tắc React/API bổ sung
+
+- PA#3 dùng React + Vite trong `client/`, React Router, và API mock tại `mock/server.mjs`.
+- Thứ tự bắt buộc: commit `docs/api/` trước, sau đó commit `mock/`, rồi mới phát triển/commit React gọi API.
+- Mọi API frontend dùng đường dẫn tương đối `/api/...`; không hardcode `http://localhost:3001` trong source React.
+- Mock bắt buộc hỗ trợ `normal`, `slow`, `error`, `empty` qua `MOCK_MODE`.
+- Mock dùng Node built-in modules và dữ liệu trong `mock/data/`; không thêm backend hay package không cần thiết.
+- Trạng thái `Đã đặt lịch` chỉ sau thanh toán cọc thành công và kiểm tra tài nguyên.
+- Nghiệm thu hợp đồng bằng `node tools/contract-check.mjs` trên mock khởi động mới.
+
 ## 1. Tài liệu căn cứ và mục tiêu
 
 - PA#2 gồm ba màn hình Main Flow. Nhóm được tự quyết định thiết kế, bố cục, nội dung trình bày và màu sắc; các hình màn hình trong brief là điểm khởi đầu để hiểu tính năng, không phải mẫu bắt buộc phải sao chép.

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GS-1024",
+    "conversationId": "conv-linh",
+    "customerId": "u-linh",
+    "customerName": "Nguyễn Thùy Linh",
+    "packageName": "Gói Tốt nghiệp Premium",
+    "packageId": "pkg-premium",
+    "date": "2026-10-24",
+    "makeup": "13:00–14:00",
+    "shoot": "14:00–16:00",
+    "room": "Phòng B",
+    "status": "Chờ cọc 30%",
+    "paymentStatus": "Chờ cọc",
+    "total": 1800000,
+    "deposit": 540000,
+    "remaining": 1260000
+  }
+]

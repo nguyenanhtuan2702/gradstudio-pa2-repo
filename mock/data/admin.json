@@ -1,0 +1,10 @@
+{
+  "accounts": [
+    { "id": "u-thao", "name": "Thảo", "email": "thao@gradstudio.test", "role": "admin", "active": true }
+  ],
+  "settings": {
+    "openingTime": "08:00",
+    "closingTime": "20:00",
+    "reminderHoursBefore": 24
+  }
+}
