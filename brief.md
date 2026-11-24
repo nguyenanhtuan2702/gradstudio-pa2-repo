@@ -760,3 +760,9 @@ Yêu cầu nguyên văn:
 > * **Lịch sử Git minh bạch & Chuẩn xác:** Cấu hình đúng `git config user.name` và `git config user.email` cá nhân trước khi thực thi. Các commit phải được tách bạch rõ ràng theo đúng tiến độ từng bước từ G1 đến G11. Nghiêm cấm hành vi gộp (`squash`) hoặc `rebase` làm sai lệch mốc thời gian commit thực tế.
 
 Nguồn quyết định kỹ thuật được đối chiếu: `ThongNhatKyThuatPA3.md`. Không chỉnh sửa file thống nhất kỹ thuật trong task này.
+
+---
+
+# PHẦN VIII: PROMPT CHỈNH RESPONSE API NHẬN ẢNH (24/11/2026)
+
+> Còn một khác biệt nhỏ về response: endpoint nhận ảnh hiện trả `{ booking, conversationStatus }`, trong khi `thống nhất kỹ thuật` mô tả trả về booking đã cập nhật. Về điều kiện nghiệp vụ thì khớp, nhưng nếu cần khớp cả response shape thật chặt thì phần này nên chỉnh thêm. này phải chỉnh sao

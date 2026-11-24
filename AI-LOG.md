@@ -211,3 +211,11 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Commit của revision này:** `adce667` và `ee39dc4` (hợp đồng API) trước `cedffea` (mock). Git identity đã dùng: `Nguyen Anh Tuan <166203062+nguyenanhtuan2702@users.noreply.github.com>`.
 - **Giới hạn lịch sử:** Các commit trước đó `22a47a9` (React scaffold), `86227f8` (mock ban đầu) và `b326226` (mock/checker) có trước bộ hợp đồng cập nhật theo quyết định kỹ thuật mới. Không sửa lịch sử; chỉ xác nhận đúng thứ tự cho các commit cập nhật nêu trên. Không khẳng định toàn bộ commit từ đầu đã theo thứ tự contract-first.
 - **Chưa làm:** Chưa triển khai React API integration hoặc các luồng React G1–G11; đây là phần tiếp theo sau khi hợp đồng và mock được commit.
+
+## 2026-11-24 — Đồng bộ response của thao tác nhận ảnh
+
+- **Yêu cầu thực tế:** Làm rõ cách chỉnh khác biệt giữa response `POST /api/bookings/:id/receive` và cách diễn đạt trong bản thống nhất kỹ thuật.
+- **Đã thay đổi:** Hợp đồng trong [docs/api/04-bookings.md](docs/api/04-bookings.md) và ví dụ thành công trong [docs/api/06-admin.md](docs/api/06-admin.md) hiện quy định trả trực tiếp booking đã cập nhật. [mock/server.mjs](mock/server.mjs) vẫn cập nhật conversation sang `Hoàn thành`, nhưng response chỉ là booking.
+- **Đã kiểm chứng:** `node --check mock/server.mjs` thành công; mock mới khởi động và `node tools/contract-check.mjs` đạt `PASS 100% - 0 FAIL (35 examples, 24 endpoints)`.
+- **Commit theo thứ tự contract-first:** `ad89267` (API contract) → `1c6eb75` (mock response).
+- **Không thực hiện:** Không sửa `styles.css`, React, bản thống nhất kỹ thuật hoặc lịch sử commit cũ.
