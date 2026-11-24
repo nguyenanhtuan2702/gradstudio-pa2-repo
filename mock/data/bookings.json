@@ -14,6 +14,18 @@
     "paymentStatus": "Chờ cọc",
     "total": 1800000,
     "deposit": 540000,
-    "remaining": 1260000
+    "remaining": 1260000,
+    "maxEditedPhotos": 30,
+    "previewPhotos": [
+      {
+        "id": "photo-1",
+        "bookingId": "GS-1024",
+        "title": "Ảnh tốt nghiệp mẫu 01",
+        "url": "/assets/images/TotNghiep.jpg"
+      }
+    ],
+    "selectedPhotoIds": [],
+    "finalFileLink": "",
+    "reminders": []
   }
 ]

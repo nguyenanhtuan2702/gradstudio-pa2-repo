@@ -7,7 +7,7 @@
     "date": "2026-10-24",
     "time": "13:00–14:00",
     "room": "Studio",
-    "status": "Đã phân công"
+    "status": "Chưa phân công"
   },
   {
     "id": "job-1024-photo",
@@ -17,6 +17,6 @@
     "date": "2026-10-24",
     "time": "14:00–16:00",
     "room": "Phòng B",
-    "status": "Đã phân công"
+    "status": "Chưa phân công"
   }
 ]
