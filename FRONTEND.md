@@ -8,8 +8,15 @@
 
 ## 2. How to run
 
-```sh
+Open PowerShell in the repository root. Start the mock server in terminal 1:
+
+```powershell
 node mock/server.mjs
+```
+
+In terminal 2, start Vite:
+
+```powershell
 cd client
 npm ci
 npm run dev
@@ -17,11 +24,37 @@ npm run dev
 
 Build and preview:
 
-```sh
+```powershell
 cd client
 npm run build
 npx vite preview
 ```
+
+### Mock server modes
+
+The mock server reads `MOCK_MODE` at startup. Stop it with `Ctrl+C` before changing the mode, then run one of these commands from the repository root:
+
+```powershell
+$env:MOCK_MODE = 'normal'
+node mock/server.mjs
+```
+
+```powershell
+$env:MOCK_MODE = 'slow'
+node mock/server.mjs
+```
+
+```powershell
+$env:MOCK_MODE = 'error'
+node mock/server.mjs
+```
+
+```powershell
+$env:MOCK_MODE = 'empty'
+node mock/server.mjs
+```
+
+`normal` delays responses by about 150 ms; `slow` delays them by 2 seconds; `error` returns HTTP 500 for requests except sign-in; `empty` returns empty arrays for list data. The default port is `3001`; override it with `$env:PORT = '3002'` before starting the server.
 
 ## 3. Demo accounts
 
@@ -57,4 +90,4 @@ No product-owner decision post was available in the repository at the time of in
 
 ## 7. Not done
 
-The initial PA#3 implementation contains the PA#2 React migration and route shell. Authentication, mock server, API integration and G2–G11 still require implementation on later assigned phases.
+The initial PA#3 implementation contains the PA#2 React migration and route shell. Authentication, React API integration and the complete G2–G11 flows still require implementation.
