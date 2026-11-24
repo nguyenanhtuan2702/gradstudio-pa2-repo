@@ -168,3 +168,24 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - `dc6334f` — bổ sung hợp đồng API và tài liệu frontend PA#3 Ngày 1.
 - **Chưa thực hiện:** Mock server, tài nguyên `mock/data/`, `AuthContext`, `ProtectedRoute`, API integration, luồng G2–G11 hoàn chỉnh và `contract-check.mjs`. Các phần này thuộc các giai đoạn/Ngày tiếp theo trong kế hoạch.
 - **Không thực hiện:** Không thêm nút demo hoặc đổi vai trò giả; không thay đổi dữ liệu mẫu, không tuyên bố booking đã thanh toán hoặc giữ chỗ; không viết mock/API implementation trong lượt Ngày 1.
+
+## 2026-11-24 — Hoàn thiện Mock Server và Contract Checker — Ngày 2 — Tuấn
+
+- **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0.
+- **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 2 theo [PhanCongPA3.md](PhanCongPA3.md): hoàn thiện dữ liệu mock, server giả lập Node built-in, bốn mode vận hành và công cụ kiểm tra hợp đồng.
+- **Đã thay đổi:**
+  - Tạo dữ liệu mock tại [mock/data/](mock/data/) cho tài khoản, catalogue, hội thoại, booking, staff và admin.
+  - Tạo [mock/server.mjs](mock/server.mjs) với các mode `normal`, `slow`, `error`, `empty`.
+  - Hỗ trợ đăng nhập bằng 5 tài khoản demo, header `Authorization: Bearer`, xung đột 09:00 và dữ liệu booking `GS-1024`.
+  - Tạo [tools/contract-check.mjs](tools/contract-check.mjs) để gửi các ví dụ trong `docs/api/*.md` đến mock và so sánh status code, cấu trúc field.
+  - Cập nhật quy tắc PA#3 trong [AGENTS.md](AGENTS.md).
+  - Đồng bộ ví dụ hợp đồng chat khi 09:00 bị xung đột và sửa ví dụ upload preview.
+- **Đã kiểm chứng:**
+  - Mock `normal`: `node tools/contract-check.mjs --base http://localhost:3001 --repo .` đạt `PASS 100% - 0 FAIL`.
+  - Mock `slow` tại port 3002: endpoint catalogue phản hồi sau khoảng 2 giây.
+  - Mock `error` tại port 3004: endpoint catalogue trả HTTP 500.
+  - Mock `empty` tại port 3003: catalogue trả các danh sách rỗng.
+  - Smoke test login, catalogue và clash check; `git diff --check` không phát hiện lỗi định dạng.
+- **Commit:** `86227f8` — bổ sung mock server và contract checker PA#3 Ngày 2.
+- **Chưa thực hiện:** Chưa thêm `AuthContext`, `ProtectedRoute`, UI component loading/error/empty hoặc kết nối React với API; việc này thuộc Ngày 3 và các luồng tiếp theo.
+- **Không thực hiện:** Không thêm dependency hoặc backend ngoài; mock chỉ dùng Node built-in modules và không giả thanh toán, giữ lịch hoặc đồng bộ dữ liệu thật.
