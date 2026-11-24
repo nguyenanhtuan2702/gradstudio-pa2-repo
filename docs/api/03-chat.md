@@ -15,7 +15,7 @@ Authorization: Bearer {{token:thao}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"items":[{"id":"conv-linh","customerName":"Nguyễn Thùy Linh","status":"Đã chốt lịch","date":"2026-10-24"}]}
+{"items":[{"id":"conv-linh","customerName":"Nguyễn Thùy Linh","status":"Đang tư vấn","date":"2026-10-24"}]}
 ```
 
 - `401` missing or invalid token.
@@ -142,3 +142,4 @@ Content-Type: application/json
 
 - 2026-11-23: Initial chat, booking-request and clash-check contract created.
 - 2026-11-24: Aligned the message response example with the mock identifier and retained the 09:00 conflict response.
+- 2026-11-24: Clarified that the conversation starts in consultation and transitions after the customer's agreement.
