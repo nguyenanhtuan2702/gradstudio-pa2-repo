@@ -197,3 +197,17 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Đã thay đổi:** Commit riêng các cập nhật hợp đồng trong `b91fdab` và `56e89a4`; sau đó mới commit đồng bộ dữ liệu/server mock và viết lại checker trong `b326226`. Checker hiện nhận HTTP và upload `curl`, so khớp tên field hai chiều, kiểm tra ví dụ có đủ trong bảng endpoint và báo khác biệt giá trị dưới dạng note khi không bật `--strict-values`.
 - **Đã kiểm chứng:** `node tools/contract-check.mjs --base http://localhost:3001 --repo .` đạt `PASS 100% - 0 FAIL (22 examples, 22 endpoints)` trên mock mới khởi động. Đã kiểm tra mode `slow` (khoảng 2 giây), `empty` (các endpoint danh sách trả `[]`), `error` (HTTP 500) và xác nhận login vẫn dùng được ở mode error. `node --check` cho server/checker và `git diff --check` đều thành công.
 - **Giới hạn lịch sử:** Các commit cũ `22a47a9` (React scaffold) và `86227f8` (mock ban đầu) đã tồn tại trước khi hoàn thiện contract. Không sửa/rebase/squash lịch sử vì PhanCongPA3.md cấm làm sai lệch tiến trình commit; do đó không thể khẳng định toàn bộ lịch sử từ đầu đã đúng thứ tự. Các commit chỉnh sửa trong lượt này giữ thứ tự contract rồi mới đến mock. React scaffold ban đầu chưa gọi API.
+
+## 2026-11-24 — Rà soát hợp đồng API luồng Khách hàng & Thanh toán (Ngày 1–2) — Phúc
+
+- **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0.
+- **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 1–2 theo kế hoạch PA#3 và quyết định chốt của Tech Lead: review toàn bộ hợp đồng API (`docs/api/`) và dữ liệu mẫu (`mock/data/`, `mock/server.mjs`) cho luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) trước khi code React.
+- **Phát hiện khi review:**
+  1. `GET /api/conversations` đang lược bỏ `messages` và `proposal`, khiến giao diện chat G3 và bước phản hồi đề xuất G6 không đọc được tin nhắn và đề xuất giờ từ API.
+  2. Luồng thanh toán cọc 30% (G7) và 70% còn lại (G9) cần tách rõ bước khởi tạo URL thanh toán (`POST /api/bookings/:id/deposit/payment`, `POST /api/bookings/:id/payments/remaining`) với bước xác nhận kết quả từ cổng thanh toán thử nghiệm; chỉ chuyển sang `Đã đặt lịch` sau khi xác nhận thành công.
+  3. Dữ liệu booking `GS-1024` thiếu schema `reminders` (thời điểm gửi, kênh gửi, người nhận, trạng thái email), `maxEditedPhotos`, `previewPhotos` và `selectedPhotoIds`; thao tác khách hàng bấm "Nhận ảnh" ở G9 cần endpoint riêng thay vì dùng chung `PATCH /api/bookings/:id` của Admin.
+- **Đã thay đổi:**
+  - Cập nhật hợp đồng API tại [docs/api/README.md](docs/api/README.md), [docs/api/03-chat.md](docs/api/03-chat.md), [docs/api/04-bookings.md](docs/api/04-bookings.md), [docs/api/05-staff.md](docs/api/05-staff.md) và [docs/api/06-admin.md](docs/api/06-admin.md): bổ sung `POST /api/bookings/:id/payments/confirm` và `POST /api/bookings/:id/receive`, chuẩn hóa schema `messages`, `proposal`, `reminders`, `previewPhotos`, `selectedPhotoIds` và hành vi `decline` giữ hội thoại ở trạng thái `Đang tư vấn`.
+  - Cập nhật dữ liệu mẫu tại [mock/data/bookings.json](mock/data/bookings.json) và đồng bộ logic xử lý trong [mock/server.mjs](mock/server.mjs).
+  - Cập nhật [FRONTEND.md](FRONTEND.md) làm rõ 5 tài khoản demo ứng với 4 role đăng nhập và bảng route mục tiêu.
+- **Đã kiểm chứng:** Khởi động mock server mới và chạy `node tools/contract-check.mjs --strict-values` đạt `PASS 100% - 0 FAIL (24 examples, 24 endpoints)`.

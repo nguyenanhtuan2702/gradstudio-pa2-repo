@@ -14,6 +14,27 @@
     "paymentStatus": "Chờ cọc",
     "total": 1800000,
     "deposit": 540000,
-    "remaining": 1260000
+    "remaining": 1260000,
+    "maxEditedPhotos": 30,
+    "previewPhotos": [
+      {
+        "id": "photo-1",
+        "bookingId": "GS-1024",
+        "title": "Ảnh tốt nghiệp mẫu 01",
+        "url": "/assets/images/TotNghiep.jpg"
+      }
+    ],
+    "selectedPhotoIds": [],
+    "reminders": [
+      {
+        "id": "rem-1024-24h",
+        "title": "Nhắc lịch make-up và chụp trước 24 giờ",
+        "scheduledAt": "2026-10-23T13:00:00+07:00",
+        "channel": "Email",
+        "recipient": "linh@gradstudio.test",
+        "emailStatus": "Đã gửi"
+      }
+    ],
+    "finalFileLink": ""
   }
 ]

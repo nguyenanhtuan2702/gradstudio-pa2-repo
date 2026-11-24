@@ -119,7 +119,7 @@ const server = http.createServer(async (req, res) => {
       sendJson(res, 200, mode === 'empty' ? { services: [], packages: [], extras: [], photos: [], reviews: [] } : catalogue)
     } else if (method === 'GET' && pathname === '/api/conversations') {
       if (forbidden(req, res, ['customer', 'admin'])) return
-      sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: conversations.map(({ messages, proposal, ...item }) => item) })
+      sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: conversations })
     } else if (method === 'POST' && match('/api/conversations/:id/request', pathname)) {
       if (forbidden(req, res, ['customer'])) return
       const { id } = match('/api/conversations/:id/request', pathname)
@@ -168,15 +168,24 @@ const server = http.createServer(async (req, res) => {
       if (!conversation || body.proposalId !== conversation.proposal?.proposalId) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy đề xuất.')); }
       else if (!['agree', 'decline'].includes(body.decision)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Quyết định không hợp lệ.', { decision: 'Chọn agree hoặc decline.' })); }
       else {
-        if (body.decision === 'agree') conversation.status = 'Đã chốt lịch'
+        if (body.decision === 'agree') {
+          conversation.status = 'Đã chốt lịch'
+          if (conversation.proposal) conversation.proposal.status = 'agreed'
+        } else {
+          conversation.status = 'Đang tư vấn'
+          if (conversation.proposal) conversation.proposal.status = 'declined'
+        }
         sendJson(res, 200, { status: conversation.status, decision: body.decision, proposalId: body.proposalId })
       }
     } else if (method === 'GET' && pathname === '/api/bookings') {
       if (forbidden(req, res, ['customer', 'admin'])) return
-      sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: bookings.map(({ packageId, customerId, ...item }) => item) })
-    } else if (method === 'GET' && pathname === '/api/bookings/GS-1024') {
+      sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: bookings.map(({ packageId, customerId, maxEditedPhotos, previewPhotos, selectedPhotoIds, reminders, finalFileLink, ...item }) => item) })
+    } else if (method === 'GET' && match('/api/bookings/:id', pathname)) {
       if (forbidden(req, res, ['customer', 'admin'])) return
-      sendJson(res, 200, bookings[0])
+      const { id } = match('/api/bookings/:id', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')) }
+      else { sendJson(res, 200, booking) }
     } else if (method === 'POST' && pathname === '/api/bookings') {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
@@ -188,16 +197,68 @@ const server = http.createServer(async (req, res) => {
       if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu tạo booking.', fields)); }
       else if (!conversation || conversation.status !== 'Đã chốt lịch') { status = 409; sendJson(res, status, error('CONFLICT', 'Khách hàng chưa đồng ý thời gian đề xuất.')); }
       else { status = 201; sendJson(res, status, bookings[0]) }
-    } else if (method === 'POST' && pathname === '/api/bookings/GS-1024/deposit/payment') {
+    } else if (method === 'POST' && match('/api/bookings/:id/deposit/payment', pathname)) {
       if (forbidden(req, res, ['customer'])) return
+      const { id } = match('/api/bookings/:id/deposit/payment', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
       const body = await readBody(req)
       if (!['success', 'failure'].includes(body.scenario)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Chọn kịch bản thanh toán.', { scenario: 'Chỉ chấp nhận success hoặc failure.' })); }
-      else { sendJson(res, 200, { gatewayUrl: `/payments/test/GS-1024?kind=deposit&scenario=${body.scenario}`, paymentId: 'pay-deposit-1024' }) }
-    } else if (method === 'POST' && pathname === '/api/bookings/GS-1024/payments/remaining') {
+      else { sendJson(res, 200, { gatewayUrl: `/payments/test/${id}?kind=deposit&scenario=${body.scenario}`, paymentId: 'pay-deposit-1024' }) }
+    } else if (method === 'POST' && match('/api/bookings/:id/payments/remaining', pathname)) {
       if (forbidden(req, res, ['customer'])) return
+      const { id } = match('/api/bookings/:id/payments/remaining', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
       const body = await readBody(req)
-      if (!body.selectedPhotoIds?.length || body.selectedPhotoIds.length > 30) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Số ảnh không hợp lệ.', { selectedPhotoIds: 'Chọn ít nhất 1 và tối đa 30 ảnh.' })); }
-      else { sendJson(res, 200, { gatewayUrl: '/payments/test/GS-1024?kind=remaining', paymentId: 'pay-rest-1024', remaining: 1260000 }) }
+      const maxPhotos = booking.maxEditedPhotos || 30
+      const scenario = body.scenario || 'success'
+      if (!['success', 'failure'].includes(scenario)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Chọn kịch bản thanh toán.', { scenario: 'Chỉ chấp nhận success hoặc failure.' })); }
+      else if (!Array.isArray(body.selectedPhotoIds) || !body.selectedPhotoIds.length || body.selectedPhotoIds.length > maxPhotos) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Số ảnh không hợp lệ.', { selectedPhotoIds: `Chọn ít nhất 1 và tối đa ${maxPhotos} ảnh.` })); }
+      else {
+        booking.selectedPhotoIds = body.selectedPhotoIds
+        sendJson(res, 200, { gatewayUrl: `/payments/test/${id}?kind=remaining&scenario=${scenario}`, paymentId: 'pay-rest-1024', remaining: booking.remaining, selectedPhotoIds: booking.selectedPhotoIds })
+      }
+    } else if (method === 'POST' && match('/api/bookings/:id/payments/confirm', pathname)) {
+      if (forbidden(req, res, ['customer'])) return
+      const { id } = match('/api/bookings/:id/payments/confirm', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      const body = await readBody(req)
+      const fields = {}
+      if (!body.paymentId) fields.paymentId = 'Thiếu mã giao dịch.'
+      if (!['deposit', 'remaining'].includes(body.kind)) fields.kind = 'Loại thanh toán phải là deposit hoặc remaining.'
+      if (!['success', 'failure'].includes(body.result)) fields.result = 'Kết quả phải là success hoặc failure.'
+      if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Dữ liệu xác nhận thanh toán không hợp lệ.', fields)); return }
+      if (body.kind === 'deposit') {
+        if (body.result === 'success') {
+          booking.status = 'Đã đặt lịch'
+          booking.paymentStatus = 'Đã cọc 30%'
+        } else {
+          booking.status = 'Chờ cọc 30%'
+          booking.paymentStatus = 'Chờ cọc'
+        }
+      } else if (body.kind === 'remaining') {
+        if (body.result === 'success') {
+          booking.paymentStatus = 'Đã thanh toán đủ'
+          booking.remaining = 0
+        }
+      }
+      sendJson(res, 200, { bookingId: booking.id, paymentId: body.paymentId, kind: body.kind, result: body.result, status: booking.status, paymentStatus: booking.paymentStatus, remaining: booking.remaining })
+    } else if (method === 'POST' && match('/api/bookings/:id/receive', pathname)) {
+      if (forbidden(req, res, ['customer'])) return
+      const { id } = match('/api/bookings/:id/receive', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      if (booking.remaining > 0 || !booking.finalFileLink) {
+        status = 409
+        sendJson(res, status, error('CONFLICT', 'Chưa đủ điều kiện nhận ảnh: cần thanh toán đủ 100% và có link file hoàn thiện từ studio.'))
+        return
+      }
+      booking.status = 'Hoàn thành'
+      const conv = conversations.find((item) => item.id === booking.conversationId)
+      if (conv) conv.status = 'Hoàn thành'
+      sendJson(res, 200, booking)
     } else if (method === 'GET' && pathname === '/api/staff/jobs') {
       if (forbidden(req, res, ['staff'])) return
       sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: staff })
@@ -207,15 +268,25 @@ const server = http.createServer(async (req, res) => {
       const job = staff.find((item) => item.id === id)
       if (!job) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy công việc.')); }
       else { const body = await readBody(req); job.status = body.status || job.status; sendJson(res, 200, { id: job.id, status: job.status }) }
-    } else if (method === 'POST' && pathname === '/api/bookings/GS-1024/photos/preview') {
+    } else if (method === 'POST' && match('/api/bookings/:id/photos/preview', pathname)) {
       if (forbidden(req, res, ['staff'])) return
+      const { id } = match('/api/bookings/:id/photos/preview', pathname)
+      const booking = bookings.find((item) => item.id === id)
       await consumeBody(req)
-      sendJson(res, 201, { id: 'photo-1', bookingId: 'GS-1024', title: 'Preview', url: '/uploads/photo-1.jpg' })
-    } else if (method === 'PATCH' && pathname === '/api/bookings/GS-1024') {
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      booking.previewPhotos ||= []
+      const nextId = `photo-${booking.previewPhotos.length + 1}`
+      const photo = { id: nextId, bookingId: id, title: 'Preview', url: `/uploads/${nextId}.jpg` }
+      booking.previewPhotos.push(photo)
+      sendJson(res, 201, photo)
+    } else if (method === 'PATCH' && match('/api/bookings/:id', pathname)) {
       if (forbidden(req, res, ['admin'])) return
+      const { id } = match('/api/bookings/:id', pathname)
+      const booking = bookings.find((item) => item.id === id)
+      if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
       const body = await readBody(req)
-      Object.assign(bookings[0], body)
-      sendJson(res, 200, bookings[0])
+      Object.assign(booking, body)
+      sendJson(res, 200, booking)
     } else if (method === 'GET' && pathname === '/api/admin/accounts') {
       if (forbidden(req, res, ['superadmin'])) return
       sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: admin.accounts })
