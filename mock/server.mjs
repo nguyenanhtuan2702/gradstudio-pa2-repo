@@ -406,7 +406,7 @@ const server = http.createServer(async (req, res) => {
       } else {
         booking.status = 'Hoàn thành'
         if (conversation) conversation.status = 'Hoàn thành'
-        sendJson(res, 200, { booking, conversationStatus: conversation?.status || 'Hoàn thành' })
+        sendJson(res, 200, booking)
       }
     } else if (method === 'GET' && pathname === '/api/staff/jobs') {
       if (forbidden(req, res, ['staff'])) return
