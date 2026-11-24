@@ -41,6 +41,11 @@ const readBody = (req) => new Promise((resolve, reject) => {
   })
 })
 
+const consumeBody = (req) => new Promise((resolve) => {
+  req.on('end', resolve)
+  req.resume()
+})
+
 const caller = (req) => {
   const authorization = req.headers.authorization || ''
   const token = authorization.replace(/^Bearer\s+/i, '')
@@ -92,7 +97,6 @@ const server = http.createServer(async (req, res) => {
     if (mode === 'error' && !(method === 'POST' && pathname === '/api/auth/login')) {
       status = 500
       respond(status, error('INTERNAL_ERROR', 'Mô phỏng lỗi máy chủ.', {}))
-      console.log(`${method} ${pathname} ${status}`)
       return
     }
 
@@ -116,8 +120,11 @@ const server = http.createServer(async (req, res) => {
     } else if (method === 'GET' && pathname === '/api/conversations') {
       if (forbidden(req, res, ['customer', 'admin'])) return
       sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: conversations.map(({ messages, proposal, ...item }) => item) })
-    } else if (method === 'POST' && pathname === '/api/conversations/conv-linh/request') {
+    } else if (method === 'POST' && match('/api/conversations/:id/request', pathname)) {
       if (forbidden(req, res, ['customer'])) return
+      const { id } = match('/api/conversations/:id/request', pathname)
+      const conversation = conversations.find((item) => item.id === id)
+      if (!conversation) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy hội thoại.')); return }
       const body = await readBody(req)
       const fields = {}
       if (!body.shootType) fields.shootType = 'Chọn loại buổi chụp.'
@@ -126,23 +133,44 @@ const server = http.createServer(async (req, res) => {
       if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Dữ liệu không hợp lệ.', fields)); }
       else if (body.preferredTime === '09:00') { status = 409; sendJson(res, status, error('CONFLICT', 'Mai bận 08:00–12:00 nên khung giờ 09:00 không khả dụng.', { preferredTime: 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.' })); }
       else { status = 201; sendJson(res, status, { requestId: 'req-linh', conversationId: 'conv-linh', shootType: body.shootType, preferredDate: body.preferredDate, preferredTime: body.preferredTime, extras: body.extras || [], status: 'Đang tư vấn' }); }
-    } else if ((match('/api/conversations/:id/messages', pathname)) && method === 'POST') {
+    } else if (match('/api/conversations/:id/messages', pathname) && method === 'POST') {
       if (forbidden(req, res, ['customer', 'admin'])) return
+      const { id } = match('/api/conversations/:id/messages', pathname)
+      const conversation = conversations.find((item) => item.id === id)
+      if (!conversation) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy hội thoại.')); return }
       const body = await readBody(req)
       if (!body.text || body.text.length > 2000) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Tin nhắn không hợp lệ.', { text: 'Nội dung tin nhắn phải từ 1 đến 2000 ký tự.' })); }
-      else { sendJson(res, 200, { id: 'msg-2', conversationId: 'conv-linh', text: body.text, sender: caller(req).role }) }
+      else {
+        const message = { id: `msg-${conversation.messages.length + 1}`, conversationId: id, text: body.text, sender: caller(req).role }
+        conversation.messages.push(message)
+        sendJson(res, 200, message)
+      }
     } else if (method === 'POST' && pathname === '/api/clash-check') {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
       if (!body.date || !body.time) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu kiểm tra.', { date: 'Chọn ngày.', time: 'Chọn giờ.' })); }
       else { sendJson(res, 200, { hasClash: body.time === '09:00', reason: body.time === '09:00' ? 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.' : 'Không có xung đột tài nguyên.', suggestions: body.time === '09:00' ? [{ makeup: '13:00–14:00', makeupArtist: 'Mai', shoot: '14:00–16:00', photographer: 'Tuấn', room: 'Phòng B' }] : [] }) }
-    } else if (method === 'POST' && pathname === '/api/conversations/conv-linh/proposal') {
+    } else if (method === 'POST' && match('/api/conversations/:id/proposal', pathname)) {
       if (forbidden(req, res, ['admin'])) return
-      sendJson(res, 200, conversations[0].proposal)
-    } else if (method === 'POST' && pathname === '/api/conversations/conv-linh/agree') {
+      const { id } = match('/api/conversations/:id/proposal', pathname)
+      const conversation = conversations.find((item) => item.id === id)
+      if (!conversation) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy hội thoại.')); }
+      else {
+        const body = await readBody(req)
+        conversation.proposal = { proposalId: 'proposal-linh', status: 'pending', ...body }
+        sendJson(res, 200, conversation.proposal)
+      }
+    } else if (method === 'POST' && match('/api/conversations/:id/agree', pathname)) {
       if (forbidden(req, res, ['customer'])) return
-      conversations[0].status = 'Đã chốt lịch'
-      sendJson(res, 200, { status: 'Đã chốt lịch', decision: 'agree', proposalId: 'proposal-linh' })
+      const { id } = match('/api/conversations/:id/agree', pathname)
+      const conversation = conversations.find((item) => item.id === id)
+      const body = await readBody(req)
+      if (!conversation || body.proposalId !== conversation.proposal?.proposalId) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy đề xuất.')); }
+      else if (!['agree', 'decline'].includes(body.decision)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Quyết định không hợp lệ.', { decision: 'Chọn agree hoặc decline.' })); }
+      else {
+        if (body.decision === 'agree') conversation.status = 'Đã chốt lịch'
+        sendJson(res, 200, { status: conversation.status, decision: body.decision, proposalId: body.proposalId })
+      }
     } else if (method === 'GET' && pathname === '/api/bookings') {
       if (forbidden(req, res, ['customer', 'admin'])) return
       sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: bookings.map(({ packageId, customerId, ...item }) => item) })
@@ -152,8 +180,14 @@ const server = http.createServer(async (req, res) => {
     } else if (method === 'POST' && pathname === '/api/bookings') {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
-      if (!body.conversationId || !body.customerId || !body.packageId) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu tạo booking.', { conversationId: 'Cần hội thoại.', customerId: 'Cần khách hàng.', packageId: 'Cần gói dịch vụ.' })); }
-      else { sendJson(res, 201, bookings[0]) }
+      const fields = {}
+      for (const field of ['conversationId', 'customerId', 'packageId', 'agreedMakeup', 'agreedShoot']) {
+        if (!body[field]) fields[field] = 'Trường này là bắt buộc.'
+      }
+      const conversation = conversations.find((item) => item.id === body.conversationId)
+      if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu tạo booking.', fields)); }
+      else if (!conversation || conversation.status !== 'Đã chốt lịch') { status = 409; sendJson(res, status, error('CONFLICT', 'Khách hàng chưa đồng ý thời gian đề xuất.')); }
+      else { status = 201; sendJson(res, status, bookings[0]) }
     } else if (method === 'POST' && pathname === '/api/bookings/GS-1024/deposit/payment') {
       if (forbidden(req, res, ['customer'])) return
       const body = await readBody(req)
@@ -175,7 +209,8 @@ const server = http.createServer(async (req, res) => {
       else { const body = await readBody(req); job.status = body.status || job.status; sendJson(res, 200, { id: job.id, status: job.status }) }
     } else if (method === 'POST' && pathname === '/api/bookings/GS-1024/photos/preview') {
       if (forbidden(req, res, ['staff'])) return
-      sendJson(res, 201, { id: 'photo-1', bookingId: 'GS-1024', title: 'Preview', url: '{{}}' })
+      await consumeBody(req)
+      sendJson(res, 201, { id: 'photo-1', bookingId: 'GS-1024', title: 'Preview', url: '/uploads/photo-1.jpg' })
     } else if (method === 'PATCH' && pathname === '/api/bookings/GS-1024') {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
@@ -196,18 +231,22 @@ const server = http.createServer(async (req, res) => {
     } else if (method === 'PUT' && pathname === '/api/admin/settings') {
       if (forbidden(req, res, ['superadmin'])) return
       const body = await readBody(req)
-      admin.settings = body
-      sendJson(res, 200, admin.settings)
+      const fields = {}
+      if (!/^\d{2}:\d{2}$/.test(body.openingTime || '')) fields.openingTime = 'Nhập giờ mở cửa theo HH:MM.'
+      if (!/^\d{2}:\d{2}$/.test(body.closingTime || '')) fields.closingTime = 'Nhập giờ đóng cửa theo HH:MM.'
+      if (!Number.isInteger(body.reminderHoursBefore) || body.reminderHoursBefore < 1) fields.reminderHoursBefore = 'Nhập số giờ nguyên dương.'
+      if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Cài đặt không hợp lệ.', fields)); }
+      else { admin.settings = body; sendJson(res, 200, admin.settings) }
     } else {
       status = 404
       sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy endpoint.', {}))
     }
   } catch (cause) {
-    status = 500
-    sendJson(res, status, error('INTERNAL_ERROR', 'Không thể xử lý yêu cầu.', {}))
+    status = cause.message === 'Invalid JSON' ? 400 : 500
+    sendJson(res, status, error(status === 400 ? 'VALIDATION_ERROR' : 'INTERNAL_ERROR', status === 400 ? 'JSON không hợp lệ.' : 'Không thể xử lý yêu cầu.', {}))
   } finally {
     if (!res.writableEnded) return
-    console.log(`${method} ${pathname} ${status}`)
+    console.log(`${method} ${pathname} ${res.statusCode || status}`)
   }
 })
 

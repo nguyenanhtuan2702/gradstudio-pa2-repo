@@ -2,7 +2,7 @@
   {
     "id": "conv-linh",
     "customerName": "Nguyễn Thùy Linh",
-    "status": "Đã chốt lịch",
+    "status": "Đang tư vấn",
     "date": "2026-10-24",
     "messages": [
       { "id": "msg-1", "text": "Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?", "sender": "customer" }
