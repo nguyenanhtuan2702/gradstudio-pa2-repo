@@ -18,12 +18,28 @@ Content-Type: application/json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Chờ cọc 30%","paymentStatus":"Chờ cọc","total":1800000,"deposit":540000,"remaining":1260000,"finalFileLink":"https://example.test/GS-1024"}
+{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Đã đặt lịch","paymentStatus":"Đã thanh toán đủ","total":1800000,"deposit":540000,"remaining":0,"maxEditedPhotos":30,"previewPhotos":[{"id":"photo-1","bookingId":"GS-1024","title":"Ảnh tốt nghiệp mẫu 01","url":"/assets/images/TotNghiep.jpg"},{"id":"photo-2","bookingId":"GS-1024","title":"Preview","url":"/uploads/photo-2.jpg"}],"selectedPhotoIds":["photo-1"],"finalFileLink":"https://example.test/GS-1024","reminders":[{"id":"rem-1024-24h","title":"Nhắc lịch make-up và chụp trước 24 giờ","scheduledAt":"2026-10-23T13:00:00+07:00","channel":"Email","recipient":"linh@gradstudio.test","emailStatus":"Đã gửi"}]}
 ```
 
 - `400` field validation failed.
 - `409` the new time clashes or booking cannot be cancelled.
 - `404` booking not found.
+
+## Customer receives final photos
+
+The customer-only `POST /api/bookings/:id/receive` endpoint is documented in `04-bookings.md`. Its successful flow requires a fully paid booking and a non-empty `finalFileLink`:
+
+```http
+POST /api/bookings/GS-1024/receive
+Authorization: Bearer {{token:linh}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"booking":{"id":"GS-1024","conversationId":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","packageId":"pkg-premium","packageName":"Gói Tốt nghiệp Premium","date":"2026-10-24","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B","status":"Hoàn thành","paymentStatus":"Đã thanh toán đủ","total":1800000,"deposit":540000,"remaining":0,"maxEditedPhotos":30,"previewPhotos":[{"id":"photo-1","bookingId":"GS-1024","title":"Ảnh tốt nghiệp mẫu 01","url":"/assets/images/TotNghiep.jpg"},{"id":"photo-2","bookingId":"GS-1024","title":"Preview","url":"/uploads/photo-2.jpg"}],"selectedPhotoIds":["photo-1"],"finalFileLink":"https://example.test/GS-1024","reminders":[{"id":"rem-1024-24h","title":"Nhắc lịch make-up và chụp trước 24 giờ","scheduledAt":"2026-10-23T13:00:00+07:00","channel":"Email","recipient":"linh@gradstudio.test","emailStatus":"Đã gửi"}]},"conversationStatus":"Hoàn thành"}
+```
 
 ## List admin accounts
 

@@ -55,6 +55,8 @@ Roles: `visitor`, `customer`, `admin`, `staff`, `superadmin`.
 | GET | `/api/bookings/:id` | customer, admin | `04-bookings.md` |
 | POST | `/api/bookings/:id/deposit/payment` | customer | `04-bookings.md` |
 | POST | `/api/bookings/:id/payments/remaining` | customer | `04-bookings.md` |
+| POST | `/api/bookings/:id/payments/confirm` | customer | `04-bookings.md` |
+| POST | `/api/bookings/:id/receive` | customer | `04-bookings.md` |
 | GET | `/api/staff/jobs` | staff | `05-staff.md` |
 | PATCH | `/api/staff/jobs/:id` | staff | `05-staff.md` |
 | POST | `/api/bookings/:id/photos/preview` | staff | `05-staff.md` |
@@ -67,3 +69,4 @@ Roles: `visitor`, `customer`, `admin`, `staff`, `superadmin`.
 ## Changes
 
 - 2026-11-24: Reviewed the endpoint inventory and aligned it with the resource contracts.
+- 2026-11-24: Added payment-result confirmation and the customer photo-receipt endpoint from the technical agreement.
