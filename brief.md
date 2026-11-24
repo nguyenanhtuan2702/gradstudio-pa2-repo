@@ -746,3 +746,17 @@ Yêu cầu nguyên văn:
 Yêu cầu nguyên văn:
 
 > uk quên nữa sẵn giúp tui dò lại các file luôn, là 1 số file ghi bạn B bạn C thì bận b LÀ Phúc Bạn C là Minh á, bô sung ghi đúng tên người chịu trách nhiệm bạn A hay bạn phụ trách index là Tuấn. Ngoài ra 1 số tài  liệu hiện ghi màn hình M1, M2,M3 ghi đúng tên file làm hình htlm
+
+---
+
+# PHẦN VII: PROMPT ĐIỀU CHỈNH CÔNG VIỆC TUẤN NGÀY 1–2 THEO THỐNG NHẤT KỸ THUẬT PA#3 (24/11/2026)
+
+## Yêu cầu thực tế
+
+> Hieen tại đã thống nhất tui cần bạn điều chỉnh lại những việc của Tuấn ngày 1 và ngày 2 để khớp với file thống nhất kỹ thuật đồng thời chỉnh lại đồng bộ với file phân công pa3.md nhớ làm việc theo đúng quy tắc **NGUYÊN TẮC SỐNG CÒN ĐỂ ĐẠT ĐIỂM TỐI ĐA (TIÊU CHÍ 5: 15 ĐIỂM & TIÊU CHÍ 9: 5 ĐIỂM)**
+>
+> * **Contract-first (Hợp đồng trước, Code sau):** Bắt buộc hoàn thiện và `git commit` toàn bộ hợp đồng API trong thư mục `docs/api/` trước. Tiếp theo, xây dựng và commit `mock/server.mjs` + `mock/data/`. Sau cùng mới tiến hành viết code React để kết nối API.
+> * **Kiểm thử tự động bằng `contract-check.mjs`:** Tất cả ví dụ cấu trúc dữ liệu trong `docs/api/*.md` khi chạy kiểm thử qua công cụ `node tools/contract-check.mjs` trên mock server phải đạt kết quả tuyệt đối **100% PASS (0 FAIL)**.
+> * **Lịch sử Git minh bạch & Chuẩn xác:** Cấu hình đúng `git config user.name` và `git config user.email` cá nhân trước khi thực thi. Các commit phải được tách bạch rõ ràng theo đúng tiến độ từng bước từ G1 đến G11. Nghiêm cấm hành vi gộp (`squash`) hoặc `rebase` làm sai lệch mốc thời gian commit thực tế.
+
+Nguồn quyết định kỹ thuật được đối chiếu: `ThongNhatKyThuatPA3.md`. Không chỉnh sửa file thống nhất kỹ thuật trong task này.
