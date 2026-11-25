@@ -233,3 +233,15 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - Cập nhật dữ liệu mẫu tại [mock/data/bookings.json](mock/data/bookings.json) và đồng bộ logic xử lý trong [mock/server.mjs](mock/server.mjs).
   - Cập nhật [FRONTEND.md](FRONTEND.md) làm rõ 5 tài khoản demo ứng với 4 role đăng nhập và bảng route mục tiêu.
 - **Đã kiểm chứng:** Khởi động mock server mới và chạy `node tools/contract-check.mjs --strict-values` đạt `PASS 100% - 0 FAIL (24 examples, 24 endpoints)`.
+
+## 2026-11-25 — Review và kiểm chứng mock server theo luồng Khách hàng (Ngày 2) — Phúc
+
+- **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; PowerShell; Git.
+- **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 2 theo [PhanCongPA3.md](PhanCongPA3.md): review dữ liệu mẫu và mock server cho các luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) sau khi đồng bộ contract mới.
+- **Đã kiểm tra:**
+  - Đối chiếu [mock/data/bookings.json](mock/data/bookings.json), [mock/data/conversations.json](mock/data/conversations.json), [mock/data/staff.json](mock/data/staff.json) và [mock/server.mjs](mock/server.mjs) với [docs/api/03-chat.md](docs/api/03-chat.md) và [docs/api/04-bookings.md](docs/api/04-bookings.md).
+  - Kiểm tra cú pháp `node --check mock/server.mjs` và parse toàn bộ 6 file JSON trong `mock/data/` (`accounts.json`, `admin.json`, `bookings.json`, `catalogue.json`, `conversations.json`, `staff.json`) đều hợp lệ.
+  - Khởi động mới mock server ở chế độ `normal` (port 3013) và chạy `node tools/contract-check.mjs`: đạt `PASS 100% - 0 FAIL (35 examples, 24 endpoints)`.
+  - Kiểm tra 3 chế độ mock còn lại trên `GET /api/catalogue`: `slow` phản hồi ~2126 ms (`services=3`), `empty` trả danh sách rỗng (`services=0, packages=0`), `error` trả HTTP `500`.
+  - Chạy `git diff --check` không phát hiện lỗi định dạng.
+- **Kết luận:** Dữ liệu mẫu và mock server đã sẵn sàng cho giai đoạn phát triển React (Ngày 3 trở đi). Không thay đổi code React trong lượt Ngày 2.
