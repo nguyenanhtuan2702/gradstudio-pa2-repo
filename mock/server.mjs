@@ -1,4 +1,5 @@
 import http from 'node:http'
+import { randomUUID } from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -21,9 +22,6 @@ const port = Number(process.env.PORT || 3001)
 const delay = mode === 'slow' ? 2000 : mode === 'normal' ? 150 : 0
 
 const tokens = new Map()
-for (const [email, account] of Object.entries(accounts)) {
-  tokens.set(`token-${account.id}`, { email, ...account })
-}
 
 const sendJson = (res, status, body) => {
   res.writeHead(status, { 'Content-Type': 'application/json' })
@@ -117,11 +115,12 @@ const timeRangeOverlaps = (left, right) => {
   return leftStart < rightEnd && rightStart < leftEnd
 }
 
-const caller = (req) => {
+const bearerToken = (req) => {
   const authorization = req.headers.authorization || ''
-  const token = authorization.replace(/^Bearer\s+/i, '')
-  return tokens.get(token) || null
+  return authorization.match(/^Bearer\s+(.+)$/i)?.[1] || ''
 }
+
+const caller = (req) => tokens.get(bearerToken(req)) || null
 
 const forbidden = (req, res, allowed) => {
   const user = caller(req)
@@ -179,12 +178,13 @@ const server = http.createServer(async (req, res) => {
         sendJson(res, status, error('UNAUTHORIZED', 'E-mail hoặc mật khẩu không đúng.', { email: 'Thông tin đăng nhập không hợp lệ', password: 'Thông tin đăng nhập không hợp lệ' }))
       } else {
         status = 200
-        const token = `token-${account.id}`
+        const token = randomUUID()
         tokens.set(token, { email: body.email, ...account })
         sendJson(res, status, { token, user: { id: account.id, name: account.name, role: account.role } })
       }
     } else if (method === 'POST' && pathname === '/api/auth/logout') {
       if (forbidden(req, res, ['customer', 'admin', 'staff', 'superadmin'])) return
+      tokens.delete(bearerToken(req))
       sendJson(res, 200, { ok: true })
     } else if (method === 'GET' && pathname === '/api/catalogue') {
       sendJson(res, 200, mode === 'empty' ? { services: [], packages: [], extras: [], photos: [], reviews: [] } : catalogue)

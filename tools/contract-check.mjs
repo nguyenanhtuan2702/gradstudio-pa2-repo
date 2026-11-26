@@ -309,6 +309,7 @@ function readAccounts() {
 
 const accounts = readAccounts()
 const tokenCache = new Map()
+const pendingRevocationChecks = new Set()
 const requestPairs = []
 const loginCandidates = []
 
@@ -499,6 +500,16 @@ function pathMatches(template, target) {
   return new RegExp(`^${source}/?$`).test(targetPath)
 }
 
+function tokenReferences(request) {
+  const source = [request.target, JSON.stringify(request.headers), request.body || '', JSON.stringify(request.form || [])].join('\n')
+  return [...new Set([...source.matchAll(/\{\{token:([^}]+)\}\}/g)].map((match) => match[1].trim()))]
+}
+
+function isLogoutRequest(request) {
+  if (request.method !== 'POST') return false
+  return new URL(request.target, 'http://localhost').pathname.replace(/\/+$/, '') === '/api/auth/logout'
+}
+
 function endpointInventory() {
   const readme = path.join(docsDir, 'README.md')
   if (!fs.existsSync(readme)) return []
@@ -528,6 +539,19 @@ for (const pair of requestPairs) {
   const location = `${pair.filename}:${pair.line}`
   try {
     const actual = await performRequest(pair.request, new Map())
+    const referencedTokens = tokenReferences(pair.request)
+    const revocationProbe = referencedTokens.filter((name) => pendingRevocationChecks.has(name))
+
+    if (isLogoutRequest(pair.request) && actual.status === 200) {
+      for (const name of referencedTokens) pendingRevocationChecks.add(name)
+    }
+    if (actual.status === 401 && revocationProbe.length) {
+      for (const name of revocationProbe) {
+        pendingRevocationChecks.delete(name)
+        tokenCache.delete(name)
+      }
+    }
+
     if (actual.status !== pair.answer.status) {
       fail(location, `${pair.request.method} ${pair.request.target} → status example ${pair.answer.status}, answer ${actual.status}`)
       continue
