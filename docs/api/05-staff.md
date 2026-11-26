@@ -15,11 +15,24 @@ Authorization: Bearer {{token:mai}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"items":[{"id":"job-1024-makeup","bookingId":"GS-1024","staffName":"Mai","work":"Make-up","date":"2026-10-24","time":"13:00–14:00","room":"Studio","status":"Đã phân công"},…]}
+{"items":[{"id":"job-1024-makeup","bookingId":"GS-1024","staffName":"Mai","work":"Make-up","date":"2026-10-24","time":"13:00–14:00","room":"Studio","status":"Đã phân công"}]}
 ```
 
 - `401` missing or invalid token.
 - `403` role is not staff.
+- The list contains only jobs assigned to the authenticated staff member.
+
+```http
+GET /api/staff/jobs
+Authorization: Bearer {{token:tuan}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"items":[{"id":"job-1024-photo","bookingId":"GS-1024","staffName":"Tuấn","work":"Chụp ảnh","date":"2026-10-24","time":"14:00–16:00","room":"Phòng B","status":"Đã phân công"}]}
+```
 
 ## Update job
 
@@ -41,7 +54,23 @@ Content-Type: application/json
 ```
 
 - `400` status is invalid.
+- `403` caller is not assigned to this job.
 - `404` job not found.
+
+```http
+PATCH /api/staff/jobs/job-1024-photo
+Authorization: Bearer {{token:mai}}
+Content-Type: application/json
+
+{"status":"Hoàn thành"}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Nhân viên không được phân công công việc này."}}
+```
 
 ## Upload preview photo
 
@@ -89,3 +118,4 @@ Content-Type: application/json
 - 2026-11-23: Initial staff jobs and preview-upload contract created.
 - 2026-11-24: Documented upload metadata persistence and the booking gallery response.
 - 2026-11-24: Updated uploaded preview identifier (`photo-2`) as the uploaded photo is appended to the booking's `previewPhotos` list.
+- 2026-11-26: Scope job lists and updates to the authenticated Staff member; add separate Mai/Tuấn examples and a cross-assignment `403` case.

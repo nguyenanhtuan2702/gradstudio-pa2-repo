@@ -67,8 +67,134 @@ Content-Type: application/json
 {"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
 ```
 
+### Missing or invalid token
+
+```http
+GET /api/bookings
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
+```http
+GET /api/bookings
+Authorization: Bearer invalid-audit-token
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
+### Token revocation for all demo roles
+
+The same login/logout/reuse sequence applies to each signed-in role. These examples verify that logout revokes each account's own token; Staff is represented by both demo accounts.
+
+```http
+POST /api/auth/logout
+Authorization: Bearer {{token:thao}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"ok":true}
+```
+
+```http
+GET /api/conversations
+Authorization: Bearer {{token:thao}}
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
+```http
+POST /api/auth/logout
+Authorization: Bearer {{token:mai}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"ok":true}
+```
+
+```http
+GET /api/staff/jobs
+Authorization: Bearer {{token:mai}}
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
+```http
+POST /api/auth/logout
+Authorization: Bearer {{token:tuan}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"ok":true}
+```
+
+```http
+GET /api/staff/jobs
+Authorization: Bearer {{token:tuan}}
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
+```http
+POST /api/auth/logout
+Authorization: Bearer {{token:superadmin}}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"ok":true}
+```
+
+```http
+GET /api/admin/settings
+Authorization: Bearer {{token:superadmin}}
+```
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{"error":{"code":"UNAUTHORIZED","message":"Thiếu hoặc sai token."}}
+```
+
 ## Changes
 
 - 2026-11-23: Initial contract created for PA#3.
 - 2026-11-24: Use the documented ellipsis wildcard for the generated login token.
 - 2026-11-26: Specify immediate token revocation on successful logout and require protected requests with the revoked token to return `401`.
+- 2026-11-26: Add missing/invalid-token checks and logout-revocation examples for all five demo accounts across the four signed-in roles.

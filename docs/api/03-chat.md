@@ -77,6 +77,8 @@ Content-Type: application/json
 
 Allowed role: `admin`.
 
+Required request fields: non-empty `date`, `time`, and `room`, plus a non-empty `staff` array.
+
 ```http
 POST /api/clash-check
 Authorization: Bearer {{token:thao}}
@@ -93,7 +95,54 @@ Content-Type: application/json
 ```
 
 - `400` date, time or resources are missing.
+- `401` missing or invalid token.
+- `403` caller is not an Admin.
 - `409` no resource combination is available.
+
+```http
+POST /api/clash-check
+Authorization: Bearer {{token:thao}}
+Content-Type: application/json
+
+{"date":"2026-10-24","time":"09:00"}
+```
+
+```http
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{"error":{"code":"VALIDATION_ERROR","message":"Thiếu dữ liệu kiểm tra.","fields":{"room":"Chọn phòng.","staff":"Chọn ít nhất một nhân sự."}}}
+```
+
+```http
+POST /api/clash-check
+Authorization: Bearer {{token:linh}}
+Content-Type: application/json
+
+{"date":"2026-10-24","time":"09:00","room":"Phòng B","staff":["Mai","Tuấn"]}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Không có quyền truy cập."}}
+```
+
+```http
+POST /api/clash-check
+Authorization: Bearer {{token:mai}}
+Content-Type: application/json
+
+{"date":"2026-10-24","time":"09:00","room":"Phòng B","staff":["Mai","Tuấn"]}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Không có quyền truy cập."}}
+```
 
 ## Propose time
 
@@ -177,3 +226,4 @@ Content-Type: application/json
 - 2026-11-24: Clarified that the conversation starts in consultation and transitions after the customer's agreement.
 - 2026-11-24: Documented full conversation messages/proposal and both decline-then-agree proposal outcomes.
 - 2026-11-24: Included `messages` and `proposal` in the conversation list response and documented the `decline` behavior keeping the conversation in `Đang tư vấn`.
+- 2026-11-26: Make `room` and non-empty `staff` required for clash checks; add missing-resource and non-Admin authorization examples.

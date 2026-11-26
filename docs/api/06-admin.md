@@ -109,6 +109,42 @@ Content-Type: application/json
 - `401` missing or invalid token.
 - `403` role is not superadmin.
 
+```http
+GET /api/admin/settings
+Authorization: Bearer {{token:linh}}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Không có quyền truy cập."}}
+```
+
+```http
+GET /api/admin/settings
+Authorization: Bearer {{token:mai}}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Không có quyền truy cập."}}
+```
+
+```http
+GET /api/admin/settings
+Authorization: Bearer {{token:thao}}
+```
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{"error":{"code":"FORBIDDEN","message":"Không có quyền truy cập."}}
+```
+
 ## Update system settings
 
 **PUT** `/api/admin/settings`
@@ -137,3 +173,4 @@ Content-Type: application/json
 - 2026-11-24: Documented the complete booking response shape returned by the mock.
 - 2026-11-24: Updated the successful receive example to return the booking object directly.
 - 2026-11-24: Synchronized booking response fields (`maxEditedPhotos`, `previewPhotos`, `selectedPhotoIds`, `reminders`, `finalFileLink`) with `04-bookings.md`.
+- 2026-11-26: Add Customer, Staff, and Admin denial examples for Superadmin-only settings.
