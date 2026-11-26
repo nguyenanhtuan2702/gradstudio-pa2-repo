@@ -219,7 +219,14 @@ const server = http.createServer(async (req, res) => {
     } else if (method === 'POST' && pathname === '/api/clash-check') {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
-      if (!body.date || !body.time) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu kiểm tra.', { date: 'Chọn ngày.', time: 'Chọn giờ.' })); }
+      const fields = {}
+      if (!body.date) fields.date = 'Chọn ngày.'
+      if (!body.time) fields.time = 'Chọn giờ.'
+      if (!body.room || typeof body.room !== 'string') fields.room = 'Chọn phòng.'
+      if (!Array.isArray(body.staff) || !body.staff.length || body.staff.some((name) => typeof name !== 'string' || !name.trim())) {
+        fields.staff = 'Chọn ít nhất một nhân sự.'
+      }
+      if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu kiểm tra.', fields)); }
       else { sendJson(res, 200, { hasClash: body.time === '09:00', reason: body.time === '09:00' ? 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.' : 'Không có xung đột tài nguyên.', suggestions: body.time === '09:00' ? [{ makeup: '13:00–14:00', makeupArtist: 'Mai', shoot: '14:00–16:00', photographer: 'Tuấn', room: 'Phòng B' }] : [] }) }
     } else if (method === 'POST' && match('/api/conversations/:id/proposal', pathname)) {
       if (forbidden(req, res, ['admin'])) return
@@ -415,12 +422,18 @@ const server = http.createServer(async (req, res) => {
       }
     } else if (method === 'GET' && pathname === '/api/staff/jobs') {
       if (forbidden(req, res, ['staff'])) return
-      sendJson(res, 200, mode === 'empty' || !assignmentsActive ? { items: [] } : { items: staff })
+      const currentStaff = caller(req)
+      const assignedJobs = staff.filter((job) => job.staffName === currentStaff.name)
+      sendJson(res, 200, mode === 'empty' || !assignmentsActive ? { items: [] } : { items: assignedJobs })
     } else if (method === 'PATCH' && pathname.startsWith('/api/staff/jobs/')) {
       if (forbidden(req, res, ['staff'])) return
       const id = pathname.split('/').pop()
       const job = staff.find((item) => item.id === id)
       if (!job) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy công việc.')); }
+      else if (job.staffName !== caller(req).name) {
+        status = 403
+        sendJson(res, status, error('FORBIDDEN', 'Nhân viên không được phân công công việc này.'))
+      }
       else {
         const body = await readBody(req)
         if (!['Đang thực hiện', 'Hoàn thành'].includes(body.status)) {
