@@ -1,6 +1,6 @@
 # GradStudio — PA#3 React Front End
 
-> **Trạng thái:** PA#3 đang được phát triển. Ứng dụng React hiện có ba route khung từ PA#2; đăng nhập, kết nối API và các luồng G1–G11 chưa hoàn tất. Nội dung trên các route hiện tại vẫn là dữ liệu tĩnh.
+> **Trạng thái:** PA#3 đang được phát triển. G1 tải catalogue từ API mock; G2 đã có đăng nhập, đăng xuất, lưu phiên và bảo vệ route theo vai trò. Các luồng G3–G11 chưa hoàn tất; những route ngoài trang chủ/đăng nhập hiện là trang chờ triển khai.
 
 PA#3 xây dựng luồng chính GradStudio cho Visitor/Customer, Admin, Staff và Superadmin. Frontend nằm trong `client/`, dùng React + Vite, React Router và CSS thuần. API mock dùng Node.js built-in modules và dữ liệu trong `mock/`; hợp đồng API nằm trong `docs/api/`.
 
@@ -84,19 +84,22 @@ Công cụ gửi các ví dụ trong `docs/api/` tới mock đang chạy tại `
 
 ## Route hiện có
 
-Các route dưới đây hiện được khai báo trong `client/src/App.jsx`. Giao diện vẫn dùng nội dung tĩnh và chưa gọi API.
+Các route dưới đây hiện được khai báo trong `client/src/App.jsx`. Những route có trạng thái chờ triển khai được bảo vệ theo vai trò nhưng chưa có nghiệp vụ PA#3.
 
-| Route | Vai trò minh họa | Nội dung hiện tại |
+| Route | Vai trò | Trạng thái |
 |---|---|---|
-| `/` | Visitor/Customer | Danh mục dịch vụ và hội thoại mẫu. |
-| `/studio` | Admin | Hội thoại, xung đột lịch và booking mẫu. |
-| `/bookings/GS-1024` | Customer | Lịch chụp, trạng thái booking và khoản cọc mẫu. |
+| `/` | Visitor/Customer | G1 tải catalogue từ API; chat G3/G6 chưa tích hợp. |
+| `/login` | Tất cả vai trò | G2 đăng nhập/đăng xuất và chuyển đến trang theo vai trò. |
+| `/studio` | Admin | Trang chờ tích hợp G4–G6 và G10. |
+| `/bookings/GS-1024` | Customer | Trang chờ tích hợp G7/G9. |
+| `/staff` | Staff | Trang chờ tích hợp G8. |
+| `/superadmin` | Superadmin | Trang chờ tích hợp G11. |
 
-Các route `/login`, `/payments/test/:id`, `/staff` và `/superadmin` là route mục tiêu trong kế hoạch PA#3, chưa được triển khai trong `client/src/App.jsx`.
+Route `/payments/test/:id` chưa được triển khai; đây là trang mục tiêu cho luồng thanh toán thử nghiệm G7/G9.
 
 ## Tài khoản và dữ liệu demo
 
-Các tài khoản dưới đây được khai báo cho mock và ví dụ hợp đồng API. Giao diện đăng nhập chưa được tích hợp.
+Các tài khoản dưới đây được khai báo cho mock và ví dụ hợp đồng API; G2 dùng các tài khoản này để đăng nhập.
 
 | Tên trong ví dụ | Vai trò | Email | Mật khẩu |
 |---|---|---|---|
@@ -113,14 +116,15 @@ Câu chuyện dữ liệu mẫu dùng xuyên suốt: Linh hỏi lịch chụp t�
 | Đường dẫn | Nội dung |
 |---|---|
 | `client/` | Mã nguồn React/Vite và bản build tạo tại `client/dist/`. |
+| `client/public/assets/images/` | Nguồn ảnh dùng chung; PA#2 và các milestone React kế tiếp dùng cùng bộ ảnh. |
 | `mock/server.mjs`, `mock/data/` | API mock và dữ liệu demo. |
 | `docs/api/` | Hợp đồng endpoint, request/response và ví dụ kiểm tra. |
-| `docs/pa3/` | Brief final project, rubric PA#3 và tài liệu `contract-check`. |
+| `docs/pa3/` | Brief, rubric, tài liệu nghiệm thu và hồ sơ PA#3 (xem `docs/pa3/README.md`). |
 | `docs/pa2/` | Tài liệu và báo cáo của PA#2. |
 | `tools/contract-check.mjs` | Công cụ chạy ví dụ API trong hợp đồng trên mock. |
 | `FRONTEND.md` | Thành viên, hướng dẫn, tài khoản demo, route mục tiêu, thư viện và phần chưa làm. |
-| `PhanCongPA3.md` | Phân công và lịch triển khai PA#3. |
-| `ThongNhatKyThuatPA3.md` | Quyết định kỹ thuật và quy ước API đã thống nhất. |
+| `docs/pa3/PhanCongPA3.md` | Phân công và lịch triển khai PA#3. |
+| `docs/pa3/ThongNhatKyThuatPA3.md` | Quyết định kỹ thuật và quy ước API đã thống nhất. |
 
 ## Nguyên tắc phát triển PA#3
 
@@ -134,8 +138,9 @@ Câu chuyện dữ liệu mẫu dùng xuyên suốt: Linh hỏi lịch chụp t�
 ## Tài liệu liên quan
 
 - [Hướng dẫn frontend và bảng route](FRONTEND.md)
-- [Phân công PA#3](PhanCongPA3.md)
-- [Thống nhất kỹ thuật PA#3](ThongNhatKyThuatPA3.md)
+- [Hồ sơ và tài liệu PA#3](docs/pa3/README.md)
+- [Phân công PA#3](docs/pa3/PhanCongPA3.md)
+- [Thống nhất kỹ thuật PA#3](docs/pa3/ThongNhatKyThuatPA3.md)
 - [Hợp đồng API](docs/api/README.md)
 - [Brief final project](docs/pa3/GradStudio-final-project-brief.pdf)
 - [Rubric PA#3](docs/pa3/PA3-rubric-react-front-end.pdf)

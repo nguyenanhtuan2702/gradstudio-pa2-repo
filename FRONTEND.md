@@ -70,17 +70,19 @@ The application uses **5 demo accounts** across **4 sign-in roles** (`customer`,
 
 ## 4. Routes
 
-Current implemented routes and target routes for G1–G11:
+Routes currently declared in `client/src/App.jsx`. “Placeholder” means the route is protected and opens directly, but its PA#3 business flow is not implemented yet.
 
-| Route | Role | PA#3 steps | Endpoints |
-|---|---|---|---|
-| `/` | Visitor, Customer | G1, G3, G6 | `/api/catalogue`, `/api/conversations`, `/api/conversations/:id/messages`, `/api/conversations/:id/request`, `/api/conversations/:id/agree` |
-| `/login` *(target)* | Visitor | G2 | `/api/auth/login`, `/api/auth/logout` |
-| `/studio` | Admin | G4–G6, G10 | `/api/conversations`, `/api/clash-check`, `/api/conversations/:id/proposal`, `/api/bookings`, `/api/bookings/:id` |
-| `/bookings/GS-1024` | Customer | G7, G9 | `/api/bookings/GS-1024`, `/api/bookings/GS-1024/deposit/payment`, `/api/bookings/GS-1024/payments/remaining`, `/api/bookings/GS-1024/receive` |
-| `/payments/test/GS-1024` | Customer | G7, G9 test payment | Exists after a payment is created; `/api/bookings/GS-1024/payments/confirm` |
-| `/staff` *(target)* | Staff | G8 | `/api/staff/jobs`, `/api/staff/jobs/:id`, `/api/bookings/:id/photos/preview` |
-| `/superadmin` *(target)* | Superadmin | G11 | `/api/admin/accounts`, `/api/admin/settings` |
+| Route | Role | PA#3 steps | API calls | Status |
+|---|---|---|---|---|
+| `/` | Visitor, Customer | G1; G3 and G6 planned | `GET /api/catalogue` | G1 catalogue loads from the mock; chat/request work for G3 and G6 are not implemented. |
+| `/login` | Visitor and signed-in users | G2 | `POST /api/auth/login`, `POST /api/auth/logout` | Login, role landing, session persistence and logout are implemented. |
+| `/studio` | Admin | G4–G6, G10 | Target: `/api/conversations`, `/api/clash-check`, `/api/conversations/:id/proposal`, `/api/bookings`, `/api/bookings/:id` | Protected placeholder; Admin flows are not implemented. |
+| `/bookings/GS-1024` | Customer | G7, G9 | Target: `/api/bookings/:id`, `/api/bookings/:id/deposit/payment`, `/api/bookings/:id/payments/remaining`, `/api/bookings/:id/receive` | Protected placeholder; booking and payment flows are not implemented. |
+| `/payments/test/:id` | Customer | G7, G9 test payment | Target: `POST /api/bookings/:id/payments/confirm` | Route not implemented; it should exist after a payment session is created. |
+| `/staff` | Staff | G8 | Target: `/api/staff/jobs`, `/api/staff/jobs/:id`, `/api/bookings/:id/photos/preview` | Protected placeholder; staff work is not implemented. |
+| `/superadmin` | Superadmin | G11 | Target: `/api/admin/accounts`, `/api/admin/settings` | Protected placeholder; account and settings flows are not implemented. |
+
+`AuthContext` keeps the signed-in user and token in `sessionStorage`. The shared API client attaches `Authorization: Bearer <token>` when a protected request uses the context request helper. The public catalogue request uses the relative path `/api/catalogue` without a token.
 
 ## 5. Product owner decisions
 
@@ -95,4 +97,4 @@ No product-owner decision post was available in the repository at the time of in
 
 ## 7. Not done
 
-The initial PA#3 implementation contains the PA#2 React migration and route shell. Authentication, React API integration and the complete G2–G11 flows still require implementation.
+The current implementation covers the G1 catalogue request and the G2 login/logout and role-protection foundation. The Admin, booking/payment, staff and Superadmin routes are protected placeholders. G3–G11 business flows, the test-payment route, chat, and API-backed loading/error/empty states for the remaining data screens still require implementation.

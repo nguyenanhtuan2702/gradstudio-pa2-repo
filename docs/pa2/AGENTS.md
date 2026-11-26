@@ -169,7 +169,7 @@ Các mục không mở được màn hình trong PA#2 như `Booking`, `Lịch st
   - Avatar chữ cái/initials hoặc biểu tượng trung tính.
   - Ảnh có giấy phép sử dụng phù hợp và nhóm ghi rõ nguồn/giấy phép.
 - Nếu dùng ảnh được cấp phép, ghi tên ảnh, nguồn và thông tin giấy phép trong `PROTOTYPE.md`.
-- Không hotlink ảnh từ website bên ngoài. Ưu tiên lưu tài nguyên hợp lệ trong repository, ví dụ `assets/images/`.
+- Không hotlink ảnh từ website bên ngoài. Dùng nguồn ảnh dùng chung tại `client/public/assets/images/`; trang tĩnh ở thư mục gốc tham chiếu bằng `client/public/assets/images/...`, còn Vite phục vụ ảnh tại `/assets/images/...`. Không tạo thêm bản sao trong `assets/images/`.
 - Mọi ảnh có ý nghĩa phải có `alt` mô tả phù hợp; ảnh trang trí dùng `alt=""`.
 
 ## 7. Công nghệ và cấu trúc CSS/JavaScript

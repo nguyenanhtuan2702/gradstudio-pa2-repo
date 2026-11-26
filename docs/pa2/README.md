@@ -4,6 +4,8 @@ Repository này chứa prototype PA#2 responsive cho ba màn hình Main Flow c�
 
 > **Phạm vi PA#2:** Có thể chọn static HTML/CSS hoặc React. Repository hiện đang dùng static HTML/CSS. Prototype chỉ mô phỏng ba màn hình được giao; không có đăng nhập, backend, lưu dữ liệu, đồng bộ chat, giữ lịch tự động hay thanh toán thật.
 
+Ảnh dùng chung cho prototype và các milestone React tiếp theo được lưu một lần tại `client/public/assets/images/`. Các trang HTML PA#2 ở thư mục gốc tham chiếu bằng đường dẫn tương đối tới thư mục này.
+
 Thông báo mới của giảng viên cho phép nhóm tự thiết kế ba màn hình và chọn static HTML/CSS hoặc React; thông báo này thay thế hướng dẫn cũ “You do not design your own three screens”. Cần dùng brief và rubric PA#2 bản cập nhật cùng danh sách **Fix these** mới nhất. Hạn nộp không thay đổi.
 
 ## 1. Ba màn hình

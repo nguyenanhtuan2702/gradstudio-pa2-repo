@@ -153,7 +153,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0; npm 11.12.1.
 - **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 1 theo kế hoạch PA#3: di chuyển PA#2 vào React/Vite, cấu hình React Router và proxy API, thiết lập dữ liệu demo, tạo hợp đồng API ban đầu và tài liệu `FRONTEND.md`.
-- **Đầu vào đã đọc:** [README.md](README.md), [AGENTS.md](AGENTS.md), [PROTOTYPE.md](PROTOTYPE.md), [PhanCongPA3.md](PhanCongPA3.md), [Rubric PA#3](docs/pa3/PA3-rubric-react-front-end.pdf) và [Final project brief PA#3](docs/pa3/GradStudio-final-project-brief.pdf).
+- **Đầu vào đã đọc:** [README.md](README.md), [AGENTS.md](docs/pa2/AGENTS.md), [PROTOTYPE.md](docs/pa2/PROTOTYPE.md), [PhanCongPA3.md](docs/pa3/PhanCongPA3.md), [Rubric PA#3](docs/pa3/PA3-rubric-react-front-end.pdf) và [Final project brief PA#3](docs/pa3/GradStudio-final-project-brief.pdf).
 - **Đã giữ lại:** Dữ liệu chuẩn PA#2: Khách Linh, Admin Thảo, makeup artist Mai, photographer Tuấn, Phòng B, booking GS-1024, gói Tốt nghiệp Premium, tổng giá 1.800.000đ, cọc 540.000đ và còn lại 1.260.000đ.
 - **Đã thay đổi:**
   - Tạo thư mục [client/](client/) bằng Vite và cài `react-router-dom`.
@@ -172,13 +172,13 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 ## 2026-11-24 — Hoàn thiện Mock Server và Contract Checker — Ngày 2 — Tuấn
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0.
-- **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 2 theo [PhanCongPA3.md](PhanCongPA3.md): hoàn thiện dữ liệu mock, server giả lập Node built-in, bốn mode vận hành và công cụ kiểm tra hợp đồng.
+- **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 2 theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md): hoàn thiện dữ liệu mock, server giả lập Node built-in, bốn mode vận hành và công cụ kiểm tra hợp đồng.
 - **Đã thay đổi:**
   - Tạo dữ liệu mock tại [mock/data/](mock/data/) cho tài khoản, catalogue, hội thoại, booking, staff và admin.
   - Tạo [mock/server.mjs](mock/server.mjs) với các mode `normal`, `slow`, `error`, `empty`.
   - Hỗ trợ đăng nhập bằng 5 tài khoản demo, header `Authorization: Bearer`, xung đột 09:00 và dữ liệu booking `GS-1024`.
   - Tạo [tools/contract-check.mjs](tools/contract-check.mjs) để gửi các ví dụ trong `docs/api/*.md` đến mock và so sánh status code, cấu trúc field.
-  - Cập nhật quy tắc PA#3 trong [AGENTS.md](AGENTS.md).
+  - Cập nhật quy tắc PA#3 trong [AGENTS.md](docs/pa2/AGENTS.md).
   - Đồng bộ ví dụ hợp đồng chat khi 09:00 bị xung đột và sửa ví dụ upload preview.
 - **Đã kiểm chứng:**
   - Mock `normal`: `node tools/contract-check.mjs --base http://localhost:3001 --repo .` đạt `PASS 100% - 0 FAIL`.
@@ -202,11 +202,11 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js; Git; PowerShell.
 - **Yêu cầu thực tế:** Điều chỉnh công việc Tuấn Ngày 1 và Ngày 2 theo bản thống nhất kỹ thuật mới nhất, đồng bộ với `PhanCongPA3.md` và tuân thủ contract-first.
-- **Nguồn đã dùng:** [ThongNhatKyThuatPA3.md](ThongNhatKyThuatPA3.md), [PhanCongPA3.md](PhanCongPA3.md), các hợp đồng `docs/api/*.md`, mock hiện có và [tools/contract-check.mjs](tools/contract-check.mjs). Không sửa bản thống nhất kỹ thuật do người dùng cung cấp.
+- **Nguồn đã dùng:** [ThongNhatKyThuatPA3.md](docs/pa3/ThongNhatKyThuatPA3.md), [PhanCongPA3.md](docs/pa3/PhanCongPA3.md), các hợp đồng `docs/api/*.md`, mock hiện có và [tools/contract-check.mjs](tools/contract-check.mjs). Không sửa bản thống nhất kỹ thuật do người dùng cung cấp.
 - **Đã thay đổi:**
   - Cập nhật [docs/api/README.md](docs/api/README.md), [docs/api/03-chat.md](docs/api/03-chat.md), [docs/api/04-bookings.md](docs/api/04-bookings.md), [docs/api/05-staff.md](docs/api/05-staff.md), [docs/api/06-admin.md](docs/api/06-admin.md): đầy đủ messages/proposal, trạng thái decline/agree, payment confirmation, reminders, preview photos, selectedPhotoIds và endpoint nhận ảnh.
   - Cập nhật [mock/server.mjs](mock/server.mjs) và [mock/data/bookings.json](mock/data/bookings.json), [mock/data/staff.json](mock/data/staff.json): cọc chỉ đặt lịch sau confirm thành công và kiểm tra tài nguyên; kích hoạt reminders/jobs sau đó; xác nhận thanh toán phần còn lại; lưu ảnh upload vào `previewPhotos`; giới hạn/lưu lựa chọn ảnh; chỉ cho nhận ảnh khi thanh toán đủ và có link hoàn thiện.
-  - Đồng bộ lịch Tuấn Ngày 1–2 và ghi nhận lịch sử thật trong [PhanCongPA3.md](PhanCongPA3.md). Không thay đổi React trong công việc này.
+  - Đồng bộ lịch Tuấn Ngày 1–2 và ghi nhận lịch sử thật trong [PhanCongPA3.md](docs/pa3/PhanCongPA3.md). Không thay đổi React trong công việc này.
 - **Đã kiểm chứng:** `node tools/contract-check.mjs` trên mock mới khởi động đạt `PASS 100% - 0 FAIL (35 examples, 24 endpoints)`. Có note về giá trị của job thứ hai trong mảng ví dụ mở, không có FAIL. `node --check mock/server.mjs`, parse JSON của `mock/data/*.json` và `git diff --check` thành công. Mode `slow` trả catalogue trong khoảng 2.15 giây; mode `error` cho login `200` và catalogue `500`; mode `empty` trả `[]` cho catalogue, conversations, bookings, staff jobs và admin accounts.
 - **Commit của revision này:** `adce667` và `ee39dc4` (hợp đồng API) trước `cedffea` (mock). Git identity đã dùng: `Nguyen Anh Tuan <166203062+nguyenanhtuan2702@users.noreply.github.com>`.
 - **Giới hạn lịch sử:** Các commit trước đó `22a47a9` (React scaffold), `86227f8` (mock ban đầu) và `b326226` (mock/checker) có trước bộ hợp đồng cập nhật theo quyết định kỹ thuật mới. Không sửa lịch sử; chỉ xác nhận đúng thứ tự cho các commit cập nhật nêu trên. Không khẳng định toàn bộ commit từ đầu đã theo thứ tự contract-first.
@@ -237,7 +237,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 ## 2026-11-25 — Review và kiểm chứng mock server theo luồng Khách hàng (Ngày 2) — Phúc
 
 - **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; PowerShell; Git.
-- **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 2 theo [PhanCongPA3.md](PhanCongPA3.md): review dữ liệu mẫu và mock server cho các luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) sau khi đồng bộ contract mới.
+- **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 2 theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md): review dữ liệu mẫu và mock server cho các luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) sau khi đồng bộ contract mới.
 - **Đã kiểm tra:**
   - Đối chiếu [mock/data/bookings.json](mock/data/bookings.json), [mock/data/conversations.json](mock/data/conversations.json), [mock/data/staff.json](mock/data/staff.json) và [mock/server.mjs](mock/server.mjs) với [docs/api/03-chat.md](docs/api/03-chat.md) và [docs/api/04-bookings.md](docs/api/04-bookings.md).
   - Kiểm tra cú pháp `node --check mock/server.mjs` và parse toàn bộ 6 file JSON trong `mock/data/` (`accounts.json`, `admin.json`, `bookings.json`, `catalogue.json`, `conversations.json`, `staff.json`) đều hợp lệ.
@@ -245,3 +245,79 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - Kiểm tra 3 chế độ mock còn lại trên `GET /api/catalogue`: `slow` phản hồi ~2126 ms (`services=3`), `empty` trả danh sách rỗng (`services=0, packages=0`), `error` trả HTTP `500`.
   - Chạy `git diff --check` không phát hiện lỗi định dạng.
 - **Kết luận:** Dữ liệu mẫu và mock server đã sẵn sàng cho giai đoạn phát triển React (Ngày 3 trở đi). Không thay đổi code React trong lượt Ngày 2.
+
+## 2026-11-26 — Triển khai phần của Tuấn Ngày 3: core, G1 và G2
+
+- **Công cụ:** Codex.
+- **Yêu cầu thực tế:** “làm dùm tôi phần của Tuấn vào ngày 3”. Đã đối chiếu phần Tuấn Ngày 3 trong `PhanCongPA3.md` và `ThongNhatKyThuatPA3.md`.
+- **Đã thay đổi:**
+  - Thêm API client dùng đường dẫn `/api/...`, giải mã lỗi theo error shape của hợp đồng, và đính kèm Bearer token qua helper trong `AuthContext`.
+  - Thêm `AuthContext`, hook `useAuth`, lưu phiên trong `sessionStorage`, `ProtectedRoute`, ánh xạ role tới trang chính và xử lý quay lại route được yêu cầu sau khi đăng nhập.
+  - Thêm trang đăng nhập/đăng xuất cho 5 tài khoản demo thuộc 4 roles; thêm route trang chính tạm cho Staff và Superadmin để G2 có điểm đến riêng theo role.
+  - Kết nối G1 với `GET /api/catalogue`; thêm trạng thái tải, lỗi có nút thử lại và dữ liệu rỗng dùng chung. Các danh sách dịch vụ, gói, extras, ảnh mẫu và đánh giá lấy từ response API.
+  - Cập nhật `client/index.html`, CSS, `FRONTEND.md` và README PA#3 để mô tả đúng route và trạng thái hiện tại.
+- **Giới hạn hiện tại:** Contract catalogue chỉ mô tả `photos` gồm `id` và `alt`, chưa có URL ảnh. Giao diện dùng asset cục bộ đã có cho `photo-1`, và hiển thị placeholder cho ảnh chưa có asset; không sửa hợp đồng hoặc mock trong task frontend này.
+- **Kiểm tra:** Chưa chạy build, trình duyệt, contract-check hoặc kiểm tra responsive trong task này; chưa ghi nhận kết quả PASS.
+- **Chưa làm:** G3–G11 ngoài nền tảng G2, trang đăng nhập test-payment và các màn Admin/booking/Staff/Superadmin nghiệp vụ vẫn cần triển khai theo phân công.
+
+## 2026-11-26 — Điều chỉnh trang chính PA#3 để kế thừa giao diện PA#2
+
+- **Công cụ:** Codex.
+- **Yêu cầu thực tế:** Người dùng hỏi có thể dùng lại `index.html` PA#2 không và nhắc vì sao trang PA#3 chưa kế thừa giao diện đó.
+- **Đã thay đổi:** Cập nhật `client/src/pages/HomePage.jsx` để kế thừa bố cục hero, nội dung giới thiệu dịch vụ, ba ảnh minh họa dịch vụ và quy trình đặt lịch từ `index.html` PA#2. Danh sách dịch vụ, gói, extras, ảnh mẫu và đánh giá vẫn được đọc từ `GET /api/catalogue`; trang không dùng bản HTML tĩnh làm entry của Vite. Không thêm lại chat mẫu PA#2 vì luồng chat thuộc phần tích hợp sau.
+- **Kiểm tra:** Chưa chạy build, trình duyệt hoặc kiểm tra responsive; chưa ghi nhận kết quả PASS.
+
+## 2026-11-26 — Khôi phục nút hỏi về gói trên trang chủ PA#3
+
+- **Công cụ:** Codex.
+- **Yêu cầu thực tế:** Người dùng nhận thấy các thẻ dịch vụ thiếu nút “Hỏi về gói này” như `index.html` PA#2.
+- **Đã thay đổi:** Thêm liên kết “Hỏi về gói này” vào thẻ dịch vụ và gói chụp trong `client/src/pages/HomePage.jsx`. Liên kết cuộn tới khu vực chat, ghi nhận lựa chọn hiện tại và hiển thị thông báo rằng chat G3 chưa gửi dữ liệu đến studio; giữ điểm tích hợp để nối `CustomerChatSection` theo `ThongNhatKyThuatPA3.md`.
+- **Kiểm tra:** Chưa chạy build, trình duyệt hoặc kiểm tra responsive; chưa ghi nhận kết quả PASS.
+
+## 2026-11-26 — Tăng độ tương phản hover cho nút hỏi gói
+
+- **Công cụ:** Codex.
+- **Yêu cầu thực tế:** Làm màu nút đậm hơn rõ rệt khi rê chuột vì hiệu ứng hover hiện tại còn nhạt.
+- **Đã thay đổi:** Thêm kiểu hover riêng cho nút “Hỏi về gói này” trong `client/src/styles.css`: nền nâu đậm, chữ trắng; trạng thái nhấn dùng màu nâu đậm hơn. Không đổi hover của các nút phụ khác.
+- **Kiểm tra:** Chưa chạy build hoặc kiểm tra giao diện; chưa ghi nhận kết quả PASS.
+
+## 2026-11-26 — Gom tài liệu PA#3 vào `docs/pa3/`
+
+- **Công cụ:** Codex; PowerShell.
+- **Yêu cầu thực tế:** Sắp xếp work tree để hồ sơ dự án dễ tìm và quản lý hơn.
+- **Đã thay đổi:** Chuyển `PhanCongPA3.md`, `PhanCongPA3.pdf` và `ThongNhatKyThuatPA3.md` vào `docs/pa3/`; thêm `docs/pa3/README.md` làm mục lục; cập nhật liên kết trong `README.md`, `AI-LOG.md` và đường dẫn tài liệu được ghi trong `brief.md`.
+- **Giữ ở thư mục gốc:** `README.md`, `FRONTEND.md`, `brief.md`, `AI-LOG.md` là hướng dẫn/hồ sơ PA#3; các trang tĩnh, stylesheet và thư mục bằng chứng PA#2 giữ nguyên đường dẫn được tài liệu PA#2 ghi nhận.
+- **Kiểm tra:** Chưa chạy build hoặc contract-check; chưa ghi nhận kết quả PASS.
+
+## 2026-11-26 — Dùng chung một nguồn ảnh giữa các milestone
+
+- **Công cụ:** Codex; PowerShell.
+- **Yêu cầu thực tế:** Tránh để các PA kế tiếp kế thừa nhiều bản sao asset có thể lệch nhau.
+- **Đã thay đổi:** Chọn `client/public/assets/images/` làm nguồn ảnh dùng chung cho PA#2 và các milestone React tiếp theo. Cập nhật đường dẫn ảnh trong `index.html`, ghi chú sử dụng trong `docs/pa2/AGENTS.md`, `docs/pa2/README.md`, `docs/pa2/PROTOTYPE.md`, `docs/pa3/README.md` và `README.md`; sửa các liên kết tài liệu PA#2 theo vị trí hiện tại; xóa bản sao cũ trong `assets/` sau khi xác nhận Git blob hash của bốn ảnh hiện tại khớp bản cũ.
+- **Kiểm tra:** Đã đối chiếu Git blob hash của bốn ảnh hiện tại với các blob cũ đã commit và xác nhận trùng khớp. Chưa chạy build hoặc mở lại prototype trên trình duyệt.
+
+## 2026-11-26 — Vô hiệu hóa token mock sau logout
+
+- **Công cụ:** Codex; Node.js.
+- **Yêu cầu thực tế:** Người dùng phát hiện token Customer vẫn gọi API được sau khi `POST /api/auth/logout` trả `200`; yêu cầu sửa logic mock và checker, không chỉ frontend.
+- **Đã thay đổi:** Cập nhật hợp đồng tại `docs/api/01-auth.md` để quy định thu hồi token ngay sau logout thành công và thêm ví dụ dùng lại token nhận `401`. Commit hợp đồng trước: `9e5c3d7`. Trong `mock/server.mjs`, login cấp token ngẫu nhiên theo phiên, token chưa xác thực không được seed, và logout xóa token khỏi map. Trong `tools/contract-check.mjs`, theo dõi token trong ví dụ logout, dùng lại chính token trong ví dụ tiếp theo, rồi làm mới cache sau khi xác nhận `401` để các ví dụ sau tiếp tục bằng phiên mới.
+- **Đã kiểm tra:** `node --check mock/server.mjs`, `node --check tools/contract-check.mjs`; mock mới khởi động ở `normal`; `node tools/contract-check.mjs` đạt `PASS 100% - 0 FAIL (36 examples, 24 endpoints)`. Cặp ví dụ mới xác nhận logout `200` rồi GET protected `/api/bookings` bằng token cũ nhận `401`. Một ghi chú về phần tử thứ hai trong danh sách jobs vẫn là note của checker, không phải FAIL.
+
+## 2026-11-26 — Kiểm tra authentication và API phân quyền PA#3
+
+- **Công cụ:** Codex; Node.js 24.15.0; PowerShell; `curl.exe`.
+- **Yêu cầu thực tế:** Kiểm tra trực tiếp 4 role đăng nhập và cả Mai/Tuấn; đối chiếu contract, mock, dữ liệu và checker; lập ma trận quyền 24 endpoint; kiểm tra token thiếu/sai, logout/thu hồi/relogin; điều tra `POST /api/clash-check` trả 404; kiểm tra phân công job/upload; không sửa frontend, không lộ token và không commit.
+- **Đã đọc/đối chiếu:** Toàn bộ `docs/api/`, `mock/server.mjs`, `mock/data/*.json`, `tools/contract-check.mjs`, `client/src/auth/`, `client/src/api/`, `FRONTEND.md`, `docs/pa3/PhanCongPA3.md` và `docs/pa3/ThongNhatKyThuatPA3.md`.
+- **Phát hiện trước sửa:** 5/5 account đăng nhập đúng role và có token riêng; 105/105 phép thử role-level trên 21 protected endpoints đúng; 44/44 request thiếu/sai token nhận `401`; logout/relogin 5/5. Tuy nhiên, clash check nhận thiếu `room`/`staff` vẫn trả `200`; `GET /api/staff/jobs` trả job của cả Mai và Tuấn cho từng người; Mai cập nhật được job của Tuấn. Contract checker ban đầu đạt `36 examples, 24 endpoints, 0 FAIL` nhưng chưa có ví dụ cho các lỗi này.
+- **Đã sửa theo contract-first:** Cập nhật `docs/api/03-chat.md` để yêu cầu đủ ngày/giờ/phòng/nhân sự và thêm ví dụ `400`/`403`; cập nhật `docs/api/05-staff.md` để giới hạn danh sách và cập nhật job theo nhân viên được phân công; thêm các ví dụ logout/thu hồi cho cả năm tài khoản, lỗi token và chặn Customer/Staff/Admin ở API Superadmin-only. Sau đó sửa `mock/server.mjs` để validate đủ tài nguyên Clash Check, lọc job theo tên Staff đã đăng nhập và trả `403` khi Staff khác cập nhật job không thuộc mình. Không sửa `tools/contract-check.mjs` vì checker hiện tại đã tự thực thi được các ví dụ mới.
+- **Đã kiểm tra sau sửa:** `node --check mock/server.mjs`, `node --check tools/contract-check.mjs`, parse toàn bộ JSON trong `mock/data/` và `git diff --check` đều đạt. Contract checker trên mock mới đạt `PASS 100% - 0 FAIL (54 examples, 24 endpoints)`. Ma trận lại đạt `105/105`; thiếu/sai token `44/44` trả `401`; logout/thu hồi/relogin đạt `5/5`, 10 token trong 10 lần đăng nhập là riêng biệt; clash đủ payload trả `200`, thiếu tài nguyên `400`, Staff gọi Admin-only `403`. Upload sai MIME và quá 10 MB trả `400`; upload hợp lệ trả `201` và ảnh xuất hiện trong `previewPhotos`.
+- **Clash Check/Postman:** `POST /api/clash-check` tồn tại trong contract và mock, method/payload đầy đủ trên mock mới trả `200` với clash và suggestion. `GET /api/clash-check` trả `404` do sai method. Trong môi trường kiểm tra, mock không bind được cổng `3001` (`EADDRINUSE`) nhưng `curl` tới cổng này nhận connection refused; kiểm thử mock mới dùng cổng `3013`. Vì không truy cập được tiến trình đã trả 404 trong Postman, nguồn gốc chính xác của phản hồi cũ chưa xác định; không ghi giả định đó thành kết luận.
+- **Phạm vi chưa xác nhận:** Contract có nêu `409` cho tình huống không còn tổ hợp tài nguyên của Clash Check nhưng fixture hiện tại chỉ có xung đột 09:00 kèm một khung giờ đề xuất; không có ví dụ đầu vào để tái hiện hết tài nguyên. Lint/build không chạy vì không sửa `client/`. Không ghi token vào log; không tạo commit.
+
+## 2026-11-26 — Đồng bộ phân công PA#3 với cấu trúc React hiện tại
+
+- **Công cụ:** Codex; PowerShell.
+- **Yêu cầu thực tế:** Cập nhật `docs/pa3/PhanCongPA3.md` để đường dẫn và mô tả Ngày 3 khớp code mới; không đổi code chỉ để khớp đường dẫn cũ trong tài liệu.
+- **Đã đối chiếu:** Cây `client/src/` hiện có `auth/AuthContext.jsx`, `auth/ProtectedRoute.jsx`, `api/apiClient.js`, `components/AsyncStates.jsx`, `pages/HomePage.jsx` và `pages/LoginPage.jsx`. `CustomerChatSection.jsx` và `StudioPage.jsx` riêng chưa có; phần Studio/Booking vẫn là placeholder trong `App.jsx`.
+- **Đã thay đổi:** Cập nhật các đường dẫn core trong phân công Tuấn; phân biệt file đã có với file dự kiến trong cây React; sửa G1 và mô tả Ngày 3 để ghi nhận `HomePage.jsx` đang có, đồng thời đánh dấu chat component và Studio page extraction là việc còn lại. Ghi nhận yêu cầu vào `brief.md`.
+- **Kiểm tra:** Rà lại các tên đường dẫn cũ trong `docs/pa3/PhanCongPA3.md`. Không chạy build hoặc kiểm thử ứng dụng vì chỉ sửa tài liệu.

@@ -267,7 +267,7 @@ Các mục dưới đây tóm lược những ràng buộc dự án được cun
 
 ### 5. Sửa font tải từ Google và vùng bấm nhỏ
 
-> **Google Fonts trái quy định:** [index.html (line 8)](/D:/gradstudio-pa2-repo/index.html:8)–[10 (line 10)](/D:/gradstudio-pa2-repo/index.html:10) tải font từ Google. [AGENTS.md (line 27)](/D:/gradstudio-pa2-repo/AGENTS.md:27) và [AGENTS.md (line 92)](/D:/gradstudio-pa2-repo/AGENTS.md:92) yêu cầu không phụ thuộc font tải từ Internet.   bạn sửa phần này dùm tui và phần này nữa **Một số vùng bấm nhỏ hơn 44px:** CSS đặt chiều cao tối thiểu về 0 cho logo và link nav; nút thu nhỏ chat là 32px; nút trong thanh prototype được đặt 36px. Quy định mobile yêu cầu vùng bấm độc lập tối thiểu 44px.
+> **Google Fonts trái quy định:** [index.html (line 8)](/D:/gradstudio-pa2-repo/index.html:8)–[10 (line 10)](/D:/gradstudio-pa2-repo/index.html:10) tải font từ Google. [AGENTS.md (line 27)](/D:/gradstudio-pa2-repo/docs/pa2/AGENTS.md:27) và [AGENTS.md (line 92)](/D:/gradstudio-pa2-repo/docs/pa2/AGENTS.md:92) yêu cầu không phụ thuộc font tải từ Internet.   bạn sửa phần này dùm tui và phần này nữa **Một số vùng bấm nhỏ hơn 44px:** CSS đặt chiều cao tối thiểu về 0 cho logo và link nav; nút thu nhỏ chat là 32px; nút trong thanh prototype được đặt 36px. Quy định mobile yêu cầu vùng bấm độc lập tối thiểu 44px.
 
 ### 6. Sửa lỗi hiển thị font tiếng Việt
 
@@ -747,7 +747,7 @@ Yêu cầu nguyên văn:
 
 > uk quên nữa sẵn giúp tui dò lại các file luôn, là 1 số file ghi bạn B bạn C thì bận b LÀ Phúc Bạn C là Minh á, bô sung ghi đúng tên người chịu trách nhiệm bạn A hay bạn phụ trách index là Tuấn. Ngoài ra 1 số tài  liệu hiện ghi màn hình M1, M2,M3 ghi đúng tên file làm hình htlm
 
----
+------------------------- P#A3 -------------------------
 
 # PHẦN VII: PROMPT ĐIỀU CHỈNH CÔNG VIỆC TUẤN NGÀY 1–2 THEO THỐNG NHẤT KỸ THUẬT PA#3 (24/11/2026)
 
@@ -759,10 +759,108 @@ Yêu cầu nguyên văn:
 > * **Kiểm thử tự động bằng `contract-check.mjs`:** Tất cả ví dụ cấu trúc dữ liệu trong `docs/api/*.md` khi chạy kiểm thử qua công cụ `node tools/contract-check.mjs` trên mock server phải đạt kết quả tuyệt đối **100% PASS (0 FAIL)**.
 > * **Lịch sử Git minh bạch & Chuẩn xác:** Cấu hình đúng `git config user.name` và `git config user.email` cá nhân trước khi thực thi. Các commit phải được tách bạch rõ ràng theo đúng tiến độ từng bước từ G1 đến G11. Nghiêm cấm hành vi gộp (`squash`) hoặc `rebase` làm sai lệch mốc thời gian commit thực tế.
 
-Nguồn quyết định kỹ thuật được đối chiếu: `ThongNhatKyThuatPA3.md`. Không chỉnh sửa file thống nhất kỹ thuật trong task này.
+Nguồn quyết định kỹ thuật được đối chiếu: `docs/pa3/ThongNhatKyThuatPA3.md`. Không chỉnh sửa file thống nhất kỹ thuật trong task này.
 
 ---
 
 # PHẦN VIII: PROMPT CHỈNH RESPONSE API NHẬN ẢNH (24/11/2026)
 
 > Còn một khác biệt nhỏ về response: endpoint nhận ảnh hiện trả `{ booking, conversationStatus }`, trong khi `thống nhất kỹ thuật` mô tả trả về booking đã cập nhật. Về điều kiện nghiệp vụ thì khớp, nhưng nếu cần khớp cả response shape thật chặt thì phần này nên chỉnh thêm. này phải chỉnh sao
+
+---
+
+# PHẦN IX: PROMPT TRIỂN KHAI PHẦN CỦA TUẤN NGÀY 3 PA#3 (26/11/2026)
+
+Yêu cầu nguyên văn:
+
+> làm dùm tôi phần của Tuấn vào ngày 3
+
+---
+
+# PHẦN X: PROMPT TÁI SỬ DỤNG GIAO DIỆN PA#2 CHO PA#3 (26/11/2026)
+
+Yêu cầu thực tế, theo thứ tự:
+
+> ủa mình ko sài lại dc file index của pa2 dc à
+>
+> sao không làm z á
+
+---
+
+# PHẦN XI: PROMPT BỔ SUNG NÚT HỎI VỀ GÓI TRÊN TRANG CHỦ PA#3 (26/11/2026)
+
+Yêu cầu nguyên văn:
+
+> sao ô dịch vụ không có nút hỏi về mấy hói này như indext pa2 cũ
+
+---
+
+# PHẦN XII: PROMPT TĂNG ĐỘ TƯƠNG PHẢN HOVER CHO NÚT HỎI GÓI (26/11/2026)
+
+Yêu cầu nguyên văn:
+
+> tui mún khi rê chuột vào nó phải thay đổi màu đậm hơn màu hiện giờ vẫn thay đổi nhưng hơi mờ nhạt
+
+---
+
+# PHẦN XIII: PROMPT SẮP XẾP WORK TREE (26/11/2026)
+
+Yêu cầu nguyên văn:
+
+> tui cần bạn sắp xếp lại work tree cho nó hợp lý tại số file hay thư mục đều nằm ngoài thư mục gốc rất khó quản lý
+
+---
+
+# PHẦN XIV: PROMPT DÙNG CHUNG ASSET GIỮA CÁC MILESTONE (26/11/2026)
+
+Yêu cầu nguyên văn:
+
+> ý là mỗi pa là 1 cột mốc á nếu và các cột móco sau sẽ kế thừa nếu như để file như vậy thì sợ càng làm về sau này nó sẽ bị lỗi khó làm hơn á
+
+---
+
+# PHẦN XV: PROMPT VÔ HIỆU HÓA TOKEN SAU ĐĂNG XUẤT (26/11/2026)
+
+Yêu cầu thực tế:
+
+> **Nhưng có một lỗi tôi tìm thấy cần sửa.**
+>
+> Cần sửa
+>
+> **Mock server chưa vô hiệu hóa token sau đăng xuất.**
+>
+> Tôi thực hiện thử nghiệm:
+>
+> 1. Đăng nhập bằng Customer.
+> 2. Nhận token.
+> 3. Gọi API cần đăng nhập: HTTP 200.
+> 4. Gọi `POST /api/auth/logout`: HTTP 200.
+> 5. Sử dụng lại chính token vừa đăng xuất để gọi API: vẫn HTTP 200.
+>
+> Nguyên nhân là endpoint logout trong `mock/server.mjs` hiện chỉ trả về `{ "ok": true }` nhưng không thực sự vô hiệu hóa token.
+>
+> Giao diện đã xóa phiên đăng nhập, nhưng phía mock server vẫn chấp nhận token cũ. Cần đồng bộ sửa logic logout và contract checker để kiểm tra lại trường hợp sử dụng token sau đăng xuất. Không nên chỉ sửa frontend.
+
+---
+
+# PHẦN XVI: ĐỒNG BỘ PHÂN CÔNG PA#3 VỚI CẤU TRÚC CODE (26/11/2026)
+
+Yêu cầu thực tế:
+
+> **Một lỗi tài liệu cần sửa trước khi bàn giao**
+>
+> File `docs/pa3/PhanCongPA3.md` vẫn chưa đồng bộ hoàn toàn với code mới.
+>
+> Tài liệu hiện ghi `client/src/context/AuthContext.jsx`, `client/src/lib/api.js`, `client/src/components/ProtectedRoute.jsx`, `client/src/components/LoadingState.jsx` và `IndexPage()` trong `App.jsx`. Cấu trúc thực tế lần lượt là `client/src/auth/AuthContext.jsx`, `client/src/api/apiClient.js`, `client/src/auth/ProtectedRoute.jsx`, `client/src/components/AsyncStates.jsx` và `client/src/pages/HomePage.jsx`.
+>
+> Ngoài ra, phần mô tả ngày 3 vẫn ghi tách `IndexPage()` trong khi code hiện tại đã có `HomePage.jsx`.
+>
+> **Nên cập nhật tài liệu theo code thật, không nên đổi code chỉ để khớp với các đường dẫn cũ trong tài liệu.**
+
+---
+
+# PHẦN XVII: KIỂM TRA AUTHENTICATION VÀ API PHÂN QUYỀN PA#3 (26/11/2026)
+
+Yêu cầu thực tế (tóm lược task được gửi kèm):
+
+> Đọc các API contract, mock server/data, contract checker, mã nguồn auth/API phía React và tài liệu phân công/thống nhất kỹ thuật PA#3. Thực sự kiểm tra đăng nhập, token riêng, logout/thu hồi token và đăng nhập lại cho đủ bốn role cùng cả hai tài khoản Staff; lập ma trận quyền cho 24 endpoint, thử token thiếu/sai và truy cập chéo role; kiểm tra cụ thể lỗi 404 của `POST /api/clash-check`, danh sách job và upload ảnh Staff. Chỉ sửa lỗi đã xác nhận trong contract/mock/checker theo thứ tự contract trước mock; không sửa frontend hoặc commit. Không ghi token vào log/báo cáo; nêu rõ phần nào không thể kiểm chứng.
