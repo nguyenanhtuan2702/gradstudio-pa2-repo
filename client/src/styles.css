@@ -354,6 +354,18 @@ textarea { resize: vertical; }
   gap: clamp(1.5rem, 3.5vw, 3rem);
 }
 
+.header-account {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gs-space-2);
+  min-width: 0;
+}
+.header-account .user-profile { margin: 0; min-width: 0; }
+.header-account .user-profile > span:last-child { overflow-wrap: anywhere; }
+.header-logout { flex-shrink: 0; }
+
 .site-nav a,
 .site-nav__link {
   display: inline-flex;
@@ -443,12 +455,17 @@ textarea { resize: vertical; }
     padding-top: var(--gs-space-1);
     border-top: 1px solid var(--gs-color-border-subtle);
   }
+  .header-account { margin-left: auto; flex-wrap: wrap; }
+  .header-account .user-profile { padding-inline: 0; }
+  .header-account .user-profile > span:last-child { max-width: 7.5rem; }
+  .header-logout { padding-inline: var(--gs-space-2); }
 }
 @media (min-width: 768px) {
   .gs-card, .page-placeholder { padding: var(--gs-space-6); }
 }
 @media (prefers-reduced-motion: reduce) {
   :root { --gs-transition: 0s; }
+  .loading-indicator { animation: none; }
 }
 
 
@@ -556,6 +573,70 @@ textarea { resize: vertical; }
 
 .site-footer p { margin: 0; }
 .site-footer { display: grid; gap: var(--space-2); }
+
+/* PA#3 shared async states, catalogue and sign-in. */
+.async-state {
+  display: grid;
+  justify-items: start;
+  gap: var(--gs-space-3);
+  max-width: 100%;
+}
+.async-state h2, .async-state h3 { margin: 0; }
+.async-state--error { border-color: var(--gs-color-error); background: var(--gs-color-error-soft); }
+.loading-indicator {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid var(--gs-color-border);
+  border-top-color: var(--gs-color-primary);
+  border-radius: 50%;
+  animation: gs-spin 800ms linear infinite;
+}
+@keyframes gs-spin { to { transform: rotate(360deg); } }
+
+.catalogue-sections { display: grid; gap: var(--gs-space-10); min-width: 0; }
+.catalogue-sections > section { display: grid; gap: var(--gs-space-4); min-width: 0; }
+.catalogue-card { display: grid; align-content: start; justify-items: start; gap: var(--gs-space-3); }
+.catalogue-card h3 { margin: 0; }
+.catalogue-card .gs-btn { align-self: end; }
+.catalogue-inquiry.gs-btn--secondary:hover {
+  border-color: var(--gs-color-primary-hover);
+  background: var(--gs-color-primary-hover);
+  color: var(--gs-color-text-inverse);
+}
+.catalogue-inquiry.gs-btn--secondary:active {
+  border-color: var(--gs-color-primary-active);
+  background: var(--gs-color-primary-active);
+  color: var(--gs-color-text-inverse);
+}
+.catalogue-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--gs-space-4); }
+.catalogue-list__item { display: grid; align-content: start; gap: var(--gs-space-2); }
+.catalogue-list__item h3 { margin: 0; }
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--gs-space-4); min-width: 0; }
+.sample-photo { display: grid; align-content: start; gap: var(--gs-space-3); min-width: 0; margin: 0; }
+.sample-photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--gs-radius-md); }
+.sample-photo figcaption { color: var(--gs-color-text-muted); }
+.sample-photo__placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 10rem;
+  padding: var(--gs-space-4);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface-sunken);
+  color: var(--gs-color-text-muted);
+  text-align: center;
+}
+.review-card { display: grid; align-content: start; gap: var(--gs-space-2); }
+.review-card h3 { margin: 0; }
+.review-rating { color: var(--gs-color-primary-hover); font-weight: var(--gs-weight-semibold); }
+
+.login-main { display: grid; align-content: start; }
+.login-card { width: min(100%, 38rem); margin-inline: auto; display: grid; gap: var(--gs-space-4); }
+.login-card h1 { margin: 0; }
+.login-form { display: grid; gap: var(--gs-space-4); }
+.login-form .field { min-width: 0; }
+.login-form-error { padding: var(--gs-space-3) var(--gs-space-4); border-left: 4px solid var(--gs-color-error); border-radius: var(--gs-radius-sm); background: var(--gs-color-error-soft); color: var(--gs-color-error); }
+.login-notice { padding: var(--gs-space-3) var(--gs-space-4); border-left: 4px solid var(--gs-color-warning); border-radius: var(--gs-radius-sm); background: var(--gs-color-warning-soft); color: var(--gs-color-warning); }
+.login-card .gs-help { margin: 0; }
 
 @media (min-width: 768px) {
   .hero { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
