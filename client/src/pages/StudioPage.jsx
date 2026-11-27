@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { EmptyState } from '../components/AsyncStates.jsx'
 import { SiteFooter, SiteHeader } from '../components/SiteChrome.jsx'
 import BookingForm from '../components/studio/BookingForm.jsx'
+import BookingManager from '../components/studio/BookingManager.jsx'
 import ChatPanel from '../components/studio/ChatPanel.jsx'
 import ConversationList from '../components/studio/ConversationList.jsx'
 import SchedulePanel from '../components/studio/SchedulePanel.jsx'
@@ -126,6 +127,11 @@ export default function StudioPage() {
             </div>
           )}
         </div>
+
+        <section aria-labelledby="bookings-title">
+          <h2 id="bookings-title">Quản lý booking</h2>
+          <BookingManager bookings={bookings} onSaved={saveBooking} />
+        </section>
       </main>
       <SiteFooter />
     </>
