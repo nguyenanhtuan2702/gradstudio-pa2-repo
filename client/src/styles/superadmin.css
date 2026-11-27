@@ -1,0 +1,117 @@
+.superadmin-page {
+  gap: var(--gs-space-6);
+}
+
+.superadmin-intro {
+  display: grid;
+  gap: var(--gs-space-3);
+}
+
+.superadmin-intro > * {
+  margin-block: 0;
+}
+
+.superadmin-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--gs-space-3);
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--gs-space-3) var(--gs-space-4);
+}
+
+.superadmin-identity p {
+  margin: 0;
+}
+
+.superadmin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--gs-space-4);
+}
+
+.superadmin-panel {
+  align-content: start;
+}
+
+.superadmin-panel h2,
+.superadmin-panel h3 {
+  margin-block: 0;
+}
+
+.superadmin-list-area {
+  display: grid;
+  gap: var(--gs-space-3);
+  min-width: 0;
+}
+
+.superadmin-list-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gs-space-2);
+}
+
+.superadmin-account-list {
+  display: grid;
+  gap: var(--gs-space-3);
+}
+
+.superadmin-account {
+  display: grid;
+  gap: var(--gs-space-3);
+  min-width: 0;
+  padding: var(--gs-space-4);
+  border: 1px solid var(--gs-color-border);
+  border-radius: var(--gs-radius-md);
+  background: var(--gs-color-surface-sunken);
+}
+
+.superadmin-account__identity,
+.superadmin-account__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gs-space-2) var(--gs-space-3);
+  min-width: 0;
+}
+
+.superadmin-account__identity {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.superadmin-account__identity span {
+  overflow-wrap: anywhere;
+  color: var(--gs-color-text-muted);
+}
+
+.superadmin-success {
+  padding: var(--gs-space-3) var(--gs-space-4);
+  border-left: 4px solid var(--gs-color-success);
+  border-radius: var(--gs-radius-sm);
+  background: var(--gs-color-success-soft);
+  color: var(--gs-color-success);
+}
+
+@media (min-width: 768px) {
+  .superadmin-page {
+    gap: var(--gs-space-8);
+  }
+
+  .superadmin-grid {
+    gap: var(--gs-space-6);
+  }
+
+  .superadmin-panel {
+    padding: var(--gs-space-6);
+  }
+}
+
+@media (min-width: 1200px) {
+  .superadmin-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
+  }
+}

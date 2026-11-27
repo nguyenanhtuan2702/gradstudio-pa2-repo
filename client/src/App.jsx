@@ -5,6 +5,7 @@ import { getRoleHomePath, ROLE_LABELS } from './auth/roles.js'
 import { useAuth } from './auth/useAuth.js'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import SuperadminPage from './pages/SuperadminPage.jsx'
 import { SiteFooter, SiteHeader } from './components/SiteChrome.jsx'
 
 function HomeRoute() {
@@ -66,7 +67,6 @@ function RoleHomePage({ role, title, description }) {
           <h2 id="role-home-title">Xin chào, {user?.name}</h2>
           <p>{description}</p>
           <p className="muted">Đã đăng nhập với vai trò {ROLE_LABELS[role]}.</p>
-          {role === 'superadmin' && <p>Luồng quản lý tài khoản và cài đặt hệ thống thuộc G11, đang được triển khai.</p>}
           {role === 'staff' && <p>Danh sách công việc và cập nhật tiến độ thuộc G8, đang được triển khai.</p>}
         </section>
       </main>
@@ -111,7 +111,7 @@ function AppRoutes() {
       )} />
       <Route path="/superadmin" element={(
         <ProtectedRoute allowedRoles={['superadmin']}>
-          <RoleHomePage role="superadmin" title="Quản trị hệ thống" description="Trang này là điểm vào của Superadmin." />
+          <SuperadminPage />
         </ProtectedRoute>
       )} />
       <Route path="*" element={<NotFound />} />
