@@ -1,0 +1,99 @@
+/* ==========================================================================
+   GradStudio PA#3 — styles for the Admin (/studio) and Staff (/staff) screens.
+   Reuses the tokens and PA#2 classes in styles.css; every new class is ops-*.
+   ========================================================================== */
+.ops-main > *,
+.ops-grid > *,
+.ops-detail > * {
+  min-width: 0;
+}
+
+.ops-grid,
+.ops-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gs-space-6);
+  align-items: start;
+}
+
+.ops-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-2);
+}
+
+.ops-filter[aria-pressed="true"] {
+  border-width: 2px;
+  background: var(--gs-color-primary-soft);
+  text-decoration: underline;
+}
+
+.ops-action {
+  justify-self: start;
+}
+
+.ops-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gs-space-2);
+}
+
+.ops-notice {
+  margin: 0;
+  color: var(--gs-color-success);
+}
+
+.ops-notice:empty {
+  display: none;
+}
+
+.ops-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--gs-space-4);
+  align-items: start;
+}
+
+.ops-subform {
+  padding-top: var(--gs-space-4);
+  border-top: 1px solid var(--gs-color-border);
+}
+
+.ops-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.ops-preview {
+  width: 100%;
+  max-width: 16rem;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--gs-radius-md);
+}
+
+.ops-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ops-main input[type="file"] {
+  padding: var(--gs-space-2);
+}
+
+@media (min-width: 768px) {
+  .ops-detail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .ops-grid {
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  }
+}
