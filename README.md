@@ -1,6 +1,6 @@
 # GradStudio — PA#3 React Front End
 
-> **Trạng thái:** PA#3 đang được phát triển. G1 tải catalogue từ API mock; G2 đã có đăng nhập, đăng xuất, lưu phiên và bảo vệ route theo vai trò. Các luồng G3–G11 chưa hoàn tất; những route ngoài trang chủ/đăng nhập hiện là trang chờ triển khai.
+> **Trạng thái:** PA#3 đang được phát triển. G1 tải catalogue từ API mock; G2 có đăng nhập, đăng xuất, lưu phiên và bảo vệ route theo vai trò; G11 Superadmin đã kết nối API quản lý tài khoản Admin và cài đặt hệ thống. Các luồng G3–G10 vẫn đang được hoàn thiện.
 
 PA#3 xây dựng luồng chính GradStudio cho Visitor/Customer, Admin, Staff và Superadmin. Frontend nằm trong `client/`, dùng React + Vite, React Router và CSS thuần. API mock dùng Node.js built-in modules và dữ liệu trong `mock/`; hợp đồng API nằm trong `docs/api/`.
 
@@ -93,7 +93,7 @@ Các route dưới đây hiện được khai báo trong `client/src/App.jsx`. N
 | `/studio` | Admin | Trang chờ tích hợp G4–G6 và G10. |
 | `/bookings/GS-1024` | Customer | Trang chờ tích hợp G7/G9. |
 | `/staff` | Staff | Trang chờ tích hợp G8. |
-| `/superadmin` | Superadmin | Trang chờ tích hợp G11. |
+| `/superadmin` | Superadmin | G11 đã triển khai: xem/tạo tài khoản Admin và xem/cập nhật cài đặt hệ thống qua API mock. |
 
 Route `/payments/test/:id` chưa được triển khai; đây là trang mục tiêu cho luồng thanh toán thử nghiệm G7/G9.
 

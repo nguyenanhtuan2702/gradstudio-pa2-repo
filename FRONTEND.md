@@ -80,7 +80,7 @@ Routes currently declared in `client/src/App.jsx`. “Placeholder” means the r
 | `/bookings/GS-1024` | Customer | G7, G9 | Target: `/api/bookings/:id`, `/api/bookings/:id/deposit/payment`, `/api/bookings/:id/payments/remaining`, `/api/bookings/:id/receive` | Protected placeholder; booking and payment flows are not implemented. |
 | `/payments/test/:id` | Customer | G7, G9 test payment | Target: `POST /api/bookings/:id/payments/confirm` | Route not implemented; it should exist after a payment session is created. |
 | `/staff` | Staff | G8 (jobs exist after G7) | `GET /api/staff/jobs`, `PATCH /api/staff/jobs/:id`, `POST /api/bookings/:id/photos/preview` | Page written in `pages/StaffPage.jsx`; the route still shows the placeholder until `App.jsx` imports it. Before the deposit succeeds it shows an empty message. |
-| `/superadmin` | Superadmin | G11 | Target: `/api/admin/accounts`, `/api/admin/settings` | Protected placeholder; account and settings flows are not implemented. |
+| `/superadmin` | Superadmin | G11 | `GET/POST /api/admin/accounts`, `GET/PUT /api/admin/settings` | Implemented: lists and creates Admin accounts, loads and updates system settings with field validation and retry/error states. |
 
 `AuthContext` keeps the signed-in user and token in `sessionStorage`. The shared API client attaches `Authorization: Bearer <token>` when a protected request uses the context request helper. The public catalogue request uses the relative path `/api/catalogue` without a token.
 
@@ -101,7 +101,6 @@ Team choice, not a product-owner decision (to be confirmed by the team): cancell
 
 - `/studio` (G4–G6, G10) and `/staff` (G8): the pages are written but `App.jsx` does not import them yet.
 - G3, G6 (customer), G7 and G9: the customer pages are UI frames without API calls, and `/payments/test/:id` has no route.
-- G11: `/superadmin` is a placeholder.
 - Mock gaps found while building G8 and G10:
   - tokens are lost when the mock restarts, so Retry after a mode change answers `401`;
   - `empty` mode still returns the lists inside a single booking;

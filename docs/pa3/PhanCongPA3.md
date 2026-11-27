@@ -39,13 +39,13 @@ Repository hiện có ba màn hình PA#2 và đã có một bước chuyển đ�
 
 - `client/src/App.jsx` có `BrowserRouter`, route `/`, `/login` và các route được bảo vệ `/studio`, `/bookings/GS-1024`, `/staff`, `/superadmin`.
 - Trang chủ đã tách thành `client/src/pages/HomePage.jsx` và tải catalogue qua API. Phúc đã tạo `CustomerChatSection.jsx` dưới dạng khung giao diện cho G3/G6, nhưng component chưa được tích hợp vào `HomePage.jsx` và các thao tác chưa nối API.
-- Đăng nhập, đăng xuất, AuthContext, `useAuth`, `ProtectedRoute` và các trang chờ theo role đã có. Các luồng nghiệp vụ G3–G11 chưa hoàn tất.
+- Đăng nhập, đăng xuất, AuthContext, `useAuth`, `ProtectedRoute` và các trang chờ theo role đã có. G11 Superadmin đã được triển khai và tích hợp route; các luồng nghiệp vụ G3–G10 tiếp tục theo lịch phân công.
 - `/studio` vẫn là hàm placeholder trong `App.jsx`. Route `/bookings/GS-1024` vẫn render placeholder nội tuyến trong `App.jsx`, dù Phúc đã tạo `BookingPage.jsx` và `TestPaymentPage.jsx` dưới dạng khung giao diện; Tuấn chưa tích hợp các page này vào router.
 - Shared async states được export từ `client/src/components/AsyncStates.jsx`; API helper nằm tại `client/src/api/apiClient.js`.
 - `client/src/styles.css` kế thừa phần lớn nền PA#2 và có thêm CSS riêng cho PA#3. Ảnh dùng chung một lần tại `client/public/assets/images/`.
 - React, Vite và React Router đã được cài đặt/cấu hình trong `client/`.
 
-Vì vậy, phần G1/G2 hiện có được tiếp tục từ code thật; các màn Studio/Booking và nghiệp vụ G3–G11 vẫn cần được phát triển theo phân công, không dựng lại trang chủ từ đầu.
+Vì vậy, phần G1/G2 hiện có được tiếp tục từ code thật; G11 Superadmin đã hoàn tất ở mức tích hợp API theo phạm vi Ngày 4. Các màn Studio/Booking và nghiệp vụ G3–G10 vẫn cần được phát triển theo phân công, không dựng lại trang chủ từ đầu.
 
 ### 1.3. Nguyên tắc kế thừa bắt buộc
 
@@ -72,8 +72,9 @@ Vì vậy, phần G1/G2 hiện có được tiếp tục từ code thật; các 
 | Authentication và ProtectedRoute | Đã có nền tảng | `client/src/auth/AuthContext.jsx`, `client/src/auth/ProtectedRoute.jsx`, `client/src/auth/roles.js`. |
 | G1 Catalogue | Đã tích hợp API | `HomePage.jsx` tải danh sách và xử lý loading/error/retry/empty. |
 | G2 Login/Logout và bảo vệ role | Đã có nền tảng | `LoginPage.jsx`, AuthContext và role routes trong `App.jsx`. |
-| API integration G3–G11 | Chưa hoàn tất | Tiếp tục theo phân công ở các mục sau; G11 chưa triển khai. |
-| Staff, Superadmin, Test Payment | Chưa có page nghiệp vụ | `/staff` và `/superadmin` mới là điểm vào placeholder; Test Payment chưa có route. |
+| API integration G3–G10 | Đang triển khai | Tiếp tục theo phân công và lịch ở các mục sau. |
+| Superadmin (G11) | Đã tích hợp | `SuperadminPage.jsx` được gắn vào route được bảo vệ `/superadmin`; tài khoản Admin và cài đặt dùng API mock. |
+| Staff, Test Payment | Chưa tích hợp đầy đủ | `/staff` vẫn là điểm vào placeholder; Test Payment chưa có route. |
 
 ---
 
@@ -221,7 +222,7 @@ client/src/
 │   ├── BookingPage.jsx             # Đã tạo — Phúc; khung giao diện G7/G9
 │   ├── TestPaymentPage.jsx         # Đã tạo — Phúc; khung giao diện Gateway
 │   ├── StaffPage.jsx               # Dự kiến — Minh
-│   └── SuperadminPage.jsx          # Dự kiến — Tuấn
+│   └── SuperadminPage.jsx          # Đã triển khai — Tuấn; G11
 ├── styles.css                      # Hiện có — nền kế thừa PA#2; chỉ sửa có kiểm soát
 ├── styles/
 │   └── customerFlow.css            # Đã tạo — Phúc; CSS riêng Customer

@@ -20,6 +20,15 @@ const createdProposals = new Map()
 const uploadedPhotos = new Map()
 let nextPhotoNumber = 2
 
+function nextAdminId() {
+  const highestId = admin.accounts.reduce((highest, account) => {
+    const match = /^u-admin-(\d+)$/.exec(account.id)
+    return match ? Math.max(highest, Number(match[1])) : highest
+  }, 1)
+
+  return `u-admin-${highestId + 1}`
+}
+
 const mode = process.env.MOCK_MODE || 'normal'
 const port = Number(process.env.PORT || 3001)
 const delay = mode === 'slow' ? 2000 : mode === 'normal' ? 150 : 0
@@ -703,7 +712,7 @@ const server = http.createServer(async (req, res) => {
       const body = await readBody(req)
       if (!body.name || !body.email || !body.password || body.password.length < 8) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Dữ liệu tài khoản không hợp lệ.', { name: 'Nhập họ tên.', email: 'Nhập e-mail hợp lệ.', password: 'Mật khẩu ít nhất 8 ký tự.' })); }
       else if (admin.accounts.some((item) => item.email === body.email)) { status = 409; sendJson(res, status, error('CONFLICT', 'E-mail đã tồn tại.')); }
-      else { const account = { id: 'u-admin-2', name: body.name, email: body.email, role: 'admin', active: true }; admin.accounts.push(account); sendJson(res, 201, account) }
+      else { const account = { id: nextAdminId(), name: body.name, email: body.email, role: 'admin', active: true }; admin.accounts.push(account); sendJson(res, 201, account) }
     } else if (method === 'GET' && pathname === '/api/admin/settings') {
       if (forbidden(req, res, ['superadmin'])) return
       sendJson(res, 200, admin.settings)
