@@ -864,3 +864,21 @@ Yêu cầu thực tế:
 Yêu cầu thực tế (tóm lược task được gửi kèm):
 
 > Đọc các API contract, mock server/data, contract checker, mã nguồn auth/API phía React và tài liệu phân công/thống nhất kỹ thuật PA#3. Thực sự kiểm tra đăng nhập, token riêng, logout/thu hồi token và đăng nhập lại cho đủ bốn role cùng cả hai tài khoản Staff; lập ma trận quyền cho 24 endpoint, thử token thiếu/sai và truy cập chéo role; kiểm tra cụ thể lỗi 404 của `POST /api/clash-check`, danh sách job và upload ảnh Staff. Chỉ sửa lỗi đã xác nhận trong contract/mock/checker theo thứ tự contract trước mock; không sửa frontend hoặc commit. Không ghi token vào log/báo cáo; nêu rõ phần nào không thể kiểm chứng.
+
+---
+
+# PHẦN XVIII: PROMPT DỰNG KHUNG UI CUSTOMER NGÀY 3 — LÊ CÔNG PHÚC (27/11/2026)
+
+Yêu cầu nguyên văn:
+
+> đây là yêu cầu task ngày 3 của Phúc
+>  phần Ngày 3 theo phân công PA#3 là dựng khung UI trên React scaffold hiện tại của Tuấn nha.
+> Phúc phụ trách chuẩn bị khung giao diện phía Customer, gồm:
+> Customer Chat — chuẩn bị cho G3 và G6.
+> Booking Page — chuẩn bị cho G7.
+> Photo Gallery — chuẩn bị cho G9.
+> Lưu ý kế thừa giao diện PA#2, không thiết kế lại từ đầu. Phần hôm nay chủ yếu là dựng component, bố cục, responsive và xác định các điểm tích hợp API. Chưa cần hoàn thành toàn bộ nghiệp vụ của G3, G6, G7, G9 vì sẽ triển khai theo lịch từ ngày 27–30/11.
+> Phúc hạn chế chỉnh sửa AuthContext, apiClient, ProtectedRoute và các file Core của Tuấn để tránh xung đột. Nếu cần thay đổi App.jsx thì trao đổi trước nha.
+> Cuối ngày bàn giao danh sách file đã tạo, ảnh giao diện và cách tích hợp để ngày mai bắt đầu G3. này tui chỉ làm rõ phần ngày 3 thôi á
+>
+> `PhanCongPA3.md` `ThongNhatKyThuatPA3.md` thực hiện các task trong ngày 3

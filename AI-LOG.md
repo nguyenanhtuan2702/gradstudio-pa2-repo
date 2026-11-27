@@ -321,3 +321,23 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Đã đối chiếu:** Cây `client/src/` hiện có `auth/AuthContext.jsx`, `auth/ProtectedRoute.jsx`, `api/apiClient.js`, `components/AsyncStates.jsx`, `pages/HomePage.jsx` và `pages/LoginPage.jsx`. `CustomerChatSection.jsx` và `StudioPage.jsx` riêng chưa có; phần Studio/Booking vẫn là placeholder trong `App.jsx`.
 - **Đã thay đổi:** Cập nhật các đường dẫn core trong phân công Tuấn; phân biệt file đã có với file dự kiến trong cây React; sửa G1 và mô tả Ngày 3 để ghi nhận `HomePage.jsx` đang có, đồng thời đánh dấu chat component và Studio page extraction là việc còn lại. Ghi nhận yêu cầu vào `brief.md`.
 - **Kiểm tra:** Rà lại các tên đường dẫn cũ trong `docs/pa3/PhanCongPA3.md`. Không chạy build hoặc kiểm thử ứng dụng vì chỉ sửa tài liệu.
+
+## 2026-11-27 — Dựng khung UI luồng Khách hàng Ngày 3 (Chat, Booking, Photo Gallery) — Phúc
+
+- **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; Vite 8.3.8; Oxlint 1.90.0; Google Chrome Headless (CDP).
+- **Yêu cầu thực tế:** Thực hiện phần việc Ngày 3 của Lê Công Phúc theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md) và [ThongNhatKyThuatPA3.md](docs/pa3/ThongNhatKyThuatPA3.md): dựng khung giao diện phía Customer trên React scaffold hiện tại của Tuấn (Customer Chat cho G3/G6, Booking Page cho G7, Photo Gallery cho G9), kế thừa giao diện PA#2, không thiết kế lại từ đầu, không sửa các file Core/`App.jsx`/`HomePage.jsx` của Tuấn, và bàn giao danh sách file, ảnh giao diện cùng hướng dẫn tích hợp.
+- **Đã tạo mới:**
+  - [client/src/components/CustomerChatSection.jsx](client/src/components/CustomerChatSection.jsx): Kế thừa vùng `#chat` của `index.html` PA#2, nhận đúng interface props đã thống nhất (`defaultConversationId`, `selectedPackageName`, `packages`, `extras`), đọc trạng thái đăng nhập từ `useAuth()`, hiển thị banner hướng dẫn đăng nhập cho Visitor, khung đề xuất giờ mới G6 và form yêu cầu kiểm tra lịch G3.
+  - [client/src/pages/BookingPage.jsx](client/src/pages/BookingPage.jsx): Kế thừa bố cục `booking.html` PA#2 (Lịch tuần 43, Timeline 3 mốc với 09:00 gạch ngang không khả dụng, thông tin `GS-1024`, hộp giá cọc 30% / còn lại 70%), bổ sung khu vực `reminders` cho G7 và nhúng `BookingPhotoGallery`.
+  - [client/src/components/BookingPhotoGallery.jsx](client/src/components/BookingPhotoGallery.jsx): Lưới ảnh preview dùng chung asset hợp lệ trong `client/public/assets/images/`, bộ đếm chọn tối đa `maxEditedPhotos` (30 ảnh), khung thanh toán 70% còn lại và nút *Nhận ảnh hoàn thiện* cho G9.
+  - [client/src/pages/TestPaymentPage.jsx](client/src/pages/TestPaymentPage.jsx): Khung cổng thanh toán thử nghiệm tại `/payments/test/:id` cho G7 và G9.
+  - [client/src/api/customerEndpoints.js](client/src/api/customerEndpoints.js) và [client/src/styles/customerFlow.css](client/src/styles/customerFlow.css): Bản đồ các điểm tích hợp API Customer và CSS phạm vi riêng dùng `:root` tokens của PA#2.
+  - Tài liệu bàn giao & bộ 7 ảnh minh chứng giao diện tại [docs/pa3/evidence/day3-phuc/DAY3_PHUC_HANDOFF.md](docs/pa3/evidence/day3-phuc/DAY3_PHUC_HANDOFF.md).
+- **Lỗi phát hiện và đã khắc phục trong quá trình kiểm tra:**
+  1. Lần chạy `npm run lint` đầu tiên báo 3 cảnh báo `react(only-export-components)` do export hằng số endpoint cùng file với React component. Đã tách toàn bộ hằng số đường dẫn sang `client/src/api/customerEndpoints.js`, chạy lại `oxlint` đạt `0 warnings, 0 errors`.
+  2. Khi quan sát ảnh chụp thực tế tại `360px` và `1280px`, phát hiện nhãn `<option>` dài trong ô `<select>` kịch bản thanh toán và `placeholder` ô chat bị cắt chữ ở khung hẹp. Đã rút ngắn nhãn `<option>` thành `"Kịch bản: Thanh toán thành công / thất bại"` và đưa câu giải thích chi tiết xuống dòng `.gs-help` bên dưới, đồng thời rút ngắn placeholder thành `"Nhập tin nhắn…"` khớp `index.html` PA#2.
+- **Đã kiểm chứng:**
+  - `npm run lint` (`oxlint`): `Found 0 warnings and 0 errors` (19 files).
+  - `npm run build` (`vite build`): thành công, tạo `client/dist/`.
+  - Kiểm tra trình duyệt Chrome Headless tại `360px`, `768px`, `1280px` (với gắn kết preview tạm thời rồi khôi phục nguyên trạng `App.jsx` và `HomePage.jsx`): `scrollWidth === clientWidth` (không tràn ngang), `0` phần tử vượt cạnh phải, đúng `1` thẻ `<h1>` mỗi trang, `100%` form control có `<label>` hiển thị, và mọi nút/link/checkbox pill độc lập tại `360px` cao `>= 44px`.
+- **Chưa thực hiện (theo đúng phạm vi Ngày 3):** Chưa gọi API thực tế cho G3, G6, G7, G9 (các nút hành động nghiệp vụ đang để `disabled` kèm chú thích rõ ràng, sẽ triển khai theo lịch từ ngày 27–30/11).
