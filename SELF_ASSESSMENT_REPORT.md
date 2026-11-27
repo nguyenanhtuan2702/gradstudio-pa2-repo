@@ -24,6 +24,21 @@
 
 **Tổng điểm tự đánh giá:** chưa chấm.
 
+## Kiểm thử patch G5/G6 (Admin)/G8/G10 — 27/11/2026
+
+Nền kiểm thử là `main` tại `f12bfb0`. Khởi động lại mock trước từng lượt kiểm tra hợp đồng và kịch bản nghiệp vụ.
+
+| Phần | Kịch bản đã chạy | Kết quả |
+|---|---|---|
+| G5 | Ngày 24/10 kiểm tra Mai lúc `10:00`, khung `10:00–11:00` và khung `07:30–08:30` bắt đầu trước giờ bận | Báo Mai bận `08:00–12:00` và gợi ý lịch trống. Khung kết thúc lúc `08:00` hoặc bắt đầu lúc `12:00` không trùng. Cùng giờ nhưng khác ngày, khác nhân sự cũng được kiểm tra. |
+| G6 (Admin) | Gửi đề xuất make-up `12:30–13:30`, chụp `15:00–17:00`, Phòng C. Tạo booking trước và sau khi khách đồng ý | Trước khi đồng ý hoặc gửi sai phòng, API trả `409`. Đề xuất được đồng ý tạo `GS-1024` với đúng giờ và Phòng C, trạng thái `Chờ cọc 30%`. Cọc thất bại vẫn để lịch trống. Cọc thành công giữ chỗ, tạo nhắc lịch và kích hoạt các job theo giờ đã chốt. |
+| G6 (xác nhận cọc đồng thời) | Dùng bản sao dữ liệu mock với hai hội thoại, tạo hai booking chờ cọc cho cùng khung giờ và xác nhận cọc đồng thời | Một lượt trả `200`, lượt kia trả `409` và vẫn chờ cọc. Sau khi hủy booking đã giữ chỗ, booking còn lại xác nhận cọc được. |
+| G10 | Kiểm tra phòng trùng và nhân sự trùng độc lập. Đổi giờ make-up sang `07:30–08:30`, đổi riêng ngày vào ngày đã có booking trùng, rồi đổi giờ chụp trong lịch của chính booking | Kiểm tra tư vấn trả lý do theo tài nguyên. Hai lần đổi lịch xung đột trả `409`. Đổi giờ chụp không tự xung đột và giờ mới xuất hiện trong job của Tuấn. |
+| G8 | Tải JPEG và PNG thật lên sau khi cọc. Lấy metadata qua API booking của khách rồi mở URL trực tiếp và qua Vite dev/preview | Upload trả `201`. URL trả `200`, đúng MIME và đúng byte ảnh trên cả ba đường dẫn. URL ảnh chưa tồn tại trả `404`. |
+| Kiểm tra chung | `npm run lint`, `npm run build` trong `client/`, `node tools/contract-check.mjs --strict-values` tại thư mục gốc | Đạt. Contract check có 57 ví dụ, 24 endpoint, 0 FAIL. |
+
+Các kiểm thử trên xác nhận hành vi API và chuyển tiếp ảnh của Vite. Minh chứng tích hợp router và kiểm thử toàn bộ luồng G1–G11 vẫn cần bổ sung trước khi chốt điểm.
+
 ## Những phần chưa làm được
 
 Xem mục `Not done` trong [FRONTEND.md](FRONTEND.md); cập nhật lại trước khi nộp.

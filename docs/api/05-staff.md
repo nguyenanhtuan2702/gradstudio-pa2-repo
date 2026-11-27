@@ -78,7 +78,7 @@ Content-Type: application/json
 
 Allowed role: `staff`.
 
-Accepted formats: JPEG, PNG. Maximum size: 10 MB.
+Accepted formats: JPEG, PNG. Maximum size: 10 MB. The mock serves the returned `url` by HTTP GET with the image media type. Uploaded files are held in memory until the mock restarts. Vite forwards `/uploads` in both dev and preview mode.
 
 ```sh
 curl -i http://localhost:3001/api/bookings/GS-1024/photos/preview \

@@ -104,7 +104,7 @@ export default function StudioPage() {
                         key={selected.id}
                         conversation={selected}
                         packages={packages}
-                        booking={bookings.items.find((item) => item.conversationId === selected.id)}
+                        booking={bookings.items.find((item) => item.conversationId === selected.id && !item.cancelled)}
                         onCreated={saveBooking}
                       />
                     </section>
@@ -114,7 +114,7 @@ export default function StudioPage() {
                     <SchedulePanel
                       key={selected.id}
                       conversation={selected}
-                      onProposal={(id, proposal) => changeConversation(id, (item) => ({ ...item, proposal }))}
+                      onProposal={(id, proposal) => changeConversation(id, (item) => ({ ...item, proposal, status: 'Đang tư vấn' }))}
                     />
                   </section>
                 </>

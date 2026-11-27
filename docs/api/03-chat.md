@@ -79,7 +79,7 @@ Content-Type: application/json
 
 Allowed role: `admin`.
 
-Required request fields: non-empty `date`, `time`, and `room`, plus a non-empty `staff` array.
+Required request fields: `date` (`YYYY-MM-DD`), `time` (`HH:MM–HH:MM` for a range or `HH:MM` for a point), `room`, and a non-empty `staff` array. Ranges include their start and exclude their end. Only paid, uncancelled bookings hold a slot. Staff unavailability is also checked.
 
 ```http
 POST /api/clash-check
@@ -99,7 +99,7 @@ Content-Type: application/json
 - `400` date, time or resources are missing.
 - `401` missing or invalid token.
 - `403` caller is not an Admin.
-- `409` no resource combination is available.
+- When no suggested slot is available, `suggestions` is empty.
 
 ```http
 POST /api/clash-check
@@ -165,7 +165,9 @@ Content-Type: application/json
 {"proposalId":"proposal-linh","status":"pending","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B"}
 ```
 
+- `400` invalid time range or room.
 - `404` conversation not found.
+- `409` staff or room conflicts with an existing schedule.
 
 ## Agree to proposal
 

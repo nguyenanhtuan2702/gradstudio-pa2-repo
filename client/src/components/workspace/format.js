@@ -41,10 +41,6 @@ export function isTimeRange(value) {
   return Boolean(found) && `${found[3]}${found[4]}` > `${found[1]}${found[2]}`
 }
 
-export function rangeStart(value) {
-  return normalizeTimeRange(value).slice(0, 5)
-}
-
 export function splitNames(value) {
   return value.split(',').map((name) => name.trim()).filter(Boolean)
 }

@@ -105,6 +105,5 @@ Team choice, not a product-owner decision (to be confirmed by the team): cancell
 - Mock gaps found while building G8 and G10:
   - tokens are lost when the mock restarts, so Retry after a mode change answers `401`;
   - `empty` mode still returns the lists inside a single booking;
-  - a booking request is not added to the conversation;
-  - uploaded preview files are not served, so their `url` does not display an image.
+  - a booking request is not added to the conversation.
 - There is no endpoint listing rooms or staff, so the Admin types them for a clash check.

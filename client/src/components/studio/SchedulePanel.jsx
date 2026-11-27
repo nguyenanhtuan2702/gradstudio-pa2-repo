@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../../auth/useAuth.js'
 import Field from '../workspace/Field.jsx'
 import { FormMessages } from '../workspace/Feedback.jsx'
-import { isTimeRange, normalizeTimeRange, rangeStart, splitNames } from '../workspace/format.js'
+import { isTimeRange, normalizeTimeRange, splitNames } from '../workspace/format.js'
 import useSubmitForm from '../workspace/useSubmitForm.js'
 
 const TIME_RANGE_MESSAGE = 'Nhập khung giờ dạng HH:MM–HH:MM, giờ kết thúc sau giờ bắt đầu.'
@@ -10,7 +10,7 @@ const TIME_RANGE_MESSAGE = 'Nhập khung giờ dạng HH:MM–HH:MM, giờ kết
 const validateCheck = (values) => {
   const errors = {}
   if (!values.date) errors.date = 'Chọn ngày.'
-  if (!values.time) errors.time = 'Chọn giờ.'
+  if (!isTimeRange(values.time)) errors.time = TIME_RANGE_MESSAGE
   if (!values.room.trim()) errors.room = 'Chọn phòng.'
   if (!splitNames(values.staff).length) errors.staff = 'Chọn ít nhất một nhân sự.'
   return errors
@@ -30,7 +30,6 @@ export default function SchedulePanel({ conversation, onProposal }) {
     validate: (values) => {
       const errors = {}
       if (!isTimeRange(values.makeup)) errors.makeup = TIME_RANGE_MESSAGE
-      else if (result?.hasClash && rangeStart(values.makeup) === result.time) errors.makeup = result.reason
       if (!isTimeRange(values.shoot)) errors.shoot = TIME_RANGE_MESSAGE
       if (!values.room.trim()) errors.room = 'Nhập phòng.'
       return errors
@@ -59,11 +58,12 @@ export default function SchedulePanel({ conversation, onProposal }) {
     validate: validateCheck,
     onSubmit: async (values) => {
       setResult(null)
+      const time = normalizeTimeRange(values.time)
       const answer = await request('/api/clash-check', {
         method: 'POST',
-        body: { date: values.date, time: values.time, room: values.room.trim(), staff: splitNames(values.staff) },
+        body: { date: values.date, time, room: values.room.trim(), staff: splitNames(values.staff) },
       })
-      setResult({ ...answer, time: values.time })
+      setResult({ ...answer, time })
     },
   })
 
@@ -89,7 +89,7 @@ export default function SchedulePanel({ conversation, onProposal }) {
         <h3 id="check-title">Kiểm tra xung đột</h3>
         <div className="form-grid">
           <Field id="check-date" name="date" label="Ngày chụp" form={editCheck} type="date" />
-          <Field id="check-time" name="time" label="Giờ cần kiểm tra" form={editCheck} type="time" />
+          <Field id="check-time" name="time" label="Khung giờ cần kiểm tra" form={editCheck} type="text" help="Ví dụ: 10:00–11:00." />
           <Field id="check-room" name="room" label="Phòng" form={editCheck} type="text" full />
           <Field id="check-staff" name="staff" label="Nhân sự" form={editCheck} type="text" help="Cách nhau bằng dấu phẩy." full />
         </div>

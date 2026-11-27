@@ -11,11 +11,14 @@ const readJson = (name) => JSON.parse(fs.readFileSync(path.join(dataDir, `${name
 const accounts = readJson('accounts')
 const catalogue = readJson('catalogue')
 let conversations = readJson('conversations')
-let bookings = readJson('bookings')
-let staff = readJson('staff')
+const bookings = readJson('bookings')
+const staff = readJson('staff')
+const jobTemplates = staff.map((job) => ({ ...job }))
 let admin = readJson('admin')
 const payments = new Map()
-let assignmentsActive = false
+const createdProposals = new Map()
+const uploadedPhotos = new Map()
+let nextPhotoNumber = 2
 
 const mode = process.env.MOCK_MODE || 'normal'
 const port = Number(process.env.PORT || 3001)
@@ -95,27 +98,68 @@ const readMultipart = async (req) => {
 const reminderFor = (booking) => ({
   id: `rem-${booking.id.slice(3)}-24h`,
   title: 'Nhắc lịch make-up và chụp trước 24 giờ',
-  scheduledAt: '2026-10-23T13:00:00+07:00',
+  scheduledAt: reminderTime(booking),
   channel: 'Email',
-  recipient: 'linh@gradstudio.test',
+  recipient: Object.keys(accounts).find((email) => accounts[email].id === booking.customerId),
   emailStatus: 'Đã gửi',
 })
 
-const timeRangeOverlaps = (left, right) => {
-  const toMinutes = (time) => {
-    const [hours, minutes] = time.split(':').map(Number)
-    return hours * 60 + minutes
-  }
-  const range = (value) => {
-    const [start, end] = value.split('–').map((time) => time.trim())
-    return [toMinutes(start), toMinutes(end)]
-  }
-  const [leftStart, leftEnd] = range(left)
-  const [rightStart, rightEnd] = range(right)
-  return leftStart < rightEnd && rightStart < leftEnd
+const toMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map(Number)
+  return hours * 60 + minutes
 }
 
-const CLASH_REASON = 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.'
+const timeRangeOverlaps = (requested, busyRange) => {
+  const [start, end] = requested.split('–').map(toMinutes)
+  const [busyStart, busyEnd] = busyRange.split('–').map(toMinutes)
+  return end === undefined ? busyStart <= start && start < busyEnd : start < busyEnd && busyStart < end
+}
+
+const staffUnavailability = [
+  { date: '2026-10-24', name: 'Mai', time: '08:00–12:00' },
+]
+const alternateSlots = [
+  { makeup: '13:00–14:00', shoot: '14:00–16:00', room: 'Phòng B' },
+  { makeup: '16:00–17:00', shoot: '17:00–19:00', room: 'Phòng B' },
+]
+
+const holdsSchedule = (booking) => !booking.cancelled && ['Đã đặt lịch', 'Hoàn thành'].includes(booking.status)
+
+const findClash = ({ date, time, room, staffNames, excludeBookingId }) => {
+  const unavailable = staffUnavailability.find((entry) => entry.date === date
+    && staffNames.includes(entry.name) && timeRangeOverlaps(time, entry.time))
+  if (unavailable) {
+    return `${unavailable.name} bận ${unavailable.time} nên không thể nhận make-up lúc ${time.slice(0, 5)}.`
+  }
+
+  for (const booking of bookings) {
+    if (booking.id === excludeBookingId || booking.date !== date || !holdsSchedule(booking)) continue
+    const job = staff.find((item) => item.bookingId === booking.id
+      && staffNames.includes(item.staffName) && timeRangeOverlaps(time, item.time))
+    if (job) return `${job.staffName} bận ${job.time} (booking ${booking.id}).`
+    if (booking.room.toLowerCase() === room.toLowerCase() && timeRangeOverlaps(time, booking.shoot)) {
+      return `${booking.room} đã được đặt ${booking.shoot} (booking ${booking.id}).`
+    }
+  }
+  return ''
+}
+
+const scheduleClashes = (schedule, jobs = jobTemplates, excludeBookingId) => {
+  const makeupJob = jobs.find((job) => job.id.endsWith('-makeup'))
+  const shootJob = jobs.find((job) => job.id.endsWith('-photo'))
+  const makeup = findClash({
+    date: schedule.date, time: schedule.makeup, room: makeupJob.room,
+    staffNames: [makeupJob.staffName], excludeBookingId,
+  })
+  const shoot = findClash({
+    date: schedule.date, time: schedule.shoot, room: schedule.room,
+    staffNames: [shootJob.staffName], excludeBookingId,
+  })
+  return { ...(makeup && { makeup }), ...(shoot && { shoot }) }
+}
+
+const jobsFor = (booking) => staff.filter((job) => job.bookingId === booking.id)
+
 const CLOSED_BOOKING_MESSAGE = 'Booking đã hoàn thành hoặc đã hủy nên không thể đổi hay hủy lịch.'
 const SCHEDULE_FIELDS = ['date', 'makeup', 'shoot', 'room']
 
@@ -154,7 +198,7 @@ const bookingPatchErrors = (body) => {
 }
 
 const applySchedule = (booking) => {
-  for (const job of staff.filter((item) => item.bookingId === booking.id)) {
+  for (const job of jobsFor(booking)) {
     job.date = booking.date
     if (job.id.endsWith('-makeup')) job.time = booking.makeup
     if (job.id.endsWith('-photo')) {
@@ -162,10 +206,13 @@ const applySchedule = (booking) => {
       job.room = booking.room
     }
   }
+  booking.reminders = booking.reminders.map((reminder) => ({ ...reminder, scheduledAt: reminderTime(booking) }))
+}
+
+const reminderTime = (booking) => {
   const dayBefore = new Date(`${booking.date}T00:00:00Z`)
   dayBefore.setUTCDate(dayBefore.getUTCDate() - 1)
-  const scheduledAt = `${dayBefore.toISOString().slice(0, 10)}T${booking.makeup.slice(0, 5)}:00+07:00`
-  booking.reminders = booking.reminders.map((reminder) => ({ ...reminder, scheduledAt }))
+  return `${dayBefore.toISOString().slice(0, 10)}T${booking.makeup.slice(0, 5)}:00+07:00`
 }
 
 const rejectCancelled = (res, booking) => {
@@ -241,6 +288,11 @@ const server = http.createServer(async (req, res) => {
         tokens.set(token, { email: body.email, ...account })
         sendJson(res, status, { token, user: { id: account.id, name: account.name, role: account.role } })
       }
+    } else if (method === 'GET' && pathname.startsWith('/uploads/')) {
+      const photo = uploadedPhotos.get(pathname)
+      if (!photo) { respond(404, error('NOT_FOUND', 'Không tìm thấy ảnh.')); return }
+      res.writeHead(200, { 'Content-Type': photo.type, 'X-Content-Type-Options': 'nosniff' })
+      res.end(photo.data)
     } else if (method === 'POST' && pathname === '/api/auth/logout') {
       if (forbidden(req, res, ['customer', 'admin', 'staff', 'superadmin'])) return
       tokens.delete(bearerToken(req))
@@ -279,14 +331,26 @@ const server = http.createServer(async (req, res) => {
       if (forbidden(req, res, ['admin'])) return
       const body = await readBody(req)
       const fields = {}
-      if (!body.date) fields.date = 'Chọn ngày.'
-      if (!body.time) fields.time = 'Chọn giờ.'
-      if (!body.room || typeof body.room !== 'string') fields.room = 'Chọn phòng.'
+      if (!isDate(body.date)) fields.date = 'Nhập ngày theo YYYY-MM-DD.'
+      if (!isTimeRange(body.time) && !(typeof body.time === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(body.time))) {
+        fields.time = 'Nhập giờ HH:MM hoặc khung giờ HH:MM–HH:MM.'
+      }
+      if (typeof body.room !== 'string' || !body.room.trim()) fields.room = 'Chọn phòng.'
       if (!Array.isArray(body.staff) || !body.staff.length || body.staff.some((name) => typeof name !== 'string' || !name.trim())) {
         fields.staff = 'Chọn ít nhất một nhân sự.'
       }
       if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu kiểm tra.', fields)); }
-      else { sendJson(res, 200, { hasClash: body.time === '09:00', reason: body.time === '09:00' ? 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.' : 'Không có xung đột tài nguyên.', suggestions: body.time === '09:00' ? [{ makeup: '13:00–14:00', makeupArtist: 'Mai', shoot: '14:00–16:00', photographer: 'Tuấn', room: 'Phòng B' }] : [] }) }
+      else {
+        const reason = findClash({
+          date: body.date, time: body.time, room: body.room.trim(), staffNames: body.staff.map((name) => name.trim()),
+        })
+        const alternate = reason && alternateSlots.find((slot) => !Object.keys(scheduleClashes({ ...slot, date: body.date })).length)
+        sendJson(res, 200, {
+          hasClash: Boolean(reason),
+          reason: reason || 'Không có xung đột tài nguyên.',
+          suggestions: alternate ? [{ ...alternate, makeupArtist: jobTemplates[0].staffName, photographer: jobTemplates[1].staffName }] : [],
+        })
+      }
     } else if (method === 'POST' && match('/api/conversations/:id/proposal', pathname)) {
       if (forbidden(req, res, ['admin'])) return
       const { id } = match('/api/conversations/:id/proposal', pathname)
@@ -294,7 +358,15 @@ const server = http.createServer(async (req, res) => {
       if (!conversation) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy hội thoại.')); }
       else {
         const body = await readBody(req)
-        conversation.proposal = { ...body, proposalId: 'proposal-linh', status: 'pending' }
+        const { makeup, shoot, room } = body
+        const fields = bookingPatchErrors({ makeup, shoot, room })
+        if (Object.keys(fields).length) { respond(400, error('VALIDATION_ERROR', 'Đề xuất lịch không hợp lệ.', fields)); return }
+        const clashes = scheduleClashes({ date: conversation.date, makeup, shoot, room: room.trim() })
+        if (Object.keys(clashes).length) { respond(409, error('CONFLICT', Object.values(clashes).join(' '), clashes)); return }
+        const previous = conversation.proposal
+        const sameSlot = previous?.makeup === makeup && previous.shoot === shoot && previous.room === room.trim()
+        conversation.proposal = { makeup, shoot, room: room.trim(), proposalId: sameSlot ? previous.proposalId : randomUUID(), status: 'pending' }
+        conversation.status = 'Đang tư vấn'
         sendJson(res, 200, conversation.proposal)
       }
     } else if (method === 'POST' && match('/api/conversations/:id/agree', pathname)) {
@@ -302,7 +374,8 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/conversations/:id/agree', pathname)
       const conversation = conversations.find((item) => item.id === id)
       const body = await readBody(req)
-      if (!conversation || body.proposalId !== conversation.proposal?.proposalId) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy đề xuất.')); }
+      if (!conversation?.proposal || body.proposalId !== conversation.proposal.proposalId) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy đề xuất.')); }
+      else if (caller(req).id !== conversation.customerId) { respond(403, error('FORBIDDEN', 'Không có quyền trả lời đề xuất này.')); }
       else if (!['agree', 'decline'].includes(body.decision)) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Quyết định không hợp lệ.', { decision: 'Chọn agree hoặc decline.' })); }
       else {
         if (body.decision === 'agree') {
@@ -333,12 +406,62 @@ const server = http.createServer(async (req, res) => {
       const body = await readBody(req)
       const fields = {}
       for (const field of ['conversationId', 'customerId', 'packageId', 'agreedMakeup', 'agreedShoot', 'room']) {
-        if (!body[field]) fields[field] = 'Trường này là bắt buộc.'
+        if (typeof body[field] !== 'string' || !body[field].trim()) fields[field] = 'Trường này là bắt buộc.'
       }
       const conversation = conversations.find((item) => item.id === body.conversationId)
-      if (Object.keys(fields).length) { status = 400; sendJson(res, status, error('VALIDATION_ERROR', 'Thiếu dữ liệu tạo booking.', fields)); }
-      else if (!conversation || conversation.status !== 'Đã chốt lịch') { status = 409; sendJson(res, status, error('CONFLICT', 'Khách hàng chưa đồng ý thời gian đề xuất.')); }
-      else { status = 201; sendJson(res, status, bookings[0]) }
+      const proposal = conversation?.proposal
+      const selectedPackage = catalogue.packages.find((item) => item.id === body.packageId)
+      if (!selectedPackage) fields.packageId = 'Chọn gói có trong catalogue.'
+      if (conversation && body.customerId !== conversation.customerId) fields.customerId = 'Mã khách phải khớp với hội thoại.'
+      if (Object.keys(fields).length) { respond(400, error('VALIDATION_ERROR', 'Dữ liệu tạo booking không hợp lệ.', fields)); return }
+      if (conversation?.status !== 'Đã chốt lịch' || proposal?.status !== 'agreed') {
+        respond(409, error('CONFLICT', 'Khách hàng chưa đồng ý thời gian đề xuất.'))
+        return
+      }
+
+      const { date } = conversation
+      const { makeup, shoot, room } = proposal
+      if (body.agreedMakeup !== makeup || body.agreedShoot !== shoot || body.room.trim() !== room) {
+        respond(409, error('CONFLICT', 'Giờ và phòng phải khớp với đề xuất đã được khách đồng ý.'))
+        return
+      }
+
+      const existing = bookings.find((item) => item.conversationId === conversation.id && !item.cancelled)
+      const previousProposal = createdProposals.get(existing?.id)
+      if (previousProposal === proposal.proposalId && existing.packageId === selectedPackage.id) {
+        respond(201, existing)
+        return
+      }
+      if (existing && (previousProposal || existing.status !== 'Chờ cọc 30%')) {
+        respond(409, error('CONFLICT', 'Hội thoại đã có booking đang hoạt động.'))
+        return
+      }
+      const clashes = scheduleClashes({ date, makeup, shoot, room })
+      if (Object.keys(clashes).length) { respond(409, error('CONFLICT', Object.values(clashes).join(' '), clashes)); return }
+
+      const bookingId = existing?.id ?? `GS-${1024 + bookings.length}`
+      const total = selectedPackage.price
+      const deposit = Math.round(total * 0.3)
+      const booking = existing ?? { id: bookingId, previewPhotos: [] }
+      Object.assign(booking, {
+        conversationId: conversation.id, customerId: conversation.customerId, customerName: conversation.customerName,
+        packageId: selectedPackage.id, packageName: selectedPackage.name,
+        date, makeup, shoot, room, status: 'Chờ cọc 30%', paymentStatus: 'Chờ cọc',
+        total, deposit, remaining: total - deposit, maxEditedPhotos: selectedPackage.editedPhotos,
+        selectedPhotoIds: [], finalFileLink: '', reminders: [],
+      })
+      if (!existing) {
+        bookings.push(booking)
+        for (const job of jobTemplates) {
+          staff.push({ ...job, id: job.id.replace('1024', bookingId.slice(3)), bookingId, status: 'Chưa phân công' })
+        }
+      }
+      for (const [paymentId, payment] of payments) {
+        if (payment.bookingId === bookingId) payments.delete(paymentId)
+      }
+      applySchedule(booking)
+      createdProposals.set(bookingId, proposal.proposalId)
+      respond(201, booking)
     } else if (method === 'POST' && match('/api/bookings/:id/deposit/payment', pathname)) {
       if (forbidden(req, res, ['customer'])) return
       const { id } = match('/api/bookings/:id/deposit/payment', pathname)
@@ -351,7 +474,7 @@ const server = http.createServer(async (req, res) => {
         status = booking.status === 'Chờ cọc 30%' ? 400 : 409
         sendJson(res, status, error(status === 400 ? 'VALIDATION_ERROR' : 'CONFLICT', status === 400 ? 'Chọn kịch bản thanh toán.' : 'Booking đã thanh toán cọc.'))
       } else {
-        const paymentId = body.scenario === 'failure' ? 'pay-deposit-1024-fail' : 'pay-deposit-1024'
+        const paymentId = `pay-deposit-${id.slice(3)}${body.scenario === 'failure' ? '-fail' : ''}`
         payments.set(paymentId, { bookingId: id, kind: 'deposit', scenario: body.scenario, confirmed: false })
         sendJson(res, 200, {
           gatewayUrl: `/payments/test/${id}?kind=deposit&scenario=${body.scenario}&paymentId=${paymentId}`,
@@ -385,7 +508,7 @@ const server = http.createServer(async (req, res) => {
         }))
       } else {
         booking.selectedPhotoIds = selectedPhotoIds
-        const paymentId = body.scenario === 'failure' ? 'pay-rest-1024-fail' : 'pay-rest-1024'
+        const paymentId = `pay-rest-${id.slice(3)}${body.scenario === 'failure' ? '-fail' : ''}`
         payments.set(paymentId, { bookingId: id, kind: 'remaining', scenario: body.scenario, confirmed: false })
         sendJson(res, 200, {
           gatewayUrl: `/payments/test/${id}?kind=remaining&scenario=${body.scenario}&paymentId=${paymentId}`,
@@ -425,23 +548,17 @@ const server = http.createServer(async (req, res) => {
           remaining: booking.remaining,
         })
       } else if (body.kind === 'deposit') {
-        const resourcesAvailable = !bookings.some((item) => item.id !== booking.id
-          && item.date === booking.date
-          && item.status === 'Đã đặt lịch'
-          && ((item.makeup && booking.makeup && timeRangeOverlaps(item.makeup, booking.makeup))
-            || (item.shoot && booking.shoot && timeRangeOverlaps(item.shoot, booking.shoot))
-            || (item.room === booking.room && item.shoot && booking.shoot && timeRangeOverlaps(item.shoot, booking.shoot))))
-        if (!resourcesAvailable) {
+        const clashes = scheduleClashes(booking, jobsFor(booking), booking.id)
+        if (booking.cancelled || booking.status !== 'Chờ cọc 30%' || Object.keys(clashes).length) {
           status = 409
-          sendJson(res, status, error('CONFLICT', 'Tài nguyên không còn khả dụng sau khi kiểm tra lại.'))
+          sendJson(res, status, error('CONFLICT', Object.values(clashes).join(' ') || 'Booking không còn chờ thanh toán cọc.'))
         } else {
           payment.confirmed = true
           payment.result = 'success'
           booking.status = 'Đã đặt lịch'
           booking.paymentStatus = 'Đã cọc 30%'
           booking.reminders = [reminderFor(booking)]
-          assignmentsActive = true
-          for (const job of staff) job.status = 'Đã phân công'
+          for (const job of jobsFor(booking)) job.status = 'Đã phân công'
           sendJson(res, 200, {
             paymentId: body.paymentId,
             kind: body.kind,
@@ -489,8 +606,8 @@ const server = http.createServer(async (req, res) => {
       if (forbidden(req, res, ['staff'])) return
       const currentStaff = caller(req)
       const assignedJobs = staff.filter((job) => job.staffName === currentStaff.name
-        && !bookings.some((item) => item.id === job.bookingId && item.cancelled))
-      sendJson(res, 200, mode === 'empty' || !assignmentsActive ? { items: [] } : { items: assignedJobs })
+        && bookings.some((item) => item.id === job.bookingId && holdsSchedule(item)))
+      sendJson(res, 200, mode === 'empty' ? { items: [] } : { items: assignedJobs })
     } else if (method === 'PATCH' && pathname.startsWith('/api/staff/jobs/')) {
       if (forbidden(req, res, ['staff'])) return
       const id = pathname.split('/').pop()
@@ -516,12 +633,13 @@ const server = http.createServer(async (req, res) => {
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
       if (rejectCancelled(res, booking)) return
-      if (!assignmentsActive) {
+      if (!holdsSchedule(booking)) {
         status = 409
         sendJson(res, status, error('CONFLICT', 'Chưa có phân công nhân sự cho booking này.'))
         return
       }
       const fields = await readMultipart(req)
+      if (rejectCancelled(res, booking)) return
       const uploaded = fields.file
       if (!uploaded || !fields.title || !['image/jpeg', 'image/png'].includes(uploaded.type) || uploaded.data.length > 10 * 1024 * 1024) {
         status = 400
@@ -532,13 +650,14 @@ const server = http.createServer(async (req, res) => {
         return
       }
       const extension = uploaded.type === 'image/png' ? 'png' : 'jpg'
-      const photoNumber = Math.max(0, ...booking.previewPhotos.map((photo) => Number(photo.id.match(/^photo-(\d+)$/)?.[1]) || 0)) + 1
+      const photoNumber = nextPhotoNumber++
       const photo = {
         id: `photo-${photoNumber}`,
         bookingId: id,
         title: fields.title,
         url: `/uploads/photo-${photoNumber}.${extension}`,
       }
+      uploadedPhotos.set(photo.url, { type: uploaded.type, data: Buffer.from(uploaded.data) })
       booking.previewPhotos.push(photo)
       sendJson(res, 201, photo)
     } else if (method === 'PATCH' && match('/api/bookings/:id', pathname)) {
@@ -559,10 +678,10 @@ const server = http.createServer(async (req, res) => {
         sendJson(res, status, error('CONFLICT', CLOSED_BOOKING_MESSAGE))
         return
       }
-      const clashing = ['makeup', 'shoot'].filter((key) => changed.includes(key) && body[key].startsWith('09:00'))
-      if (clashing.length) {
+      const clashes = changed.length ? scheduleClashes({ ...booking, ...body }, jobsFor(booking), booking.id) : {}
+      if (Object.keys(clashes).length) {
         status = 409
-        sendJson(res, status, error('CONFLICT', CLASH_REASON, Object.fromEntries(clashing.map((key) => [key, CLASH_REASON]))))
+        sendJson(res, status, error('CONFLICT', Object.values(clashes).join(' '), clashes))
       } else if (body.finalFileLink && (booking.cancelled || booking.remaining !== 0 || booking.paymentStatus !== 'Đã thanh toán đủ')) {
         status = 409
         sendJson(res, status, error('CONFLICT', 'Chỉ có thể thêm link ảnh hoàn thiện sau khi khách thanh toán đủ.',

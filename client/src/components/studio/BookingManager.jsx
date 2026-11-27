@@ -4,7 +4,7 @@ import { EmptyState } from '../AsyncStates.jsx'
 import Field from '../workspace/Field.jsx'
 import { FormMessages, ResourceStatus, StatusBadge } from '../workspace/Feedback.jsx'
 import {
-  errorMessage, formatCurrency, formatDate, isTimeRange, normalizeTimeRange, rangeStart, splitNames,
+  errorMessage, formatCurrency, formatDate, isTimeRange, normalizeTimeRange,
 } from '../workspace/format.js'
 import useSubmitForm from '../workspace/useSubmitForm.js'
 
@@ -16,7 +16,6 @@ const validateSchedule = (values) => {
   if (!isTimeRange(values.makeup)) errors.makeup = TIME_RANGE_MESSAGE
   if (!isTimeRange(values.shoot)) errors.shoot = TIME_RANGE_MESSAGE
   if (!values.room.trim()) errors.room = 'Nhập phòng.'
-  if (!splitNames(values.staff).length) errors.staff = 'Nhập ít nhất một nhân sự để kiểm tra lịch.'
   return errors
 }
 
@@ -36,11 +35,10 @@ function useBookingPatch(booking, onSaved) {
 }
 
 function ScheduleForm({ booking, onSaved }) {
-  const { request } = useAuth()
   const patch = useBookingPatch(booking, onSaved)
 
   const form = useSubmitForm({
-    initialValues: { date: booking.date, makeup: booking.makeup, shoot: booking.shoot, room: booking.room, staff: '' },
+    initialValues: { date: booking.date, makeup: booking.makeup, shoot: booking.shoot, room: booking.room },
     validate: validateSchedule,
     onSubmit: async (values) => {
       const next = {
@@ -51,22 +49,6 @@ function ScheduleForm({ booking, onSaved }) {
       }
       if (Object.keys(next).every((key) => next[key] === booking[key])) {
         return { formError: 'Lịch chưa có thay đổi.' }
-      }
-
-      // G10: check the people and the room again at each new start time.
-      for (const field of ['makeup', 'shoot']) {
-        const time = rangeStart(next[field])
-        const answer = await request('/api/clash-check', {
-          method: 'POST',
-          body: { date: next.date, time, room: next.room, staff: splitNames(values.staff) },
-        })
-        if (answer.hasClash) {
-          const free = answer.suggestions?.map((slot) => `make-up ${slot.makeup}, chụp ${slot.shoot}, ${slot.room}`).join('; ')
-          return {
-            errors: { [field]: answer.reason },
-            formError: `Chưa đổi lịch vì có xung đột. ${answer.reason}${free ? ` Khung giờ trống: ${free}.` : ''}`,
-          }
-        }
       }
 
       await patch(next)
@@ -84,7 +66,6 @@ function ScheduleForm({ booking, onSaved }) {
         <Field id={id('makeup')} name="makeup" label="Giờ make-up" form={form} type="text" />
         <Field id={id('shoot')} name="shoot" label="Giờ chụp" form={form} type="text" />
         <Field id={id('room')} name="room" label="Phòng" form={form} type="text" full />
-        <Field id={id('staff')} name="staff" label="Nhân sự cần kiểm tra" form={form} type="text" help="Cách nhau bằng dấu phẩy." full />
       </div>
       <FormMessages form={form} />
       <button className="gs-btn gs-btn--primary ops-action" type="submit" disabled={form.submitting}>

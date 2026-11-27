@@ -50,7 +50,8 @@ Content-Type: application/json
 - `400` required fields are missing or invalid.
 - `401` missing or invalid token.
 - `403` caller is not an Admin.
-- `409` conversation has not agreed or resources are unavailable.
+- `409` the conversation has not agreed, the submitted schedule differs from the agreed proposal, an active booking already exists for a different proposal, or resources are unavailable.
+- The booking uses the agreed proposal and starts at `Chờ cọc 30%`. It holds resources only after a successful deposit confirmation.
 
 ## List bookings
 
