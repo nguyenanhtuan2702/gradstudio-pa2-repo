@@ -115,6 +115,65 @@ const timeRangeOverlaps = (left, right) => {
   return leftStart < rightEnd && rightStart < leftEnd
 }
 
+const CLASH_REASON = 'Mai bận 08:00–12:00 nên không thể nhận make-up lúc 09:00.'
+const CLOSED_BOOKING_MESSAGE = 'Booking đã hoàn thành hoặc đã hủy nên không thể đổi hay hủy lịch.'
+const SCHEDULE_FIELDS = ['date', 'makeup', 'shoot', 'room']
+
+const isDate = (value) => {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false
+  const parsed = new Date(`${value}T00:00:00Z`)
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(value)
+}
+
+const isTimeRange = (value) => {
+  if (typeof value !== 'string') return false
+  const found = value.match(/^([01]\d|2[0-3]):([0-5]\d)–([01]\d|2[0-3]):([0-5]\d)$/)
+  return Boolean(found) && `${found[3]}${found[4]}` > `${found[1]}${found[2]}`
+}
+
+const isHttpUrl = (value) => {
+  if (typeof value !== 'string' || value.length > 2000) return false
+  try { return ['http:', 'https:'].includes(new URL(value).protocol) } catch { return false }
+}
+
+const bookingPatchErrors = (body) => {
+  const fields = {}
+  const keys = Object.keys(body)
+  if (!keys.length) fields.body = 'Gửi ít nhất một trường cần thay đổi.'
+  for (const key of keys) {
+    if (![...SCHEDULE_FIELDS, 'finalFileLink', 'cancel'].includes(key)) fields[key] = 'Trường này không được phép thay đổi.'
+  }
+  if ('date' in body && !isDate(body.date)) fields.date = 'Nhập ngày theo YYYY-MM-DD.'
+  for (const key of ['makeup', 'shoot']) {
+    if (key in body && !isTimeRange(body[key])) fields[key] = 'Nhập khung giờ theo HH:MM–HH:MM, giờ kết thúc sau giờ bắt đầu.'
+  }
+  if ('room' in body && (typeof body.room !== 'string' || !body.room.trim() || body.room.length > 100)) fields.room = 'Nhập tên phòng từ 1 đến 100 ký tự.'
+  if ('finalFileLink' in body && !isHttpUrl(body.finalFileLink)) fields.finalFileLink = 'Nhập đường dẫn http hoặc https hợp lệ.'
+  if ('cancel' in body && (body.cancel !== true || keys.length !== 1)) fields.cancel = 'Chỉ gửi riêng cancel = true.'
+  return fields
+}
+
+const applySchedule = (booking) => {
+  for (const job of staff.filter((item) => item.bookingId === booking.id)) {
+    job.date = booking.date
+    if (job.id.endsWith('-makeup')) job.time = booking.makeup
+    if (job.id.endsWith('-photo')) {
+      job.time = booking.shoot
+      job.room = booking.room
+    }
+  }
+  const dayBefore = new Date(`${booking.date}T00:00:00Z`)
+  dayBefore.setUTCDate(dayBefore.getUTCDate() - 1)
+  const scheduledAt = `${dayBefore.toISOString().slice(0, 10)}T${booking.makeup.slice(0, 5)}:00+07:00`
+  booking.reminders = booking.reminders.map((reminder) => ({ ...reminder, scheduledAt }))
+}
+
+const rejectCancelled = (res, booking) => {
+  if (!booking?.cancelled) return false
+  sendJson(res, 409, error('CONFLICT', 'Booking đã bị studio hủy.'))
+  return true
+}
+
 const bearerToken = (req) => {
   const authorization = req.headers.authorization || ''
   return authorization.match(/^Bearer\s+(.+)$/i)?.[1] || ''
@@ -285,6 +344,7 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/bookings/:id/deposit/payment', pathname)
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      if (booking.customerId === caller(req).id && rejectCancelled(res, booking)) return
       const body = await readBody(req)
       if (booking.customerId !== caller(req).id) { status = 403; sendJson(res, status, error('FORBIDDEN', 'Không có quyền truy cập booking này.')) }
       else if (booking.status !== 'Chờ cọc 30%' || !['success', 'failure'].includes(body.scenario)) {
@@ -303,6 +363,7 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/bookings/:id/payments/remaining', pathname)
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      if (booking.customerId === caller(req).id && rejectCancelled(res, booking)) return
       const body = await readBody(req)
       const selectedPhotoIds = body.selectedPhotoIds
       const invalidSelection = !Array.isArray(selectedPhotoIds)
@@ -337,6 +398,7 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/bookings/:id/payments/confirm', pathname)
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      if (booking.customerId === caller(req).id && rejectCancelled(res, booking)) return
       const body = await readBody(req)
       const payment = payments.get(body.paymentId)
       if (booking.customerId !== caller(req).id) {
@@ -412,6 +474,9 @@ const server = http.createServer(async (req, res) => {
       else if (booking.customerId !== caller(req).id) {
         status = 403
         sendJson(res, status, error('FORBIDDEN', 'Không có quyền truy cập booking này.'))
+      } else if (booking.cancelled) {
+        status = 409
+        sendJson(res, status, error('CONFLICT', 'Booking đã bị studio hủy.'))
       } else if (booking.remaining !== 0 || booking.paymentStatus !== 'Đã thanh toán đủ' || !booking.finalFileLink) {
         status = 409
         sendJson(res, status, error('CONFLICT', 'Chưa đủ điều kiện nhận ảnh: cần thanh toán đủ 100% và có link file hoàn thiện từ studio.'))
@@ -423,7 +488,8 @@ const server = http.createServer(async (req, res) => {
     } else if (method === 'GET' && pathname === '/api/staff/jobs') {
       if (forbidden(req, res, ['staff'])) return
       const currentStaff = caller(req)
-      const assignedJobs = staff.filter((job) => job.staffName === currentStaff.name)
+      const assignedJobs = staff.filter((job) => job.staffName === currentStaff.name
+        && !bookings.some((item) => item.id === job.bookingId && item.cancelled))
       sendJson(res, 200, mode === 'empty' || !assignmentsActive ? { items: [] } : { items: assignedJobs })
     } else if (method === 'PATCH' && pathname.startsWith('/api/staff/jobs/')) {
       if (forbidden(req, res, ['staff'])) return
@@ -449,6 +515,7 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/bookings/:id/photos/preview', pathname)
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
+      if (rejectCancelled(res, booking)) return
       if (!assignmentsActive) {
         status = 409
         sendJson(res, status, error('CONFLICT', 'Chưa có phân công nhân sự cho booking này.'))
@@ -480,11 +547,33 @@ const server = http.createServer(async (req, res) => {
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
       const body = await readBody(req)
-      if (body.finalFileLink && (booking.remaining !== 0 || booking.paymentStatus !== 'Đã thanh toán đủ')) {
+      const fields = bookingPatchErrors(body)
+      if (Object.keys(fields).length) {
+        status = 400
+        sendJson(res, status, error('VALIDATION_ERROR', 'Dữ liệu booking không hợp lệ.', fields))
+        return
+      }
+      const changed = SCHEDULE_FIELDS.filter((key) => key in body && body[key] !== booking[key])
+      if ((body.cancel || changed.length) && (booking.cancelled || booking.status === 'Hoàn thành')) {
         status = 409
-        sendJson(res, status, error('CONFLICT', 'Chỉ có thể thêm link ảnh hoàn thiện sau khi khách thanh toán đủ.'))
+        sendJson(res, status, error('CONFLICT', CLOSED_BOOKING_MESSAGE))
+        return
+      }
+      const clashing = ['makeup', 'shoot'].filter((key) => changed.includes(key) && body[key].startsWith('09:00'))
+      if (clashing.length) {
+        status = 409
+        sendJson(res, status, error('CONFLICT', CLASH_REASON, Object.fromEntries(clashing.map((key) => [key, CLASH_REASON]))))
+      } else if (body.finalFileLink && (booking.cancelled || booking.remaining !== 0 || booking.paymentStatus !== 'Đã thanh toán đủ')) {
+        status = 409
+        sendJson(res, status, error('CONFLICT', 'Chỉ có thể thêm link ảnh hoàn thiện sau khi khách thanh toán đủ.',
+          { finalFileLink: 'Booking chưa thanh toán đủ hoặc đã bị hủy.' }))
+      } else if (body.cancel) {
+        booking.cancelled = true
+        booking.reminders = []
+        sendJson(res, 200, booking)
       } else {
         Object.assign(booking, body)
+        if (changed.length) applySchedule(booking)
         sendJson(res, 200, booking)
       }
     } else if (method === 'GET' && pathname === '/api/admin/accounts') {

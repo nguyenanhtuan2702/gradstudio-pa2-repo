@@ -1,6 +1,7 @@
 [
   {
     "id": "conv-linh",
+    "customerId": "u-linh",
     "customerName": "Nguyễn Thùy Linh",
     "status": "Đang tư vấn",
     "date": "2026-10-24",
