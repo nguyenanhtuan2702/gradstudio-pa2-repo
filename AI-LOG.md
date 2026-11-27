@@ -371,3 +371,22 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - Kiểm tra tự động trên Chrome Headless: sau khi kích hoạt `.catalogue-inquiry` rồi đổi `#req-shoot-type` sang `"Chân dung/CV"`, cả giá trị `<select>` lẫn tiêu đề chat cập nhật thành `"Chân dung/CV"`; trang `/bookings/GS-1024` hiển thị `Đã chọn: 0 / 30`, `#select-preview-photo-1.checked === false`, khối nhắc lịch hiển thị trạng thái trống cho `reminders: []`, và click chọn ảnh tăng lên `1 / 30`.
   - Responsive `360px`, `768px`, `1280px`: `horizontalOverflow: false`, `1` thẻ `<h1>`/trang, `0` control thiếu label, vùng bấm tại `360px` cao `>= 44px`.
   - `npm run lint` (`oxlint`): `Found 0 warnings and 0 errors` (35 files); `npm run build` (`vite build`) thành công.
+
+### 2026-11-27 — Triển khai luồng G3 Ngày 4 (Chat tư vấn & Gửi yêu cầu đặt lịch) — Phúc
+
+- **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; Oxlint 1.90.0; Vite 8.3.8; Google Chrome Headless (CDP).
+- **Yêu cầu thực tế:** Thực hiện phần việc Ngày 4 của Lê Công Phúc theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md): hoàn thiện luồng G3 trong `CustomerChatSection.jsx` (tải hội thoại, gửi và đồng bộ tin nhắn với Admin Thảo không cần reload trang, gửi form yêu cầu đặt lịch kèm validation từng trường, hiển thị lỗi `400`/`409` đúng vị trí input và khóa nút submit khi đang gửi).
+- **Đã thay đổi:**
+  - [client/src/components/CustomerChatSection.jsx](client/src/components/CustomerChatSection.jsx):
+    - Kết nối `GET /api/conversations` thông qua `useAuth().request`, xử lý đầy đủ `LoadingState`, `ErrorState` (kèm nút *Thử tải lại* tại chỗ) và `EmptyState` cho 4 chế độ `normal`, `slow`, `error`, `empty`; giữ chế độ xem giới thiệu cho Visitor chưa đăng nhập.
+    - Bổ sung nút *Cập nhật tin nhắn* để đồng bộ phản hồi mới từ Admin Thảo mà không cần reload trang.
+    - Kết nối `POST /api/conversations/:id/messages`: kiểm tra độ dài 1–2000 ký tự, khóa nút gửi (`Đang gửi…`) kèm khóa đồng bộ `useRef` chống gửi trùng, thêm tin nhắn mới trực tiếp vào danh sách và hiển thị lỗi `400` dưới ô nhập.
+    - Kết nối `POST /api/conversations/:id/request`: kiểm tra từng trường (`shootType`, `preferredDate` chuẩn ISO, `preferredTime` trong khung mở cửa `08:00–20:00`), khóa nút submit (`Đang gửi yêu cầu…`) khi đang xử lý, ánh xạ `error.fields` của HTTP `400` và `409` (xung đột `09:00` do Mai bận `08:00–12:00`) ngay dưới trường tương ứng với `aria-invalid="true"` và focus tự động, đồng thời hiển thị thông báo `201 Created` nêu rõ chưa giữ lịch trước khi cọc 30%.
+  - [client/src/styles/customerFlow.css](client/src/styles/customerFlow.css): Bổ sung style cho thanh thao tác tiêu đề chat (`.chat__head-actions`) và hộp thông báo kết quả/lỗi (`.chat-feedback-ok`, `.chat-feedback-error`).
+  - Lập báo cáo kiểm thử và 10 ảnh chụp minh chứng tại [docs/pa3/evidence/g3/G3_TEST_REPORT.md](docs/pa3/evidence/g3/G3_TEST_REPORT.md).
+- **Lỗi phát hiện và đã khắc phục:**
+  - Lần chạy `oxlint` đầu tiên cảnh báo 2 quy tắc React Compiler (`react(preserve-manual-memoization)` trên `useCallback` phụ thuộc `user?.id` và `react(set-state-in-effect)` do gọi `setLoadStatus('loading')` đồng bộ trong `useEffect`). Đã chuyển hàm chọn hội thoại thành hàm thuần ngoài component và suy dẫn trạng thái `loading` từ khóa phiên `requestKey` (tương tự cơ chế `useResource.js`), giúp `oxlint` đạt `0 warnings, 0 errors`.
+- **Đã kiểm chứng:**
+  - Chrome Headless (nối tạm `CustomerChatSection` vào `HomePage.jsx` khi test rồi khôi phục nguyên trạng `HomePage.jsx`): 11/11 kịch bản G3 đạt PASS (Visitor guard, tải chat, gửi tin nhắn, đồng bộ tin nhắn từ Admin Thảo không reload, validation client, lỗi `400` đúng trường, xung đột `09:00` trả `409`, yêu cầu `14:00` trả `201`, khóa nút submit ở `slow` mode, `ErrorState` ở `error` mode, `EmptyState` ở `empty` mode, và responsive `360px`/`768px`/`1280px`).
+  - `npm run lint` (`oxlint`): `Found 0 warnings and 0 errors` (35 files); `npm run build` thành công; `node tools/contract-check.mjs` đạt `PASS 100% - 0 FAIL (57 examples, 24 endpoints)`.
+- **Chưa thực hiện (thuộc các ngày tiếp theo):** Nút *Đồng ý / Từ chối* đề xuất giờ trong chat thuộc G6-Customer (Ngày 5); kết nối `HomePage.jsx` thuộc phạm vi tích hợp của Tuấn.

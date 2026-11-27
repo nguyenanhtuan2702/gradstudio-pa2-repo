@@ -911,3 +911,13 @@ Yêu cầu nguyên văn, theo thứ tự:
 Follow-up xác nhận thực thi:
 
 > bắt đầu
+
+---
+
+# PHẦN XXI: PROMPT TRIỂN KHAI TASK NGÀY 4 (G3) — LÊ CÔNG PHÚC (27/11/2026)
+
+Yêu cầu nguyên văn:
+
+> `docs/pa3/PhanCongPA3.md` thực hiện task ngày 4
+>
+> thực hiện task ngày 4 của Phúc
