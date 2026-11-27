@@ -119,3 +119,4 @@ Content-Type: application/json
 - 2026-11-24: Documented upload metadata persistence and the booking gallery response.
 - 2026-11-24: Updated uploaded preview identifier (`photo-2`) as the uploaded photo is appended to the booking's `previewPhotos` list.
 - 2026-11-26: Scope job lists and updates to the authenticated Staff member; add separate Mai/Tuấn examples and a cross-assignment `403` case.
+- 2026-11-27: Jobs of a cancelled booking are removed from the job list, jobs follow a rescheduled booking, and preview upload to a cancelled booking answers `409` (see `06-admin.md`).

@@ -15,11 +15,13 @@ Authorization: Bearer {{token:thao}}
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"items":[{"id":"conv-linh","customerName":"Nguyễn Thùy Linh","status":"Đang tư vấn","date":"2026-10-24","messages":[{"id":"msg-1","text":"Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?","sender":"customer"}],"proposal":{"proposalId":"proposal-linh","status":"pending","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B"}}]}
+{"items":[{"id":"conv-linh","customerId":"u-linh","customerName":"Nguyễn Thùy Linh","status":"Đang tư vấn","date":"2026-10-24","messages":[{"id":"msg-1","text":"Gói tốt nghiệp có makeup còn lịch 24/10 lúc 09:00 không?","sender":"customer"}],"proposal":{"proposalId":"proposal-linh","status":"pending","makeup":"13:00–14:00","shoot":"14:00–16:00","room":"Phòng B"}}]}
 ```
 
 - `401` missing or invalid token.
 - `403` role is not allowed.
+
+Each item includes `customerId`; the Admin sends it back as `customerId` in `POST /api/bookings`.
 
 ## Send message
 
@@ -227,3 +229,4 @@ Content-Type: application/json
 - 2026-11-24: Documented full conversation messages/proposal and both decline-then-agree proposal outcomes.
 - 2026-11-24: Included `messages` and `proposal` in the conversation list response and documented the `decline` behavior keeping the conversation in `Đang tư vấn`.
 - 2026-11-26: Make `room` and non-empty `staff` required for clash checks; add missing-resource and non-Admin authorization examples.
+- 2026-11-27: Add `customerId` to conversation items. `POST /api/bookings` requires it and no other Admin endpoint returned it before a booking existed.

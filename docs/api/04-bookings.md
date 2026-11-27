@@ -323,3 +323,4 @@ On success, the endpoint returns the updated booking object directly, including 
 - 2026-11-24: Added payment confirmation, reminders, preview gallery, selected photo, and receive-photo workflow per the technical agreement.
 - 2026-11-24: Clarified that successful receive returns the updated booking object directly.
 - 2026-11-24: Added `reminders` (scheduledAt, channel, recipient, emailStatus), `maxEditedPhotos`, `previewPhotos`, `selectedPhotoIds`, `finalFileLink`, `/api/bookings/:id/payments/confirm` and `/api/bookings/:id/receive`.
+- 2026-11-27: A booking cancelled by the Admin (`cancelled: true`, see `06-admin.md`) answers `409` to deposit start, remaining-payment start, payment confirmation and photo receipt.
