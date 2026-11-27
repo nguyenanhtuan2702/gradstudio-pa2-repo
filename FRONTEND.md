@@ -76,10 +76,10 @@ Routes currently declared in `client/src/App.jsx`. “Placeholder” means the r
 |---|---|---|---|---|
 | `/` | Visitor, Customer | G1; G3 and G6 planned | `GET /api/catalogue` | G1 catalogue loads from the mock; chat/request work for G3 and G6 are not implemented. |
 | `/login` | Visitor and signed-in users | G2 | `POST /api/auth/login`, `POST /api/auth/logout` | Login, role landing, session persistence and logout are implemented. |
-| `/studio` | Admin | G4–G6, G10 | Target: `/api/conversations`, `/api/clash-check`, `/api/conversations/:id/proposal`, `/api/bookings`, `/api/bookings/:id` | Protected placeholder; Admin flows are not implemented. |
+| `/studio` | Admin | G4–G6, G10 | `GET /api/conversations`, `GET /api/bookings`, `GET /api/catalogue`, `POST /api/conversations/:id/messages`, `POST /api/clash-check`, `POST /api/conversations/:id/proposal`, `POST /api/bookings`, `PATCH /api/bookings/:id` | Page written in `pages/StudioPage.jsx`; the route still shows the placeholder until `App.jsx` imports it. |
 | `/bookings/GS-1024` | Customer | G7, G9 | Target: `/api/bookings/:id`, `/api/bookings/:id/deposit/payment`, `/api/bookings/:id/payments/remaining`, `/api/bookings/:id/receive` | Protected placeholder; booking and payment flows are not implemented. |
 | `/payments/test/:id` | Customer | G7, G9 test payment | Target: `POST /api/bookings/:id/payments/confirm` | Route not implemented; it should exist after a payment session is created. |
-| `/staff` | Staff | G8 | Target: `/api/staff/jobs`, `/api/staff/jobs/:id`, `/api/bookings/:id/photos/preview` | Protected placeholder; staff work is not implemented. |
+| `/staff` | Staff | G8 (jobs exist after G7) | `GET /api/staff/jobs`, `PATCH /api/staff/jobs/:id`, `POST /api/bookings/:id/photos/preview` | Page written in `pages/StaffPage.jsx`; the route still shows the placeholder until `App.jsx` imports it. Before the deposit succeeds it shows an empty message. |
 | `/superadmin` | Superadmin | G11 | Target: `/api/admin/accounts`, `/api/admin/settings` | Protected placeholder; account and settings flows are not implemented. |
 
 `AuthContext` keeps the signed-in user and token in `sessionStorage`. The shared API client attaches `Authorization: Bearer <token>` when a protected request uses the context request helper. The public catalogue request uses the relative path `/api/catalogue` without a token.
@@ -87,6 +87,8 @@ Routes currently declared in `client/src/App.jsx`. “Placeholder” means the r
 ## 5. Product owner decisions
 
 No product-owner decision post was available in the repository at the time of initial PA#3 setup.
+
+Team choice, not a product-owner decision (to be confirmed by the team): cancelling keeps the booking status and adds `cancelled: true`, so no new status name is introduced. See `docs/api/06-admin.md`.
 
 ## 6. Libraries
 
@@ -97,4 +99,12 @@ No product-owner decision post was available in the repository at the time of in
 
 ## 7. Not done
 
-The current implementation covers the G1 catalogue request and the G2 login/logout and role-protection foundation. The Admin, booking/payment, staff and Superadmin routes are protected placeholders. G3–G11 business flows, the test-payment route, chat, and API-backed loading/error/empty states for the remaining data screens still require implementation.
+- `/studio` (G4–G6, G10) and `/staff` (G8): the pages are written but `App.jsx` does not import them yet.
+- G3, G6 (customer), G7 and G9: the customer pages are UI frames without API calls, and `/payments/test/:id` has no route.
+- G11: `/superadmin` is a placeholder.
+- Mock gaps found while building G8 and G10:
+  - tokens are lost when the mock restarts, so Retry after a mode change answers `401`;
+  - `empty` mode still returns the lists inside a single booking;
+  - a booking request is not added to the conversation;
+  - uploaded preview files are not served, so their `url` does not display an image.
+- There is no endpoint listing rooms or staff, so the Admin types them for a clash check.

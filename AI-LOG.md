@@ -147,9 +147,9 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Đã cập nhật:** Bổ sung bảng phân công trong `README.md`, `AGENTS.md`, `PROTOTYPE.md`, `brief.md` và `SELF_ASSESSMENT_REPORT.md`; thêm tên người phụ trách vào ba báo cáo kiểm tra; dùng tên file HTML trong phần mô tả hiện hành. Các prompt lịch sử được giữ nguyên và có chú giải ánh xạ Màn 1/2/3 sang file hiện tại.
 - **Kiểm tra:** Chưa chạy HTML/W3C vì không sửa mã nguồn trong lượt này.
 
-# AI-LOG.md — GradStudio PA#3
+## PA#3
 
-## 2026-11-23 — Khởi tạo hạ tầng và hợp đồng API cho Ngày 1 — Tuấn
+### 2026-11-23 — Khởi tạo hạ tầng và hợp đồng API cho Ngày 1 — Tuấn
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0; npm 11.12.1.
 - **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 1 theo kế hoạch PA#3: di chuyển PA#2 vào React/Vite, cấu hình React Router và proxy API, thiết lập dữ liệu demo, tạo hợp đồng API ban đầu và tài liệu `FRONTEND.md`.
@@ -169,7 +169,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Chưa thực hiện:** Mock server, tài nguyên `mock/data/`, `AuthContext`, `ProtectedRoute`, API integration, luồng G2–G11 hoàn chỉnh và `contract-check.mjs`. Các phần này thuộc các giai đoạn/Ngày tiếp theo trong kế hoạch.
 - **Không thực hiện:** Không thêm nút demo hoặc đổi vai trò giả; không thay đổi dữ liệu mẫu, không tuyên bố booking đã thanh toán hoặc giữ chỗ; không viết mock/API implementation trong lượt Ngày 1.
 
-## 2026-11-24 — Hoàn thiện Mock Server và Contract Checker — Ngày 2 — Tuấn
+### 2026-11-24 — Hoàn thiện Mock Server và Contract Checker — Ngày 2 — Tuấn
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0.
 - **Yêu cầu:** Làm phần Nguyễn Anh Tuấn Ngày 2 theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md): hoàn thiện dữ liệu mock, server giả lập Node built-in, bốn mode vận hành và công cụ kiểm tra hợp đồng.
@@ -190,7 +190,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Chưa thực hiện:** Chưa thêm `AuthContext`, `ProtectedRoute`, UI component loading/error/empty hoặc kết nối React với API; việc này thuộc Ngày 3 và các luồng tiếp theo.
 - **Không thực hiện:** Không thêm dependency hoặc backend ngoài; mock chỉ dùng Node built-in modules và không giả thanh toán, giữ lịch hoặc đồng bộ dữ liệu thật.
 
-## 2026-11-24 — Chỉnh quy trình nghiệm thu theo nguyên tắc contract-first
+### 2026-11-24 — Chỉnh quy trình nghiệm thu theo nguyên tắc contract-first
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js 24.15.0; Git.
 - **Yêu cầu:** Sau khi rà lại `PhanCongPA3.md`, điều chỉnh việc triển khai để hợp đồng API được commit riêng trước các thay đổi mock tiếp theo; nâng checker cho đúng các điều kiện nghiệm thu được mô tả trong tài liệu contract-check.
@@ -198,7 +198,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Đã kiểm chứng:** `node tools/contract-check.mjs --base http://localhost:3001 --repo .` đạt `PASS 100% - 0 FAIL (22 examples, 22 endpoints)` trên mock mới khởi động. Đã kiểm tra mode `slow` (khoảng 2 giây), `empty` (các endpoint danh sách trả `[]`), `error` (HTTP 500) và xác nhận login vẫn dùng được ở mode error. `node --check` cho server/checker và `git diff --check` đều thành công.
 - **Giới hạn lịch sử:** Các commit cũ `22a47a9` (React scaffold) và `86227f8` (mock ban đầu) đã tồn tại trước khi hoàn thiện contract. Không sửa/rebase/squash lịch sử vì PhanCongPA3.md cấm làm sai lệch tiến trình commit; do đó không thể khẳng định toàn bộ lịch sử từ đầu đã đúng thứ tự. Các commit chỉnh sửa trong lượt này giữ thứ tự contract rồi mới đến mock. React scaffold ban đầu chưa gọi API.
 
-## 2026-11-24 — Đồng bộ phần Tuấn Ngày 1–2 theo thống nhất kỹ thuật
+### 2026-11-24 — Đồng bộ phần Tuấn Ngày 1–2 theo thống nhất kỹ thuật
 
 - **Công cụ:** GitHub Copilot bằng Copilot SDK trong VS Code; Node.js; Git; PowerShell.
 - **Yêu cầu thực tế:** Điều chỉnh công việc Tuấn Ngày 1 và Ngày 2 theo bản thống nhất kỹ thuật mới nhất, đồng bộ với `PhanCongPA3.md` và tuân thủ contract-first.
@@ -212,7 +212,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Giới hạn lịch sử:** Các commit trước đó `22a47a9` (React scaffold), `86227f8` (mock ban đầu) và `b326226` (mock/checker) có trước bộ hợp đồng cập nhật theo quyết định kỹ thuật mới. Không sửa lịch sử; chỉ xác nhận đúng thứ tự cho các commit cập nhật nêu trên. Không khẳng định toàn bộ commit từ đầu đã theo thứ tự contract-first.
 - **Chưa làm:** Chưa triển khai React API integration hoặc các luồng React G1–G11; đây là phần tiếp theo sau khi hợp đồng và mock được commit.
 
-## 2026-11-24 — Đồng bộ response của thao tác nhận ảnh
+### 2026-11-24 — Đồng bộ response của thao tác nhận ảnh
 
 - **Yêu cầu thực tế:** Làm rõ cách chỉnh khác biệt giữa response `POST /api/bookings/:id/receive` và cách diễn đạt trong bản thống nhất kỹ thuật.
 - **Đã thay đổi:** Hợp đồng trong [docs/api/04-bookings.md](docs/api/04-bookings.md) và ví dụ thành công trong [docs/api/06-admin.md](docs/api/06-admin.md) hiện quy định trả trực tiếp booking đã cập nhật. [mock/server.mjs](mock/server.mjs) vẫn cập nhật conversation sang `Hoàn thành`, nhưng response chỉ là booking.
@@ -220,7 +220,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Commit theo thứ tự contract-first:** `ad89267` (API contract) → `1c6eb75` (mock response).
 - **Không thực hiện:** Không sửa `styles.css`, React, bản thống nhất kỹ thuật hoặc lịch sử commit cũ.
 
-## 2026-11-24 — Rà soát hợp đồng API luồng Khách hàng & Thanh toán (Ngày 1–2) — Phúc
+### 2026-11-24 — Rà soát hợp đồng API luồng Khách hàng & Thanh toán (Ngày 1–2) — Phúc
 
 - **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0.
 - **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 1–2 theo kế hoạch PA#3 và quyết định chốt của Tech Lead: review toàn bộ hợp đồng API (`docs/api/`) và dữ liệu mẫu (`mock/data/`, `mock/server.mjs`) cho luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) trước khi code React.
@@ -234,7 +234,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - Cập nhật [FRONTEND.md](FRONTEND.md) làm rõ 5 tài khoản demo ứng với 4 role đăng nhập và bảng route mục tiêu.
 - **Đã kiểm chứng:** Khởi động mock server mới và chạy `node tools/contract-check.mjs --strict-values` đạt `PASS 100% - 0 FAIL (24 examples, 24 endpoints)`.
 
-## 2026-11-25 — Review và kiểm chứng mock server theo luồng Khách hàng (Ngày 2) — Phúc
+### 2026-11-25 — Review và kiểm chứng mock server theo luồng Khách hàng (Ngày 2) — Phúc
 
 - **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; PowerShell; Git.
 - **Yêu cầu:** Thực hiện phần việc của Lê Công Phúc ở Ngày 2 theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md): review dữ liệu mẫu và mock server cho các luồng Khách hàng & Thanh toán (G3, G6-Customer, G7, G9) sau khi đồng bộ contract mới.
@@ -246,7 +246,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - Chạy `git diff --check` không phát hiện lỗi định dạng.
 - **Kết luận:** Dữ liệu mẫu và mock server đã sẵn sàng cho giai đoạn phát triển React (Ngày 3 trở đi). Không thay đổi code React trong lượt Ngày 2.
 
-## 2026-11-26 — Triển khai phần của Tuấn Ngày 3: core, G1 và G2
+### 2026-11-26 — Triển khai phần của Tuấn Ngày 3: core, G1 và G2
 
 - **Công cụ:** Codex.
 - **Yêu cầu thực tế:** “làm dùm tôi phần của Tuấn vào ngày 3”. Đã đối chiếu phần Tuấn Ngày 3 trong `PhanCongPA3.md` và `ThongNhatKyThuatPA3.md`.
@@ -260,28 +260,28 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Kiểm tra:** Chưa chạy build, trình duyệt, contract-check hoặc kiểm tra responsive trong task này; chưa ghi nhận kết quả PASS.
 - **Chưa làm:** G3–G11 ngoài nền tảng G2, trang đăng nhập test-payment và các màn Admin/booking/Staff/Superadmin nghiệp vụ vẫn cần triển khai theo phân công.
 
-## 2026-11-26 — Điều chỉnh trang chính PA#3 để kế thừa giao diện PA#2
+### 2026-11-26 — Điều chỉnh trang chính PA#3 để kế thừa giao diện PA#2
 
 - **Công cụ:** Codex.
 - **Yêu cầu thực tế:** Người dùng hỏi có thể dùng lại `index.html` PA#2 không và nhắc vì sao trang PA#3 chưa kế thừa giao diện đó.
 - **Đã thay đổi:** Cập nhật `client/src/pages/HomePage.jsx` để kế thừa bố cục hero, nội dung giới thiệu dịch vụ, ba ảnh minh họa dịch vụ và quy trình đặt lịch từ `index.html` PA#2. Danh sách dịch vụ, gói, extras, ảnh mẫu và đánh giá vẫn được đọc từ `GET /api/catalogue`; trang không dùng bản HTML tĩnh làm entry của Vite. Không thêm lại chat mẫu PA#2 vì luồng chat thuộc phần tích hợp sau.
 - **Kiểm tra:** Chưa chạy build, trình duyệt hoặc kiểm tra responsive; chưa ghi nhận kết quả PASS.
 
-## 2026-11-26 — Khôi phục nút hỏi về gói trên trang chủ PA#3
+### 2026-11-26 — Khôi phục nút hỏi về gói trên trang chủ PA#3
 
 - **Công cụ:** Codex.
 - **Yêu cầu thực tế:** Người dùng nhận thấy các thẻ dịch vụ thiếu nút “Hỏi về gói này” như `index.html` PA#2.
 - **Đã thay đổi:** Thêm liên kết “Hỏi về gói này” vào thẻ dịch vụ và gói chụp trong `client/src/pages/HomePage.jsx`. Liên kết cuộn tới khu vực chat, ghi nhận lựa chọn hiện tại và hiển thị thông báo rằng chat G3 chưa gửi dữ liệu đến studio; giữ điểm tích hợp để nối `CustomerChatSection` theo `ThongNhatKyThuatPA3.md`.
 - **Kiểm tra:** Chưa chạy build, trình duyệt hoặc kiểm tra responsive; chưa ghi nhận kết quả PASS.
 
-## 2026-11-26 — Tăng độ tương phản hover cho nút hỏi gói
+### 2026-11-26 — Tăng độ tương phản hover cho nút hỏi gói
 
 - **Công cụ:** Codex.
 - **Yêu cầu thực tế:** Làm màu nút đậm hơn rõ rệt khi rê chuột vì hiệu ứng hover hiện tại còn nhạt.
 - **Đã thay đổi:** Thêm kiểu hover riêng cho nút “Hỏi về gói này” trong `client/src/styles.css`: nền nâu đậm, chữ trắng; trạng thái nhấn dùng màu nâu đậm hơn. Không đổi hover của các nút phụ khác.
 - **Kiểm tra:** Chưa chạy build hoặc kiểm tra giao diện; chưa ghi nhận kết quả PASS.
 
-## 2026-11-26 — Gom tài liệu PA#3 vào `docs/pa3/`
+### 2026-11-26 — Gom tài liệu PA#3 vào `docs/pa3/`
 
 - **Công cụ:** Codex; PowerShell.
 - **Yêu cầu thực tế:** Sắp xếp work tree để hồ sơ dự án dễ tìm và quản lý hơn.
@@ -289,21 +289,21 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Giữ ở thư mục gốc:** `README.md`, `FRONTEND.md`, `brief.md`, `AI-LOG.md` là hướng dẫn/hồ sơ PA#3; các trang tĩnh, stylesheet và thư mục bằng chứng PA#2 giữ nguyên đường dẫn được tài liệu PA#2 ghi nhận.
 - **Kiểm tra:** Chưa chạy build hoặc contract-check; chưa ghi nhận kết quả PASS.
 
-## 2026-11-26 — Dùng chung một nguồn ảnh giữa các milestone
+### 2026-11-26 — Dùng chung một nguồn ảnh giữa các milestone
 
 - **Công cụ:** Codex; PowerShell.
 - **Yêu cầu thực tế:** Tránh để các PA kế tiếp kế thừa nhiều bản sao asset có thể lệch nhau.
 - **Đã thay đổi:** Chọn `client/public/assets/images/` làm nguồn ảnh dùng chung cho PA#2 và các milestone React tiếp theo. Cập nhật đường dẫn ảnh trong `index.html`, ghi chú sử dụng trong `docs/pa2/AGENTS.md`, `docs/pa2/README.md`, `docs/pa2/PROTOTYPE.md`, `docs/pa3/README.md` và `README.md`; sửa các liên kết tài liệu PA#2 theo vị trí hiện tại; xóa bản sao cũ trong `assets/` sau khi xác nhận Git blob hash của bốn ảnh hiện tại khớp bản cũ.
 - **Kiểm tra:** Đã đối chiếu Git blob hash của bốn ảnh hiện tại với các blob cũ đã commit và xác nhận trùng khớp. Chưa chạy build hoặc mở lại prototype trên trình duyệt.
 
-## 2026-11-26 — Vô hiệu hóa token mock sau logout
+### 2026-11-26 — Vô hiệu hóa token mock sau logout
 
 - **Công cụ:** Codex; Node.js.
 - **Yêu cầu thực tế:** Người dùng phát hiện token Customer vẫn gọi API được sau khi `POST /api/auth/logout` trả `200`; yêu cầu sửa logic mock và checker, không chỉ frontend.
 - **Đã thay đổi:** Cập nhật hợp đồng tại `docs/api/01-auth.md` để quy định thu hồi token ngay sau logout thành công và thêm ví dụ dùng lại token nhận `401`. Commit hợp đồng trước: `9e5c3d7`. Trong `mock/server.mjs`, login cấp token ngẫu nhiên theo phiên, token chưa xác thực không được seed, và logout xóa token khỏi map. Trong `tools/contract-check.mjs`, theo dõi token trong ví dụ logout, dùng lại chính token trong ví dụ tiếp theo, rồi làm mới cache sau khi xác nhận `401` để các ví dụ sau tiếp tục bằng phiên mới.
 - **Đã kiểm tra:** `node --check mock/server.mjs`, `node --check tools/contract-check.mjs`; mock mới khởi động ở `normal`; `node tools/contract-check.mjs` đạt `PASS 100% - 0 FAIL (36 examples, 24 endpoints)`. Cặp ví dụ mới xác nhận logout `200` rồi GET protected `/api/bookings` bằng token cũ nhận `401`. Một ghi chú về phần tử thứ hai trong danh sách jobs vẫn là note của checker, không phải FAIL.
 
-## 2026-11-26 — Kiểm tra authentication và API phân quyền PA#3
+### 2026-11-26 — Kiểm tra authentication và API phân quyền PA#3
 
 - **Công cụ:** Codex; Node.js 24.15.0; PowerShell; `curl.exe`.
 - **Yêu cầu thực tế:** Kiểm tra trực tiếp 4 role đăng nhập và cả Mai/Tuấn; đối chiếu contract, mock, dữ liệu và checker; lập ma trận quyền 24 endpoint; kiểm tra token thiếu/sai, logout/thu hồi/relogin; điều tra `POST /api/clash-check` trả 404; kiểm tra phân công job/upload; không sửa frontend, không lộ token và không commit.
@@ -314,7 +314,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Clash Check/Postman:** `POST /api/clash-check` tồn tại trong contract và mock, method/payload đầy đủ trên mock mới trả `200` với clash và suggestion. `GET /api/clash-check` trả `404` do sai method. Trong môi trường kiểm tra, mock không bind được cổng `3001` (`EADDRINUSE`) nhưng `curl` tới cổng này nhận connection refused; kiểm thử mock mới dùng cổng `3013`. Vì không truy cập được tiến trình đã trả 404 trong Postman, nguồn gốc chính xác của phản hồi cũ chưa xác định; không ghi giả định đó thành kết luận.
 - **Phạm vi chưa xác nhận:** Contract có nêu `409` cho tình huống không còn tổ hợp tài nguyên của Clash Check nhưng fixture hiện tại chỉ có xung đột 09:00 kèm một khung giờ đề xuất; không có ví dụ đầu vào để tái hiện hết tài nguyên. Lint/build không chạy vì không sửa `client/`. Không ghi token vào log; không tạo commit.
 
-## 2026-11-26 — Đồng bộ phân công PA#3 với cấu trúc React hiện tại
+### 2026-11-26 — Đồng bộ phân công PA#3 với cấu trúc React hiện tại
 
 - **Công cụ:** Codex; PowerShell.
 - **Yêu cầu thực tế:** Cập nhật `docs/pa3/PhanCongPA3.md` để đường dẫn và mô tả Ngày 3 khớp code mới; không đổi code chỉ để khớp đường dẫn cũ trong tài liệu.
@@ -322,7 +322,7 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
 - **Đã thay đổi:** Cập nhật các đường dẫn core trong phân công Tuấn; phân biệt file đã có với file dự kiến trong cây React; sửa G1 và mô tả Ngày 3 để ghi nhận `HomePage.jsx` đang có, đồng thời đánh dấu chat component và Studio page extraction là việc còn lại. Ghi nhận yêu cầu vào `brief.md`.
 - **Kiểm tra:** Rà lại các tên đường dẫn cũ trong `docs/pa3/PhanCongPA3.md`. Không chạy build hoặc kiểm thử ứng dụng vì chỉ sửa tài liệu.
 
-## 2026-11-27 — Dựng khung UI luồng Khách hàng Ngày 3 (Chat, Booking, Photo Gallery) — Phúc
+### 2026-11-27 — Dựng khung UI luồng Khách hàng Ngày 3 (Chat, Booking, Photo Gallery) — Phúc
 
 - **Công cụ:** Antigravity (Google DeepMind); Node.js 24.15.0; Vite 8.3.8; Oxlint 1.90.0; Google Chrome Headless (CDP).
 - **Yêu cầu thực tế:** Thực hiện phần việc Ngày 3 của Lê Công Phúc theo [PhanCongPA3.md](docs/pa3/PhanCongPA3.md) và [ThongNhatKyThuatPA3.md](docs/pa3/ThongNhatKyThuatPA3.md): dựng khung giao diện phía Customer trên React scaffold hiện tại của Tuấn (Customer Chat cho G3/G6, Booking Page cho G7, Photo Gallery cho G9), kế thừa giao diện PA#2, không thiết kế lại từ đầu, không sửa các file Core/`App.jsx`/`HomePage.jsx` của Tuấn, và bàn giao danh sách file, ảnh giao diện cùng hướng dẫn tích hợp.
@@ -341,3 +341,19 @@ Rejected: Không thêm `role` giả tạo để giữ `aria-label`, không dùng
   - `npm run build` (`vite build`): thành công, tạo `client/dist/`.
   - Kiểm tra trình duyệt Chrome Headless tại `360px`, `768px`, `1280px` (với gắn kết preview tạm thời rồi khôi phục nguyên trạng `App.jsx` và `HomePage.jsx`): `scrollWidth === clientWidth` (không tràn ngang), `0` phần tử vượt cạnh phải, đúng `1` thẻ `<h1>` mỗi trang, `100%` form control có `<label>` hiển thị, và mọi nút/link/checkbox pill độc lập tại `360px` cao `>= 44px`.
 - **Chưa thực hiện (theo đúng phạm vi Ngày 3):** Chưa gọi API thực tế cho G3, G6, G7, G9 (các nút hành động nghiệp vụ đang để `disabled` kèm chú thích rõ ràng, sẽ triển khai theo lịch từ ngày 27–30/11).
+
+### 2026-11-27 — Luồng Admin, Staff và tài liệu (G4–G6, G8, G10) — Minh
+
+- **Công cụ:** Claude (Claude Sonnet 5.5, trợ lý chạy trong môi trường đám mây); Node.js 22.23.5; Oxlint; Vite; Playwright 1.63.0 với Chromium headless; Nu Html Checker (`vnu-jar`).
+- **Yêu cầu thực tế:** Làm phần việc của Minh theo `docs/pa3/PhanCongPA3.md` (nguyên văn trong `brief.md`, phần XIX).
+- **Đã giữ lại:** API client, AuthContext, `useResource`, `AsyncStates`, header/footer và stylesheet nền của nhóm; bố cục ba cột và các class của `studio.html` PA#2; dữ liệu mẫu và bốn trạng thái hội thoại.
+- **Đã thay đổi:**
+  - Hợp đồng rồi mới đến mock: thêm `customerId` vào hội thoại (cần cho `POST /api/bookings`); định nghĩa trường, lỗi, đổi lịch và hủy lịch cho `PATCH /api/bookings/:id`.
+  - Tạo `StudioPage.jsx`, `StaffPage.jsx`, các component trong `components/studio/`, `components/staff/`, `components/workspace/` và `styles/workspace.css`.
+  - Cập nhật `FRONTEND.md`, `brief.md`, `AI-LOG.md` (đổi tiêu đề phần PA#3 thành `## PA#3`, các mục bên trong hạ một cấp) và tạo bản nháp `SELF_ASSESSMENT_REPORT.md`.
+- **Lỗi của assistant do kiểm tra phát hiện:**
+  1. `npm run lint` báo lỗi `rules-of-hooks`: hàm điền khung giờ đề xuất bị đặt tên `useSlot` nên bị coi là React Hook. Đổi thành `fillProposal`. Lint cũng cảnh báo `only-export-components` ở `ConversationList.jsx`; chuyển hàm lọc sang `format.js`.
+  2. Kịch bản trình duyệt G6: đang lọc `Đang tư vấn`, sau khi khách đồng ý và bấm cập nhật thì hội thoại đang mở biến mất cùng biểu mẫu `Tạo booking`. Sửa `StudioPage.jsx` để hội thoại đang mở được giữ khi trạng thái của nó rời bộ lọc; chạy lại kịch bản đạt.
+- **Phương án không dùng:** Không viết cứng danh sách phòng/nhân sự vì API không cung cấp (dùng ô nhập); không thêm trạng thái booking mới cho việc hủy (dùng trường `cancelled`); không thêm dependency; không đưa thay đổi `App.jsx` vào commit vì file thuộc phạm vi của Tuấn.
+- **Đã kiểm chứng (assistant chạy, với `App.jsx` nối tạm hai page):** `npm run lint` và `npm run build` thành công; `node tools/contract-check.mjs` trên mock mới đạt `PASS 100% - 0 FAIL (57 examples, 24 endpoints)`; kịch bản Playwright cho G4–G6, G8, G10; bốn mode `normal`, `slow`, `error`, `empty`; `/studio` và `/staff` tại 360, 768, 1280 px không cuộn ngang, một `h1`, không có control thấp hơn 44 px trong phép đo; Nu Html Checker trên HTML đã render của hai page ở ba bề rộng không báo lỗi.
+- **Chưa kiểm chứng:** Thành viên nhóm chưa tự kiểm thử lại; chưa chạy luồng liên vai trò hoàn toàn qua giao diện vì G3, G7, G9 và tích hợp router chưa xong (bước của khách trong kịch bản được gọi thẳng vào API).
