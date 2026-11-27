@@ -11,14 +11,22 @@ function formatCurrency(value) {
 export default function BookingPhotoGallery({
   bookingId = 'GS-1024',
   previewPhotos = [],
-  initialSelectedIds = ['photo-1'],
+  selectedPhotoIds = [],
   maxEditedPhotos = 30,
   remainingAmount = 1260000,
   paymentStatus = 'Chờ cọc',
   finalFileLink = '',
 }) {
-  const [selectedIds, setSelectedIds] = useState(initialSelectedIds)
+  const normalizedPropIds = Array.isArray(selectedPhotoIds) ? selectedPhotoIds : []
+  const propSelectionKey = normalizedPropIds.join('\u0000')
+  const [selectedIds, setSelectedIds] = useState(() => normalizedPropIds)
+  const [prevPropSelectionKey, setPrevPropSelectionKey] = useState(propSelectionKey)
   const [remainingScenario, setRemainingScenario] = useState('success')
+
+  if (propSelectionKey !== prevPropSelectionKey) {
+    setPrevPropSelectionKey(propSelectionKey)
+    setSelectedIds(normalizedPropIds)
+  }
 
   const selectedCount = selectedIds.length
   const reachedLimit = selectedCount >= maxEditedPhotos

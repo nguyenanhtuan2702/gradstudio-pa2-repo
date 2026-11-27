@@ -48,13 +48,23 @@ export default function CustomerChatSection({
   )
   const extraItems = extras.length ? extras : FALLBACK_EXTRAS
 
-  const [preferredShootType, setPreferredShootType] = useState('')
+  const [preferredShootType, setPreferredShootType] = useState(
+    () => selectedPackageName || shootOptions[0] || '',
+  )
+  const [prevSelectedPackageName, setPrevSelectedPackageName] = useState(selectedPackageName)
   const [preferredDate, setPreferredDate] = useState('2026-10-24')
   const [preferredTime, setPreferredTime] = useState('09:00')
   const [selectedExtras, setSelectedExtras] = useState(['Makeup'])
   const [draftMessage, setDraftMessage] = useState('')
 
-  const activeShootType = selectedPackageName || preferredShootType || shootOptions[0]
+  if (selectedPackageName !== prevSelectedPackageName) {
+    setPrevSelectedPackageName(selectedPackageName)
+    if (selectedPackageName) {
+      setPreferredShootType(selectedPackageName)
+    }
+  }
+
+  const activeShootType = preferredShootType || selectedPackageName || shootOptions[0] || ''
 
   function handleToggleExtra(extraName) {
     setSelectedExtras((current) => (
@@ -86,7 +96,7 @@ export default function CustomerChatSection({
               <div>
                 <p><strong>GradStudio</strong></p>
                 <p className="meta" aria-live="polite">
-                  Đang hỏi về: <strong>{selectedPackageName || 'Gói Tốt nghiệp Premium'}</strong> · Mã hội thoại: <code>{defaultConversationId}</code>
+                  Đang hỏi về: <strong>{activeShootType || 'Gói Tốt nghiệp Premium'}</strong> · Mã hội thoại: <code>{defaultConversationId}</code>
                 </p>
               </div>
               <span className="badge badge--wait">

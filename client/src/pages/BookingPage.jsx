@@ -1,19 +1,25 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { CUSTOMER_API_ENDPOINTS } from '../api/customerEndpoints.js'
+import { EmptyState } from '../components/AsyncStates.jsx'
 import BookingPhotoGallery from '../components/BookingPhotoGallery.jsx'
 import { SiteFooter, SiteHeader } from '../components/SiteChrome.jsx'
 import '../styles/customerFlow.css'
 
 const PREVIEW_BOOKING_SHELL = Object.freeze({
   id: 'GS-1024',
+  conversationId: 'conv-linh',
+  customerId: 'u-linh',
   customerName: 'Nguyễn Thùy Linh',
   shootType: 'Tốt nghiệp cá nhân',
+  packageId: 'pkg-premium',
   packageName: 'Gói Tốt nghiệp Premium',
   packageSummary: '2 giờ chụp · 30 ảnh chỉnh',
+  date: '2026-10-24',
   dateLabel: 'Thứ Bảy, 24/10/2026',
-  makeup: '13:00–14:00 với Mai',
-  shoot: '14:00–16:00 với Tuấn · Phòng B',
+  makeup: '13:00–14:00',
+  shoot: '14:00–16:00',
+  room: 'Phòng B',
   status: 'Chờ cọc 30%',
   paymentStatus: 'Chờ cọc',
   total: 1800000,
@@ -28,41 +34,40 @@ const PREVIEW_BOOKING_SHELL = Object.freeze({
       alt: 'Mèo con nhìn nghiêng giữa những tán cây xanh',
       url: '/assets/images/TotNghiep.jpg',
     },
-    {
-      id: 'photo-sample-2',
-      bookingId: 'GS-1024',
-      title: 'Ảnh kỷ yếu mẫu 02 (minh họa bố cục lưới)',
-      alt: 'Ba con mèo ngồi cạnh nhau trên nền lá khô',
-      url: '/assets/images/KyYeu.jpg',
-    },
-    {
-      id: 'photo-sample-3',
-      bookingId: 'GS-1024',
-      title: 'Ảnh chân dung mẫu 03 (minh họa bố cục lưới)',
-      alt: 'Chân dung cận cảnh mèo lông sáng trên nền tối',
-      url: '/assets/images/ChanDung.jpg',
-    },
   ],
-  remindersSample: [
-    {
-      id: 'rem-1024-24h',
-      title: 'Nhắc lịch make-up và chụp trước 24 giờ',
-      scheduledAtLabel: '23/10/2026 · 13:00 (GMT+7)',
-      channel: 'Email',
-      recipient: 'linh@gradstudio.test',
-      emailStatus: 'Chờ kích hoạt sau khi cọc 30%',
-    },
-  ],
+  selectedPhotoIds: [],
+  finalFileLink: '',
+  reminders: [],
 })
 
 function formatCurrency(value) {
   return `${new Intl.NumberFormat('vi-VN').format(value)}đ`
 }
 
+function formatScheduledAt(scheduledAt) {
+  if (!scheduledAt) return 'Chưa xác định'
+  const parsed = new Date(scheduledAt)
+  if (Number.isNaN(parsed.getTime())) return String(scheduledAt)
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Asia/Ho_Chi_Minh',
+  }).format(parsed)
+}
+
 export default function BookingPage() {
   const { id = PREVIEW_BOOKING_SHELL.id } = useParams()
   const [depositScenario, setDepositScenario] = useState('success')
   const booking = { ...PREVIEW_BOOKING_SHELL, id }
+  const reminders = Array.isArray(booking.reminders) ? booking.reminders : []
+  const makeupSummary = booking.makeup?.includes('Mai') ? booking.makeup : `${booking.makeup} với Mai`
+  const shootSummary = booking.shoot?.includes('Tuấn')
+    ? booking.shoot
+    : `${booking.shoot} với Tuấn · ${booking.room || 'Phòng B'}`
 
   return (
     <>
@@ -74,7 +79,7 @@ export default function BookingPage() {
             Xem lại lịch đã thống nhất với studio. Lịch chỉ được giữ sau khi thanh toán cọc 30% thành công và hệ thống kiểm tra lại tài nguyên.
           </p>
           <p className="role-strip">
-            Khung giao diện Ngày 3 kế thừa từ <code>booking.html</code> (PA#2) cho mã <strong>{booking.id}</strong>: hiện hiển thị dữ liệu mẫu để kiểm tra bố cục G7 &amp; G9; truy vấn <code>GET {CUSTOMER_API_ENDPOINTS.getBooking(booking.id)}</code> và thanh toán thử nghiệm sẽ được kết nối ở Ngày 6–7.
+            Khung giao diện Ngày 3 kế thừa từ <code>booking.html</code> (PA#2) cho mã <strong>{booking.id}</strong>: hiện hiển thị dữ liệu mẫu đúng cấu trúc contract để kiểm tra bố cục G7 &amp; G9; truy vấn <code>GET {CUSTOMER_API_ENDPOINTS.getBooking(booking.id)}</code> và thanh toán thử nghiệm sẽ được kết nối ở Ngày 6–7.
           </p>
         </section>
 
@@ -112,14 +117,14 @@ export default function BookingPage() {
                   <p className="meta">Makeup artist Mai bận 08:00–12:00.</p>
                 </li>
                 <li>
-                  <p className="timeline__time">13:00–14:00</p>
+                  <p className="timeline__time">{booking.makeup}</p>
                   <h3>Makeup với Mai</h3>
                   <p className="meta">Giờ makeup đã thống nhất</p>
                 </li>
                 <li>
-                  <p className="timeline__time">14:00–16:00</p>
+                  <p className="timeline__time">{booking.shoot}</p>
                   <h3>Chụp ảnh với Tuấn</h3>
-                  <p className="meta">Phòng B · Giờ chụp đã thống nhất</p>
+                  <p className="meta">{booking.room || 'Phòng B'} · Giờ chụp đã thống nhất</p>
                 </li>
               </ol>
             </section>
@@ -127,24 +132,35 @@ export default function BookingPage() {
             <section className="gs-card gs-stack" aria-labelledby="reminders-title">
               <h2 id="reminders-title">Nhắc lịch &amp; thông báo email</h2>
               <p className="meta">
-                Danh sách nhắc lịch từ trường <code>booking.reminders</code> (chỉ kích hoạt sau khi xác nhận đặt cọc 30% thành công ở bước G7; trạng thái email là dữ liệu mô phỏng của API mock).
+                Danh sách nhắc lịch đọc trực tiếp từ <code>booking.reminders</code> và trường <code>reminder.scheduledAt</code> (trạng thái email là dữ liệu mô phỏng của API mock).
               </p>
-              <ul className="reminder-list gs-list-reset">
-                {booking.remindersSample.map((reminder) => (
-                  <li className="reminder-item" key={reminder.id}>
-                    <div className="reminder-item__head">
-                      <h3>{reminder.title}</h3>
-                      <span className="badge badge--wait">
-                        <span aria-hidden="true">◷</span> {reminder.emailStatus}
-                      </span>
-                    </div>
-                    <p className="meta">
-                      Kênh: <strong>{reminder.channel}</strong> · Người nhận: <code>{reminder.recipient}</code>
-                    </p>
-                    <p className="meta">Thời điểm gửi dự kiến: {reminder.scheduledAtLabel}</p>
-                  </li>
-                ))}
-              </ul>
+              {reminders.length ? (
+                <ul className="reminder-list gs-list-reset">
+                  {reminders.map((reminder) => {
+                    const isSent = reminder.emailStatus === 'Đã gửi'
+                    return (
+                      <li className="reminder-item" key={reminder.id}>
+                        <div className="reminder-item__head">
+                          <h3>{reminder.title}</h3>
+                          <span className={`badge ${isSent ? 'badge--ok' : 'badge--wait'}`}>
+                            <span aria-hidden="true">{isSent ? '✓' : '◷'}</span> {reminder.emailStatus}
+                          </span>
+                        </div>
+                        <p className="meta">
+                          Kênh: <strong>{reminder.channel}</strong> · Người nhận: <code>{reminder.recipient}</code>
+                        </p>
+                        <p className="meta">
+                          Thời điểm gửi: <time dateTime={reminder.scheduledAt}>{formatScheduledAt(reminder.scheduledAt)}</time>
+                        </p>
+                      </li>
+                    )
+                  })}
+                </ul>
+              ) : (
+                <EmptyState title="Chưa có lịch nhắc tự động" headingLevel={3}>
+                  Booking đang ở trạng thái {booking.status}; nhắc lịch email sẽ được tạo sau khi xác nhận đặt cọc 30% thành công.
+                </EmptyState>
+              )}
             </section>
           </div>
 
@@ -163,8 +179,8 @@ export default function BookingPage() {
               <div><dt>Khách hàng</dt><dd>{booking.customerName}</dd></div>
               <div><dt>Loại buổi chụp</dt><dd>{booking.shootType}</dd></div>
               <div><dt>Ngày</dt><dd>{booking.dateLabel}</dd></div>
-              <div><dt>Makeup</dt><dd>{booking.makeup}</dd></div>
-              <div><dt>Chụp ảnh</dt><dd>{booking.shoot}</dd></div>
+              <div><dt>Makeup</dt><dd>{makeupSummary}</dd></div>
+              <div><dt>Chụp ảnh</dt><dd>{shootSummary}</dd></div>
               <div><dt>Bao gồm</dt><dd>{booking.packageSummary}</dd></div>
             </dl>
 
@@ -220,10 +236,11 @@ export default function BookingPage() {
         <BookingPhotoGallery
           bookingId={booking.id}
           previewPhotos={booking.previewPhotos}
+          selectedPhotoIds={booking.selectedPhotoIds}
           maxEditedPhotos={booking.maxEditedPhotos}
           remainingAmount={booking.remaining}
           paymentStatus={booking.paymentStatus}
-          finalFileLink=""
+          finalFileLink={booking.finalFileLink}
         />
 
         <nav className="next-step" aria-label="Điều hướng khách hàng">
