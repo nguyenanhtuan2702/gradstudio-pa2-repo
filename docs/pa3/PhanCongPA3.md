@@ -35,12 +35,12 @@ Repository hiện có ba màn hình PA#2 và đã có một bước chuyển đ�
 | `styles.css` ở root | `client/src/styles.css` | Bản React kế thừa nền PA#2 và có thêm CSS cho catalogue, đăng nhập, trạng thái bất đồng bộ và tài khoản | Tiếp tục sử dụng làm stylesheet nền. Chỉ bổ sung CSS có phạm vi rõ ràng cho thành phần mới hoặc sửa lỗi responsive/accessibility bắt buộc; không thay toàn bộ design system. |
 | `client/public/assets/images/` | Cùng một nguồn ảnh cho PA#2 và React | Ảnh dùng chung; trang HTML gốc tham chiếu tương đối tới thư mục này, Vite phục vụ tại `/assets/images/` | Giữ một bản duy nhất; bổ sung ảnh mới tại đây khi nghiệp vụ cần và nguồn ảnh hợp lệ. |
 
-**Trạng thái code hiện tại (26/11/2026):**
+**Trạng thái code hiện tại (27/11/2026, sau bàn giao Ngày 3):**
 
 - `client/src/App.jsx` có `BrowserRouter`, route `/`, `/login` và các route được bảo vệ `/studio`, `/bookings/GS-1024`, `/staff`, `/superadmin`.
-- Trang chủ đã tách thành `client/src/pages/HomePage.jsx` và tải catalogue qua API. Khu vực chat G3/G6 chưa tích hợp.
+- Trang chủ đã tách thành `client/src/pages/HomePage.jsx` và tải catalogue qua API. Phúc đã tạo `CustomerChatSection.jsx` dưới dạng khung giao diện cho G3/G6, nhưng component chưa được tích hợp vào `HomePage.jsx` và các thao tác chưa nối API.
 - Đăng nhập, đăng xuất, AuthContext, `useAuth`, `ProtectedRoute` và các trang chờ theo role đã có. Các luồng nghiệp vụ G3–G11 chưa hoàn tất.
-- Các màn `/studio` và `/bookings/GS-1024` hiện vẫn là hàm placeholder trong `App.jsx`, chưa tách thành page files và chưa tích hợp API nghiệp vụ.
+- `/studio` vẫn là hàm placeholder trong `App.jsx`. Route `/bookings/GS-1024` vẫn render placeholder nội tuyến trong `App.jsx`, dù Phúc đã tạo `BookingPage.jsx` và `TestPaymentPage.jsx` dưới dạng khung giao diện; Tuấn chưa tích hợp các page này vào router.
 - Shared async states được export từ `client/src/components/AsyncStates.jsx`; API helper nằm tại `client/src/api/apiClient.js`.
 - `client/src/styles.css` kế thừa phần lớn nền PA#2 và có thêm CSS riêng cho PA#3. Ảnh dùng chung một lần tại `client/public/assets/images/`.
 - React, Vite và React Router đã được cài đặt/cấu hình trong `client/`.
@@ -192,7 +192,7 @@ export default function CustomerChatSection({
 - Minh dùng API client/AuthContext do Tuấn cung cấp; không tự triển khai token/API helper riêng.
 - Minh giữ lại giao diện hiện có của `StudioPage()` khi tách file, sau đó mới mở rộng API và các thao tác G4–G6/G10.
 
-### 3.4. Cấu trúc React hiện tại, file dự kiến bổ sung và quy tắc tránh xung đột
+### 3.4. Cấu trúc React hiện tại, trạng thái file và quy tắc tránh xung đột
 
 Cây dưới đây phân biệt file đang có với file dự kiến tạo theo phân công. Đường dẫn của các file đã có phản ánh cấu trúc repository ngày 26/11/2026:
 
@@ -201,7 +201,8 @@ client/src/
 ├── App.jsx                         # Hiện có — Tuấn: router và tích hợp page
 ├── main.jsx                        # Hiện có — bootstrap ứng dụng
 ├── api/
-│   └── apiClient.js                # Hiện có — API client dùng chung
+│   ├── apiClient.js                # Hiện có — API client dùng chung
+│   └── customerEndpoints.js        # Đã tạo — Phúc; bản đồ endpoint Customer
 ├── auth/
 │   ├── AuthContext.jsx             # Hiện có
 │   ├── ProtectedRoute.jsx          # Hiện có
@@ -209,23 +210,26 @@ client/src/
 ├── components/
 │   ├── AsyncStates.jsx             # Hiện có — LoadingState/ErrorState/EmptyState
 │   ├── SiteChrome.jsx              # Hiện có
-│   └── CustomerChatSection.jsx     # Dự kiến — Phúc
+│   ├── BookingPhotoGallery.jsx     # Đã tạo — Phúc; khung giao diện G9
+│   └── CustomerChatSection.jsx     # Đã tạo — Phúc; khung giao diện G3/G6
 ├── hooks/
 │   └── useResource.js              # Hiện có
 ├── pages/
 │   ├── HomePage.jsx                # Hiện có — Tuấn; tích hợp chat sau
 │   ├── LoginPage.jsx               # Hiện có — Tuấn
 │   ├── StudioPage.jsx              # Dự kiến — Minh
-│   ├── BookingPage.jsx             # Dự kiến — Phúc
-│   ├── TestPaymentPage.jsx         # Dự kiến — Phúc
+│   ├── BookingPage.jsx             # Đã tạo — Phúc; khung giao diện G7/G9
+│   ├── TestPaymentPage.jsx         # Đã tạo — Phúc; khung giao diện Gateway
 │   ├── StaffPage.jsx               # Dự kiến — Minh
 │   └── SuperadminPage.jsx          # Dự kiến — Tuấn
 ├── styles.css                      # Hiện có — nền kế thừa PA#2; chỉ sửa có kiểm soát
+├── styles/
+│   └── customerFlow.css            # Đã tạo — Phúc; CSS riêng Customer
 ├── App.css                          # Hiện có
 └── index.css                        # Hiện có
 ```
 
-Ở thời điểm cập nhật, `StudioPage()` và `BookingPage()` vẫn là hàm placeholder khai báo trong `App.jsx`; các page gắn nhãn “Dự kiến” chưa có file tương ứng.
+Ở thời điểm cập nhật, `StudioPage()` và `BookingPage()` nội tuyến trong `App.jsx` vẫn là placeholder. Các file `CustomerChatSection.jsx`, `BookingPage.jsx`, `TestPaymentPage.jsx` và `BookingPhotoGallery.jsx` đã được tạo theo bàn giao Ngày 3 nhưng mới là khung giao diện, chưa nối đầy đủ nghiệp vụ API; các route vẫn cần Tuấn tích hợp. `StudioPage.jsx` và `StaffPage.jsx` chưa có file riêng.
 
 Quy tắc làm việc:
 
@@ -261,7 +265,7 @@ Quy tắc làm việc:
 |---|---|---|---|
 | **Ngày 1 — 24/11 (Thứ Ba)** | Rà soát Git identity và tài liệu thống nhất kỹ thuật. Hoàn thiện, rà soát và commit riêng các hợp đồng `docs/api/` trước các thay đổi mock/React integration. Chốt request/response cho hội thoại, agree/decline, payment-init/confirm, reminders, preview photos, selected photos và Customer receive. Phúc/Minh review các endpoint thuộc luồng mình phụ trách. | Tuấn chính; Phúc và Minh review. | Các cập nhật hợp đồng được ghi nhận ở `adce667`, `ee39dc4`; dữ liệu thống nhất với Linh, Thảo, Mai, Tuấn, Phòng B và booking `GS-1024`. React/Vite scaffold đã có từ commit trước; không coi đó là API integration. **Ngày 1 đã hoàn thành theo lịch sử repository.** |
 | **Ngày 2 — 25/11 (Thứ Tư)** | Sau khi hợp đồng được cập nhật, kiểm tra/cập nhật `mock/server.mjs` và `mock/data/` bằng Node built-in modules. Hoàn thiện lifecycle hội thoại, đề xuất, tạo booking, confirm cọc, reminders, upload preview, selected photos, thanh toán còn lại và receive. Duy trì bốn mode `normal`, `slow`, `error`, `empty`. | Tuấn chính; Phúc/Minh review theo nghiệp vụ. | Mock update được ghi nhận ở `cedffea`; kiểm tra `node --check`, JSON, `git diff --check` và `node tools/contract-check.mjs`. Kết quả đã ghi nhận: **35 examples, 24 endpoints, 0 FAIL**. **Ngày 2 đã hoàn thành theo lịch sử repository.** |
-| **Ngày 3 — 26/11 (Thứ Năm)** | **Tuấn:** nền tảng API client/AuthContext/ProtectedRoute và async states nằm trong các file hiện có; G1 đang chạy từ `HomePage.jsx` qua catalogue API; G2 có `LoginPage.jsx` và role routes nền tảng. **Phúc:** tiếp tục tách vùng chat thành `CustomerChatSection.jsx` từ `HomePage.jsx`, thống nhất props/API với Tuấn để triển khai G3/G6-Customer; component này chưa có trong code hiện tại. **Minh:** tiếp tục tách nội dung `StudioPage()` placeholder trong `App.jsx` thành `StudioPage.jsx` và chuẩn bị Staff/Admin; file page riêng chưa có trong code hiện tại. | Tuấn: core + nền tảng G1/G2. Phúc: chat component (còn chờ triển khai). Minh: Studio page extraction (còn chờ triển khai). | Đã đối chiếu code: các file core nêu trên tồn tại; G1 tải catalogue; `HomePage.jsx` là page trang chủ hiện tại. Chat component và page Studio riêng vẫn là phần việc tiếp theo; chưa ghi nhận kết quả nghiệm thu build, responsive hoặc E2E trong cập nhật tài liệu này. |
+| **Ngày 3 — 26/11 (Thứ Năm)** | **Tuấn:** nền tảng API client/AuthContext/ProtectedRoute và async states nằm trong các file hiện có; G1 đang chạy từ `HomePage.jsx` qua catalogue API; G2 có `LoginPage.jsx` và role routes nền tảng. **Phúc:** tạo khung `CustomerChatSection.jsx`, `BookingPage.jsx`, `TestPaymentPage.jsx`, `BookingPhotoGallery.jsx`, bản đồ endpoint Customer và CSS riêng; thống nhất props/API, chuẩn bị cho G3/G6-Customer/G7/G9. **Minh:** tiếp tục tách nội dung `StudioPage()` placeholder trong `App.jsx` thành `StudioPage.jsx` và chuẩn bị Staff/Admin; file page riêng chưa có trong code hiện tại. | Tuấn: core + nền tảng G1/G2. Phúc: bàn giao khung giao diện Customer. Minh: Studio page extraction (còn chờ triển khai). | Đã đối chiếu code: G1 tải catalogue; Phúc đã bàn giao các khung UI trong `DAY3_PHUC_HANDOFF.md`. Báo cáo bàn giao ghi nhận lint/build và kiểm tra responsive/accessibility; các thao tác API và tích hợp component vào `HomePage.jsx`/router vẫn là công việc tiếp theo theo lịch G3–G9. |
 
 ### Giai đoạn 2 — Hoàn thiện nghiệp vụ G3–G11 (Ngày 4–7)
 
