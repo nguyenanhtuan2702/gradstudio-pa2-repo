@@ -221,6 +221,17 @@ const rejectCancelled = (res, booking) => {
   return true
 }
 
+const rejectPreviewUpload = (res, booking) => {
+  if (rejectCancelled(res, booking)) return true
+  if (booking.status === 'Đã đặt lịch') return false
+
+  const message = booking.status === 'Hoàn thành'
+    ? 'Booking đã hoàn thành nên không thể tải thêm ảnh preview.'
+    : 'Chưa có phân công nhân sự cho booking này.'
+  sendJson(res, 409, error('CONFLICT', message))
+  return true
+}
+
 const bearerToken = (req) => {
   const authorization = req.headers.authorization || ''
   return authorization.match(/^Bearer\s+(.+)$/i)?.[1] || ''
@@ -632,14 +643,9 @@ const server = http.createServer(async (req, res) => {
       const { id } = match('/api/bookings/:id/photos/preview', pathname)
       const booking = bookings.find((item) => item.id === id)
       if (!booking) { status = 404; sendJson(res, status, error('NOT_FOUND', 'Không tìm thấy booking.')); return }
-      if (rejectCancelled(res, booking)) return
-      if (!holdsSchedule(booking)) {
-        status = 409
-        sendJson(res, status, error('CONFLICT', 'Chưa có phân công nhân sự cho booking này.'))
-        return
-      }
+      if (rejectPreviewUpload(res, booking)) return
       const fields = await readMultipart(req)
-      if (rejectCancelled(res, booking)) return
+      if (rejectPreviewUpload(res, booking)) return
       const uploaded = fields.file
       if (!uploaded || !fields.title || !['image/jpeg', 'image/png'].includes(uploaded.type) || uploaded.data.length > 10 * 1024 * 1024) {
         status = 400

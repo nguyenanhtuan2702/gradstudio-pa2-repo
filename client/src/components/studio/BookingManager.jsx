@@ -94,7 +94,6 @@ function FinalLinkForm({ booking, onSaved }) {
         label="Link ảnh hoàn thiện"
         form={form}
         type="url"
-        help="Chỉ lưu được sau khi khách đã thanh toán đủ."
       />
       <FormMessages form={form} />
       <button className="gs-btn gs-btn--secondary ops-action" type="submit" disabled={form.submitting}>
@@ -110,6 +109,7 @@ function BookingCard({ booking, onSaved }) {
   const [cancelling, setCancelling] = useState(false)
   const [cancelError, setCancelError] = useState('')
   const closed = booking.cancelled || booking.status === 'Hoàn thành'
+  const canSaveFinalLink = !booking.cancelled && booking.paymentStatus === 'Đã thanh toán đủ' && booking.remaining === 0
 
   async function cancelBooking() {
     setCancelling(true)
@@ -147,7 +147,10 @@ function BookingCard({ booking, onSaved }) {
         <a className="ops-link" href={booking.finalFileLink} target="_blank" rel="noreferrer">Mở link ảnh hoàn thiện</a>
       )}
 
-      {!booking.cancelled && <FinalLinkForm booking={booking} onSaved={onSaved} />}
+      {canSaveFinalLink && <FinalLinkForm booking={booking} onSaved={onSaved} />}
+      {!booking.cancelled && !canSaveFinalLink && (
+        <p className="gs-help">Có thể thêm link ảnh hoàn thiện sau khi khách thanh toán đủ.</p>
+      )}
 
       {closed ? (
         <p className="gs-help">Booking đã hoàn thành hoặc đã hủy nên không thể đổi hay hủy lịch.</p>

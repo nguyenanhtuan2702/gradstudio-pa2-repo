@@ -98,6 +98,7 @@ Content-Type: application/json
 - `401` missing or invalid token.
 - `403` caller is not Staff.
 - `404` booking not found.
+- `409` booking is awaiting its deposit, cancelled, or completed. Uploads are allowed only for an uncancelled booking in `Đã đặt lịch`.
 
 ## Confirm uploaded preview is available on the booking
 
