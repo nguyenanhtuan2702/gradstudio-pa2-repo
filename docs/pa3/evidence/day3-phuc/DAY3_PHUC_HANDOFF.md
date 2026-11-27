@@ -10,9 +10,9 @@
 
 | Đường dẫn file | Vai trò & Luồng chuẩn bị | Ghi chú kế thừa & Kiến trúc |
 |---|---|---|
-| `client/src/components/CustomerChatSection.jsx` | **Customer Chat** — chuẩn bị cho **G3** & **G6-Customer** | Kế thừa bố cục `#chat` từ `index.html` PA#2; dùng `useAuth()` kiểm tra phiên đăng nhập; có banner hướng dẫn đăng nhập cho Visitor, khung đề xuất giờ mới G6 (Đồng ý / Từ chối) và form gửi yêu cầu kiểm tra lịch G3. |
-| `client/src/pages/BookingPage.jsx` | **Booking Page** — chuẩn bị cho **G7** & tích hợp **G9** | Kế thừa trọn vẹn bố cục `booking.html` PA#2 (Lịch tuần 43, Timeline 3 mốc với 09:00 gạch ngang không khả dụng, chi tiết gói `GS-1024`, hộp giá `1.800.000đ` / `540.000đ` / `1.260.000đ`); bổ sung khối `reminders` và nhúng `BookingPhotoGallery`. |
-| `client/src/components/BookingPhotoGallery.jsx` | **Photo Gallery** — chuẩn bị cho **G9** | Lưới ảnh preview dùng chung asset hợp lệ trong `client/public/assets/images/`, bộ đếm chọn tối đa `maxEditedPhotos` (30 ảnh), khung thanh toán 70% còn lại và nút *Nhận ảnh hoàn thiện* (sử dụng `EmptyState` dùng chung khi danh sách rỗng). |
+| `client/src/components/CustomerChatSection.jsx` | **Customer Chat** — chuẩn bị cho **G3** & **G6-Customer** | Kế thừa bố cục `#chat` từ `index.html` PA#2; đồng bộ gói khi bấm *“Hỏi về gói này”* từ Catalogue nhưng vẫn cho phép khách tự đổi lựa chọn trong dropdown; có banner hướng dẫn đăng nhập cho Visitor, khung đề xuất giờ mới G6 và form gửi yêu cầu G3. |
+| `client/src/pages/BookingPage.jsx` | **Booking Page** — chuẩn bị cho **G7** & tích hợp **G9** | Kế thừa trọn vẹn bố cục `booking.html` PA#2; dùng đúng cấu trúc `booking.reminders` (ban đầu rỗng `[]` khi `Chờ cọc 30%`, định dạng ISO `reminder.scheduledAt`) và truyền `booking.selectedPhotoIds` xuống `BookingPhotoGallery`. |
+| `client/src/components/BookingPhotoGallery.jsx` | **Photo Gallery** — chuẩn bị cho **G9** | Lưới ảnh preview đọc trực tiếp `selectedPhotoIds` (mặc định `[]` — `0 / 30` ảnh, không tự chọn trước `photo-1`), bộ đếm trần `maxEditedPhotos` (30 ảnh), khung thanh toán 70% còn lại và nút *Nhận ảnh hoàn thiện*. |
 | `client/src/pages/TestPaymentPage.jsx` | **Test Payment Gateway** — chuẩn bị cho **G7** & **G9** | Khung trang cổng thanh toán mô phỏng tại `/payments/test/:id`, đọc query `kind`, `scenario`, `paymentId` và chuẩn bị điểm gọi `POST /api/bookings/:id/payments/confirm`. |
 | `client/src/api/customerEndpoints.js` | Bản đồ Endpoint Customer | Gom toàn bộ đường dẫn tương đối `/api/...` cho G3, G6, G7, G9; tách riêng khỏi file `.jsx` để đảm bảo React Fast Refresh (`oxlint` đạt 0 warning, 0 error). |
 | `client/src/styles/customerFlow.css` | Stylesheet phạm vi Customer | Tái sử dụng 100% design tokens `:root` của `styles.css` PA#2; mobile-first (`768px`, `1200px`), không dùng `!important`, không dùng `overflow-x: hidden`. |
@@ -86,8 +86,12 @@ Tất cả các cuộc gọi API trong giai đoạn tiếp theo sẽ đi qua `co
 
 > **Phương pháp chụp ảnh minh chứng:** Để kiểm tra giao diện thực tế mà không sửa file của Tuấn trong Git, quá trình kiểm tra đã gắn tạm các component vào bản chạy cục bộ trên trình duyệt Chrome Headless với mock server (`normal` mode), đo DOM tự động tại 3 độ phân giải `360px`, `768px`, `1280px`, chụp ảnh màn hình, sau đó khôi phục nguyên trạng 100% `HomePage.jsx` và `App.jsx`.
 
-- **`npm run lint` (`oxlint`):** `Found 0 warnings and 0 errors` trên toàn bộ 19 files trong `client/src/`.
+- **`npm run lint` (`oxlint`):** `Found 0 warnings and 0 errors` trên toàn bộ 35 files trong `client/src/`.
 - **`npm run build` (`vite build`):** Thành công, xuất `client/dist/` không lỗi.
+- **Kiểm chứng 3 điểm review kỹ thuật:**
+  1. `CustomerChatSection`: Bấm *“Hỏi về gói này”* từ Catalogue tự điền gói vào dropdown, sau đó đổi thủ công trong `<select>` sang gói khác (`Chân dung/CV`) cập nhật bình thường cả dropdown và nhãn `Đang hỏi về`.
+  2. `BookingPage`: Đọc trực tiếp `booking.reminders` và `reminder.scheduledAt` (hiển thị `EmptyState` khi `reminders: []` ở trạng thái `Chờ cọc 30%`).
+  3. `BookingPhotoGallery`: Mặc định `selectedPhotoIds = []` (`Đã chọn: 0 / 30`, `photo-1` chưa được chọn), đồng bộ theo prop `selectedPhotoIds` và bật/tắt chọn bình thường trên UI.
 - **Kiểm tra Responsive & Accessibility tự động (`360px`, `768px`, `1280px`):**
   - `scrollWidth > clientWidth`: `false` trên mọi màn hình và kích thước.
   - Phần tử tràn cạnh phải viewport: `0` phần tử.

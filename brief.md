@@ -893,3 +893,21 @@ Yêu cầu nguyên văn:
 > Bạn truy cập repo https://github.com/nguyenanhtuan2702/gradstudio-pa2-repo.git, bạn làm cho tôi phần việc của Minh trong file PhanCongPA3 đi
 
 Trong lượt này không có prompt bổ sung. Phạm vi và ràng buộc được assistant đọc từ `docs/pa3/PhanCongPA3.md`, `docs/pa3/ThongNhatKyThuatPA3.md`, `docs/api/`, brief và rubric PA#3.
+
+---
+
+# PHẦN XX: PROMPT SỬA 3 LỖI REVIEW KHUNG UI CUSTOMER — LÊ CÔNG PHÚC (27/11/2026)
+
+Yêu cầu nguyên văn, theo thứ tự:
+
+> có 3 lỗi cần xem xét qua:
+> CustomerChatSection.jsx – Logic chọn gói: activeShootType hiện luôn ưu tiên selectedPackageName hơn preferredShootType. Khi khách bấm “Hỏi về gói này” từ Catalogue, khách có thể không đổi được gói trong dropdown. Bạn sửa lại logic/state để khách có thể thay đổi lựa chọn bình thường nhé.
+>
+> BookingPage.jsx – Dữ liệu reminders: Khi tích hợp API, cần sử dụng đúng cấu trúc booking.reminders và trường reminder.scheduledAt theo API contract, thay vì phụ thuộc vào remindersSample và scheduledAtLabel.
+>
+> BookingPhotoGallery.jsx – Ảnh được chọn mặc định: Hiện component tự đánh dấu photo-1 là ảnh được chọn ngay từ đầu, trong khi dữ liệu API mẫu có selectedPhotoIds rỗng. Bạn bỏ lựa chọn mặc định này; khi triển khai G9, trạng thái ảnh được chọn cần lấy từ booking.selectedPhotoIds để giao diện phản ánh đúng dữ liệu thực tế.
+> thực hiện phân tích và lên plan để sửa
+
+Follow-up xác nhận thực thi:
+
+> bắt đầu
