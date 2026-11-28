@@ -92,6 +92,22 @@ function getStatusBadgeProps(status) {
   return { className: 'badge badge--wait', symbol: '◷' }
 }
 
+function getProposalBadgeProps(status) {
+  if (status === 'agreed') {
+    return { className: 'badge badge--ok', symbol: '✓' }
+  }
+  if (status === 'declined') {
+    return { className: 'badge badge--bad', symbol: '✕' }
+  }
+  return { className: 'badge badge--wait', symbol: '◷' }
+}
+
+function formatIsoDateVi(value) {
+  if (typeof value !== 'string') return ''
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : value
+}
+
 function findCustomerConversation(items, userId, defaultConversationId) {
   if (!Array.isArray(items) || !items.length) return null
   return (
@@ -148,6 +164,12 @@ export default function CustomerChatSection({
   const [submittedRequest, setSubmittedRequest] = useState(null)
   const [submittingRequest, setSubmittingRequest] = useState(false)
   const submittingReqRef = useRef(false)
+
+  // Proposal agree / decline state (G6-Customer)
+  const [respondingDecision, setRespondingDecision] = useState('')
+  const [proposalError, setProposalError] = useState('')
+  const [proposalNotice, setProposalNotice] = useState('')
+  const respondingProposalRef = useRef(false)
 
   if (selectedPackageName !== prevSelectedPackageName) {
     setPrevSelectedPackageName(selectedPackageName)
@@ -210,16 +232,79 @@ export default function CustomerChatSection({
     setRefreshError('')
     try {
       const payload = await request(CUSTOMER_API_ENDPOINTS.listConversations)
+      const nextConversation = findCustomerConversation(payload?.items, userId, defaultConversationId)
+      if (
+        nextConversation?.proposal?.proposalId !== conversation?.proposal?.proposalId
+        || nextConversation?.proposal?.status !== conversation?.proposal?.status
+      ) {
+        setProposalError('')
+        setProposalNotice('')
+      }
       setFetchResult({
         key: requestKey,
         status: 'success',
-        conversation: findCustomerConversation(payload?.items, userId, defaultConversationId),
+        conversation: nextConversation,
         error: null,
       })
     } catch (error) {
       setRefreshError(error?.message || 'Chưa thể cập nhật tin nhắn mới.')
     } finally {
       setRefreshing(false)
+    }
+  }
+
+  async function handleRespondProposal(decision) {
+    if (!isCustomer || !conversation?.id || !activeProposal?.proposalId) return
+    if (activeProposal.status !== 'pending' || respondingProposalRef.current) return
+
+    setProposalError('')
+    setProposalNotice('')
+    respondingProposalRef.current = true
+    setRespondingDecision(decision)
+
+    try {
+      const result = await request(CUSTOMER_API_ENDPOINTS.respondProposal(conversation.id), {
+        method: 'POST',
+        body: {
+          proposalId: activeProposal.proposalId,
+          decision,
+        },
+      })
+
+      const nextStatus = result?.status || (decision === 'agree' ? 'Đã chốt lịch' : 'Đang tư vấn')
+      const nextProposalStatus = result?.proposalStatus || (decision === 'agree' ? 'agreed' : 'declined')
+
+      updateActiveConversation((current) => ({
+        ...current,
+        status: nextStatus,
+        proposal: current.proposal
+          ? {
+              ...current.proposal,
+              status: nextProposalStatus,
+            }
+          : current.proposal,
+      }))
+
+      if (decision === 'agree') {
+        setProposalNotice(
+          'Đã xác nhận đồng ý khung giờ đề xuất. Hội thoại đã chuyển sang trạng thái Đã chốt lịch. Lưu ý: lịch chưa được giữ ở bước này — chỉ khi studio tạo booking (Chờ cọc 30%) và bạn thanh toán cọc 30% thành công thì lịch mới được giữ.',
+        )
+      } else {
+        setProposalNotice(
+          'Đã gửi từ chối đề xuất này. Hội thoại tiếp tục ở trạng thái Đang tư vấn để studio kiểm tra và đề xuất khung giờ khác phù hợp hơn.',
+        )
+      }
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 404) {
+        setProposalError(
+          'Đề xuất khung giờ này đã thay đổi hoặc không còn hiệu lực. Vui lòng bấm “Cập nhật tin nhắn” để tải đề xuất mới nhất từ studio.',
+        )
+      } else {
+        setProposalError(error?.message || 'Không gửi được phản hồi đề xuất giờ. Vui lòng thử lại.')
+      }
+    } finally {
+      respondingProposalRef.current = false
+      setRespondingDecision('')
     }
   }
 
@@ -372,6 +457,14 @@ export default function CustomerChatSection({
   const statusBadge = getStatusBadgeProps(activeStatus)
   const displayedMessages = isCustomer ? (conversation?.messages || []) : VISITOR_SAMPLE_MESSAGES
   const activeProposal = isCustomer ? conversation?.proposal : null
+  const proposalBadge = activeProposal ? getProposalBadgeProps(activeProposal.status) : null
+  const canRespondProposal = Boolean(
+    isCustomer
+    && activeProposal?.proposalId
+    && activeProposal.status === 'pending'
+    && !respondingDecision,
+  )
+  const proposalDateLabel = formatIsoDateVi(conversation?.date)
   const customerDisplayName = conversation?.customerName || user?.name || 'Nguyễn Thùy Linh'
 
   return (
@@ -388,7 +481,7 @@ export default function CustomerChatSection({
       )}
 
       <div className="customer-chat-layout">
-        {/* Cột 1: Khung hội thoại G3 + hiển thị đề xuất giờ từ API (chờ nối nút bấm G6 ở Ngày 5) */}
+        {/* Cột 1: Khung hội thoại G3 + đề xuất giờ và phản hồi Đồng ý/Từ chối G6-Customer */}
         <div className="gs-card chat">
           <div className="chat__head">
             <span className="user-avatar" aria-hidden="true">GS</span>
@@ -445,37 +538,52 @@ export default function CustomerChatSection({
           {activeProposal && (
             <section className="chat-proposal-card" aria-labelledby="proposal-preview-title">
               <div className="status-row">
-                <span className={`badge ${activeProposal.status === 'agreed' ? 'badge--ok' : 'badge--wait'}`}>
-                  <span aria-hidden="true">{activeProposal.status === 'agreed' ? '✓' : '◷'}</span>
+                <span className={proposalBadge.className}>
+                  <span aria-hidden="true">{proposalBadge.symbol}</span>
                   {' '}
                   {PROPOSAL_STATUS_LABELS[activeProposal.status] || activeProposal.status}
                 </span>
               </div>
               <h3 id="proposal-preview-title">Đề xuất khung giờ từ studio</h3>
               <div className="chat-proposal-slots">
-                <p><strong>Makeup:</strong> {activeProposal.makeup} với Mai</p>
-                <p><strong>Chụp ảnh:</strong> {activeProposal.shoot} với Tuấn · {activeProposal.room}</p>
+                {proposalDateLabel && (
+                  <p><strong>Ngày chụp:</strong> {proposalDateLabel}</p>
+                )}
+                <p><strong>Makeup:</strong> {activeProposal.makeup} với {activeProposal.makeupArtist || 'Mai'}</p>
+                <p><strong>Chụp ảnh:</strong> {activeProposal.shoot} với {activeProposal.photographer || 'Tuấn'} · {activeProposal.room}</p>
               </div>
+              {proposalError && (
+                <p className="chat-feedback-error" role="alert">{proposalError}</p>
+              )}
+              {proposalNotice && (
+                <p className="chat-feedback-ok" role="status">{proposalNotice}</p>
+              )}
               <div className="chat-proposal-actions">
                 <button
                   className="gs-btn gs-btn--primary"
                   type="button"
-                  disabled
-                  aria-describedby="proposal-shell-note"
+                  disabled={!canRespondProposal}
+                  aria-describedby="proposal-status-note"
+                  onClick={() => handleRespondProposal('agree')}
                 >
-                  Đồng ý khung giờ này
+                  {respondingDecision === 'agree' ? 'Đang xác nhận đồng ý…' : 'Đồng ý khung giờ này'}
                 </button>
                 <button
                   className="gs-btn gs-btn--secondary"
                   type="button"
-                  disabled
-                  aria-describedby="proposal-shell-note"
+                  disabled={!canRespondProposal}
+                  aria-describedby="proposal-status-note"
+                  onClick={() => handleRespondProposal('decline')}
                 >
-                  Từ chối, chọn giờ khác
+                  {respondingDecision === 'decline' ? 'Đang gửi từ chối…' : 'Từ chối, chọn giờ khác'}
                 </button>
               </div>
-              <p className="gs-help" id="proposal-shell-note">
-                Thao tác phản hồi đề xuất giờ (<code>POST {CUSTOMER_API_ENDPOINTS.respondProposal(activeConversationId)}</code>) thuộc luồng G6 — Ngày 5. Đồng ý giờ trong chat chưa giữ chỗ cho đến khi cọc 30% thành công.
+              <p className="gs-help" id="proposal-status-note">
+                {activeProposal.status === 'agreed'
+                  ? 'Bạn đã đồng ý khung giờ này (hội thoại: Đã chốt lịch). Lưu ý: đồng ý giờ trong chat chưa giữ chỗ — lịch chỉ được giữ sau khi studio tạo booking (Chờ cọc 30%) và bạn thanh toán cọc 30% thành công.'
+                  : activeProposal.status === 'declined'
+                    ? 'Bạn đã từ chối đề xuất này. Hội thoại tiếp tục ở trạng thái Đang tư vấn; bạn có thể nhắn tin, gửi yêu cầu giờ mới hoặc bấm “Cập nhật tin nhắn” khi studio gửi đề xuất khung giờ khác.'
+                    : 'Bấm Đồng ý để chuyển hội thoại sang Đã chốt lịch (chưa giữ chỗ cho đến khi cọc 30% thành công), hoặc Từ chối để tiếp tục tư vấn khung giờ khác.'}
               </p>
             </section>
           )}
