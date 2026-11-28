@@ -275,7 +275,27 @@
   font-family: var(--gs-font-sans);
 }
 
-/* Test Payment Gateway shell */
+/* Test Payment Gateway & Booking feedback */
+.booking-page-head__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+}
+
+.booking-feedback-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gs-space-3);
+}
+
+.booking-feedback-banner p {
+  margin: 0;
+}
+
 .gateway-card {
   width: min(100%, 38rem);
   margin-inline: auto;
